@@ -107,7 +107,11 @@ func button(text: String, callback: Callable, muted: bool=false) -> Button:
 	return b
 
 func _clear_ui() -> void:
-	for child in ui.get_children():ui.remove_child(child);child.queue_free()
+	# Touch-to-mouse dispatch can still retain the old Control after pressed.
+	# Hide now, then let queue_free detach it after the current event unwinds.
+	for child in ui.get_children():
+		if child is CanvasItem:child.hide()
+		child.queue_free()
 	hud_score=null;hud_ore=null;hud_shots=null;hud_bar=null;hint=null;banner_spacer=null;toast_label=null;reward_button=null;reward_hint=null
 	dragging=false;cavern.trajectory.visible=false
 
@@ -184,7 +188,7 @@ func _update_hud() -> void:
 	hud_score.text="%s pts"%_number(run.score)
 	hud_ore.text="%d / %d crystals"%[run.stage_crystals,run.spec.goal]
 	hud_bar.max_value=run.spec.goal;hud_bar.value=run.stage_crystals
-	hud_shots.text="%s  %d SHOTS LEFT"%["● ".repeat(run.shots),run.shots]
+	hud_shots.text="%s  %d %s LEFT"%["● ".repeat(run.shots),run.shots,"SHOT" if run.shots==1 else "SHOTS"]
 	if run.moving:hint.text="%d CRYSTAL COMBO · TAP RECALL TO RETURN"%run.shot_combo
 	elif run.stage_crystals>=int(run.spec.goal):hint.text="TARGET REACHED · BANK OR MINE EVERY CRYSTAL"
 	elif run.chamber==0 and run.mode=="campaign":hint.text="DRAG ON THE CAVE. RELEASE INTO THE GOLD VEIN."
@@ -335,7 +339,7 @@ func _result() -> void:
 	for i in range(3):
 		var icon:=TextureRect.new();icon.texture=load("res://assets/ui/star.png" if i<run.stars() else "res://assets/ui/star_empty.png");icon.custom_minimum_size=Vector2(48,48);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;stars.add_child(icon)
 	var points:=label("%s POINTS"%_number(run.score),34);points.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;card.add_child(points)
-	card.add_child(label("%d crystals  ·  best combo ×%d\n%d ricochets  ·  %d shots"%[run.crystals,run.best_combo,run.ricochets,run.used],19,MUTED))
+	card.add_child(label("%d crystals  ·  best combo ×%d\n%d ricochets  ·  %d %s"%[run.crystals,run.best_combo,run.ricochets,run.used,"shot" if run.used==1 else "shots"],19,MUTED))
 	if run.won:
 		card.add_child(label("+%d ore   +%d XP"%[receipt.get("coins",profile.data.last_receipt.get("coins",0)),receipt.get("xp",profile.data.last_receipt.get("xp",0))],22,GOLD))
 		if run.mode=="campaign" and run.chamber<29:card.add_child(button("Next chamber  ›",func():var index:int=run.chamber+1;start_run("campaign",index);_interstitial()))

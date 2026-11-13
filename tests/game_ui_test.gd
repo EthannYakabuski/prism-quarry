@@ -37,6 +37,7 @@ func same_json_state(a:Variant,b:Variant) -> bool:
 	return a==b
 
 func find_button(node:Node, text:String) -> Button:
+	if node.is_queued_for_deletion():return null
 	if node is Button and node.text==text:return node
 	for child in node.get_children():
 		var found:=find_button(child,text)
@@ -53,6 +54,7 @@ func press(text:String) -> bool:
 
 func all_buttons(node:Node) -> Array[Button]:
 	var found:Array[Button]=[]
+	if node.is_queued_for_deletion():return found
 	if node is Button:found.append(node)
 	for child in node.get_children():found.append_array(all_buttons(child))
 	return found
