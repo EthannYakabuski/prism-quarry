@@ -67,7 +67,7 @@
 			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
 			"path": "tablet7/results.png",
 			"profile": "tablet7",
-			"sha256": "7da5bac605f560f5e282112a1502f079228b8812323e66d63587e3f1001dffd3",
+			"sha256": "cc68718a72633cf1debb7bfca40965e2a3fb661efdb1b7f2a57ef13388ee3d18",
 			"source_commit": "working tree; capture-source.json hashes identify runtime files",
 			"view": "results",
 			"width": 1200

@@ -32,8 +32,9 @@ jobs:
           python platform/tests/run_tests.py --godot "$RUNNER_TEMP/prism-godot/Godot_v4.5.1-stable_linux.x86_64"
           for suite in tests/game_model_test.gd tests/game_ui_test.gd; do
             profile=$(mktemp -d "$RUNNER_TEMP/prism-tests-XXXXXX")
-            XDG_DATA_HOME="$profile" PRISM_TEST_ROOT="$profile" timeout 120 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --script "$suite" -- --qa-profile="user://qa-ui-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+            XDG_DATA_HOME="$profile" PRISM_TEST_ROOT="$profile" timeout 120 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --script "$suite" --log-file "$profile/engine.log" -- --qa-profile="user://qa-ui-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
           done
+          python tools/run_touch_regression.py --godot "$RUNNER_TEMP/prism-godot/Godot_v4.5.1-stable_linux.x86_64"
           mkdir -p build/site/play
           timeout 180 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --export-release Web build/site/play/index.html
           python tools/verify_web_export.py build/site/play --output build/web-export-validation.json

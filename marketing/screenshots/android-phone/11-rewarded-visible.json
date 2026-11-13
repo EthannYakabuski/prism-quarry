@@ -1,0 +1,15 @@
+{
+  "label": "11-rewarded-visible",
+  "profile": "phone",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T17:55:24.1825740Z",
+  "display_size": "Physical size: 1080x1920",
+  "display_density": "Physical density: 420",
+  "image": "marketing/screenshots/android-phone/11-rewarded-visible.png",
+  "width": 1080,
+  "height": 1920,
+  "image_sha256": "fc96518dd7a6097c85f2250df977cc4a3efe9741c8e7dbbb711b2b7b754cef3d",
+  "apk_sha256": "8e8197219668567c475ae79f0e199ac4110b89fc0dc6902462103a9ba0a1ec80"
+}

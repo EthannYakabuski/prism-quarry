@@ -1,0 +1,15 @@
+{
+  "label": "01-final-game",
+  "profile": "tablet7",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:08:20.6274282Z",
+  "display_size": "Physical size: 1080x1920\r\nOverride size: 1200x1920",
+  "display_density": "Physical density: 420\r\nOverride density: 320",
+  "image": "marketing/screenshots/android-tablet7/01-final-game.png",
+  "width": 1200,
+  "height": 1920,
+  "image_sha256": "33e4ed63ade1ded2fd19694989ced86bf4d314c156535d3fb9a71f5c81abff7e",
+  "apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+}

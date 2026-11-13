@@ -1,0 +1,15 @@
+{
+  "label": "21-interstitial-third-session-round",
+  "profile": "phone",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:01:06.4429700Z",
+  "display_size": "Physical size: 1080x1920",
+  "display_density": "Physical density: 420",
+  "image": "marketing/screenshots/android-phone/21-interstitial-third-session-round.png",
+  "width": 1080,
+  "height": 1920,
+  "image_sha256": "86a354f8798446a5fe9d1ad88247313efa850252a7331c792c59dfd292bb95ac",
+  "apk_sha256": "8e8197219668567c475ae79f0e199ac4110b89fc0dc6902462103a9ba0a1ec80"
+}

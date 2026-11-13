@@ -64,6 +64,25 @@ def main() -> None:
     # An old receipt must not survive a new export or a failed assembly.
     (target / "build.json").unlink(missing_ok=True)
     identity = source_identity(args.require_clean, args.expected_sha)
+    web_html = target / "play/index.html"
+    html = web_html.read_text(encoding="utf-8")
+    marker = "const engine = new Engine(GODOT_CONFIG);"
+    if marker not in html:
+        raise SystemExit("Cannot locate official Web shell engine startup for compatibility diagnostic.")
+    guard = '''// PRISM_ENGINE_GUARD: the official engine JavaScript remains unmodified.
+if (typeof Engine !== 'function') {
+  document.body.innerHTML = '<main style="max-width:640px;margin:12vh auto;padding:28px;color:#f7f4e9;background:#102830;font:18px/1.6 system-ui;border-radius:16px"><h1>Update your browser to play</h1><p>This browser could not load the Godot game engine. Please try a current browser with WebGL 2 support.</p><p><a style="color:#9df6cf" href="../review/">Open the game review and screenshots</a></p></main>';
+  throw new Error('Prism Quarry: game engine unavailable; update the browser.');
+}
+'''
+    if "// PRISM_ENGINE_GUARD" in html:
+        start = html.index("// PRISM_ENGINE_GUARD")
+        end = html.index(marker, start)
+        updated_html = html[:start] + guard + html[end:]
+    else:
+        updated_html = html.replace(marker, guard + marker)
+    if updated_html != html:
+        web_html.write_text(updated_html, encoding="utf-8")
     target.mkdir(parents=True, exist_ok=True)
     shutil.copy2(ROOT / "public/index.html", target / "index.html")
     ignore = shutil.ignore_patterns("*.import", "*.private.*", "*.log", "__pycache__", ".DS_Store")

@@ -1,0 +1,379 @@
+{
+  "source_commit": "f0fdea95a100c1250e5e5b94f04b568142209629",
+  "worktree_changes_at_receipt": [
+    "M .github/workflows/ci.yml",
+    " M .github/workflows/pages.yml",
+    " M README.md",
+    " M docs/ACCEPTANCE.md",
+    " M marketing/screenshots/capture-source.json",
+    " M marketing/screenshots/phone/captures.json",
+    " M marketing/screenshots/phone/results.png",
+    " M marketing/screenshots/provenance.json",
+    " M marketing/screenshots/tablet10/captures.json",
+    " M marketing/screenshots/tablet10/results.png",
+    " M marketing/screenshots/tablet7/captures.json",
+    " M marketing/screenshots/tablet7/results.png",
+    " M review/index.html",
+    " M review/review.js",
+    " M review/style.css",
+    " M tests/game_touch_teardown_test.gd",
+    " M tests/game_verification.md",
+    " M tools/assemble_site.py",
+    " M tools/validate_store.py",
+    "?? docs/HANDOFF.md",
+    "?? docs/build-evidence.json",
+    "?? docs/native-diagnostics.json",
+    "?? marketing/screenshots/android-phone/",
+    "?? marketing/screenshots/android-provenance.json",
+    "?? marketing/screenshots/android-tablet10/",
+    "?? marketing/screenshots/android-tablet7/",
+    "?? tests/game_touch_teardown_test.gd.uid",
+    "?? tools/run_touch_regression.py"
+  ],
+  "runtime_source_sha256": "a0debeb1952fa0320a746954af4fe3635b9fcdfa7e50111334ae39172308e96c",
+  "runtime_source_file_count": 417,
+  "runtime_source_hash_method": "SHA256 of canonical sorted path-to-file-SHA256 JSON; excludes import/UID caches and tests",
+  "artifacts": [
+    {
+      "path": "build/android/prism-quarry-test.apk",
+      "bytes": 274649262,
+      "sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+    },
+    {
+      "path": "build/android/prism-quarry-debug.aab",
+      "bytes": 102129822,
+      "sha256": "b6be1f9ac82397bbba7946da3992ad779036a68a4247f54248a71597f9eeea4f"
+    },
+    {
+      "path": "build/site/play/index.pck",
+      "bytes": 10987508,
+      "sha256": "b3fb4928b679dea5a38b2ccee4aea2e1d1e398d122d8baf33cd81af43acb1d5c"
+    },
+    {
+      "path": "build/site/play/index.wasm",
+      "bytes": 38034280,
+      "sha256": "6498359ba889796a0d95a2f71113ac184badc0f2d84cf28f4103c7e399d2d547"
+    },
+    {
+      "path": "marketing/play-games-achievements/prism-quarry-achievements-google-play.zip",
+      "bytes": 9338716,
+      "sha256": "04d294a6122d6ec07502eed943d5e25c21c25eb49bd533c4064db01baa54f14d"
+    }
+  ],
+  "scope": "Identity receipt only. Runtime tests, emulator results and hosted CI are recorded separately.",
+  "candidate_status": "corrected_runtime_artifacts_verified_prepublication_snapshot_2026-11-13",
+  "receipt_state_explanation": "Prepublication verification snapshot dated2026-11-13, generated with tools/build_receipt.py from five actual final files. Source HEAD and worktree state are retained as observed. Later exact publication SHA and CI outcome are recorded separately in the local publication receipt and delivery response; consult repository CI for current state.",
+  "verification": {
+    "date": "2026-11-13",
+    "runtime_correction_commit": "f0fdea95a100c1250e5e5b94f04b568142209629",
+    "tests": {
+      "model": {
+        "checks": 189,
+        "failures": 0,
+        "all_30_base_equipment_three_star_solutions": true
+      },
+      "ui": {
+        "checks": 90,
+        "failures": 0
+      },
+      "touch": {
+        "passed": true,
+        "transitions": 10,
+        "can_process_errors": 0,
+        "problems": [],
+        "engine_returncode": 0,
+        "engine_log": "build/touch-test-j127sl4z/engine.log",
+        "fixture_report": "build/evidence/game-touch-teardown.json",
+        "evidence_class": "headless ScreenTouch dispatch fixture; not physical or Android device input"
+      },
+      "platform": {
+        "checks": 36,
+        "failures": 0,
+        "native_sdk_proof": false,
+        "receipt": "build/platform-tests-abd959266e39/result.json"
+      },
+      "achievement_validator": {
+        "self_tests": 31,
+        "failures": 0
+      },
+      "achievement_archive": {
+        "achievement_count": 20,
+        "entry_count": 22,
+        "total_points": 720,
+        "zip_sha256": "04d294a6122d6ec07502eed943d5e25c21c25eb49bd533c4064db01baa54f14d",
+        "console_upload_performed": false,
+        "console_acceptance_verified": false
+      }
+    },
+    "native_structural": {
+      "engine": "4.5.1.stable.official.f62fdbde1",
+      "package": "com.ethannyakabuski.prismquarry",
+      "version": "1.0.0",
+      "debug_builds": true,
+      "artifacts": [
+        {
+          "file": "build/android/prism-quarry-test.apk",
+          "bytes": 274649262,
+          "sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c",
+          "source_fingerprint_sha256": "a82c549c4e330e1d66b3a9f2965d53755c5348b0880fd6c9ccca255ff8d94c35",
+          "source_unchanged_during_export": true,
+          "export_returncode": 0,
+          "native_libraries": {
+            "arm64-v8a": [
+              "libc++_shared.so",
+              "libgodot_android.so"
+            ],
+            "x86": [
+              "libc++_shared.so",
+              "libgodot_android.so"
+            ],
+            "x86_64": [
+              "libc++_shared.so",
+              "libgodot_android.so"
+            ]
+          },
+          "elf_64bit_load_alignment_16kb_pass": true
+        },
+        {
+          "file": "build/android/prism-quarry-debug.aab",
+          "bytes": 102129822,
+          "sha256": "b6be1f9ac82397bbba7946da3992ad779036a68a4247f54248a71597f9eeea4f",
+          "source_fingerprint_sha256": "a82c549c4e330e1d66b3a9f2965d53755c5348b0880fd6c9ccca255ff8d94c35",
+          "source_unchanged_during_export": true,
+          "export_returncode": 0,
+          "native_libraries": {
+            "arm64-v8a": [
+              "libc++_shared.so",
+              "libgodot_android.so"
+            ],
+            "x86": [
+              "libc++_shared.so",
+              "libgodot_android.so"
+            ],
+            "x86_64": [
+              "libc++_shared.so",
+              "libgodot_android.so"
+            ]
+          },
+          "elf_64bit_load_alignment_16kb_pass": true
+        }
+      ],
+      "apk_manifest": {
+        "min_sdk": 24,
+        "target_sdk": 36,
+        "compile_sdk": 35,
+        "admob_app_id": "ca-app-pub-3940256099942544~3347511713",
+        "play_games_app_id_present": false
+      },
+      "payload_checks": [
+        {
+          "artifact": "prism-quarry-test.apk",
+          "asset_entries": 522,
+          "test_configuration": true,
+          "blank_disabled_pgs": true,
+          "no_generated_test_or_marketing_payload": true
+        },
+        {
+          "artifact": "prism-quarry-debug.aab",
+          "asset_entries": 522,
+          "test_configuration": true,
+          "blank_disabled_pgs": true,
+          "no_generated_test_or_marketing_payload": true
+        }
+      ],
+      "platform_fixtures": {
+        "checks": 36,
+        "failures": 0,
+        "native_sdk_proof": false,
+        "receipt": "build/platform-tests-abd959266e39/result.json"
+      },
+      "not_verified_here": [
+        "physical devices",
+        "16KB device execution",
+        "ZIP alignment/BundleConfig page-size declaration",
+        "production signing",
+        "Play Games backend",
+        "Google Play submission"
+      ]
+    },
+    "web_static": {
+      "result": "PASS - static exported-byte validation only",
+      "godot": "4.5.1",
+      "pck_version": 3,
+      "pck_entries": 516,
+      "all_entry_checksums_verified": true,
+      "web_threads": false,
+      "required_entries": [
+        "project.binary",
+        "game/catalog.json",
+        "assets/audio/manifest.json",
+        "platform/config.json",
+        "scenes/main.tscn.remap",
+        "game/main.gdc",
+        "game/run.gdc",
+        "game/profile.gdc",
+        "game/chambers.gdc",
+        "game/cavern.gdc",
+        "platform/services.gdc",
+        "LICENSE",
+        "NOTICE"
+      ],
+      "unwanted_entries": [],
+      "browser_load_or_gameplay_tested": false,
+      "files": {
+        "index.apple-touch-icon.png": {
+          "bytes": 63976,
+          "sha256": "6f7a23ff81144a91a277a6179e4fb3453eb3ac6fb040a7a73cbbb9c8d9f7c2c4"
+        },
+        "index.audio.position.worklet.js": {
+          "bytes": 2973,
+          "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+        },
+        "index.audio.worklet.js": {
+          "bytes": 7298,
+          "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+        },
+        "index.html": {
+          "bytes": 5487,
+          "sha256": "27454b50c33ca0878a7e67658acb2cc9be9d4ee44d118e6491bbc0cf7e390f1e"
+        },
+        "index.icon.png": {
+          "bytes": 420306,
+          "sha256": "1ff2bfabda1a2edcf24f4e2817ccdb57b63c7ae8bf40878a58141c081d5499a7"
+        },
+        "index.js": {
+          "bytes": 305185,
+          "sha256": "8a7c7d57f7da69bb71da9de302480b87e4c7ecb467ce643665b4a288683cd18f"
+        },
+        "index.pck": {
+          "bytes": 10987508,
+          "sha256": "b3fb4928b679dea5a38b2ccee4aea2e1d1e398d122d8baf33cd81af43acb1d5c"
+        },
+        "index.png": {
+          "bytes": 1326474,
+          "sha256": "72eb5ec53a345a4ed9e152f4e0b43ca7d7001fbf811b303f11298a3afef0cbdf"
+        },
+        "index.wasm": {
+          "bytes": 38034280,
+          "sha256": "6498359ba889796a0d95a2f71113ac184badc0f2d84cf28f4103c7e399d2d547"
+        }
+      },
+      "format_reference": "https://github.com/godotengine/godot/blob/4.5.1-stable/core/io/file_access_pack.cpp"
+    },
+    "desktop_captures": {
+      "count": 18,
+      "profiles": [
+        [
+          1080,
+          1920
+        ],
+        [
+          1200,
+          1920
+        ],
+        [
+          1600,
+          2560
+        ]
+      ],
+      "source_files_checked": 93,
+      "regenerated_after_touch_fix": true,
+      "physical_device": false,
+      "provenance": "marketing/screenshots/provenance.json"
+    },
+    "native_runtime": {
+      "status": "completed_with_explicit_limitations",
+      "final_apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c",
+      "prior_apk_sha256": "8e8197219668567c475ae79f0e199ac4110b89fc0dc6902462103a9ba0a1ec80",
+      "emulator": "Task-owned disposable Pixel_API_30 API30 x86 emulator-5560",
+      "physical_device": false,
+      "save_fixtures_injected": false,
+      "final_native_can_process_errors": 0,
+      "prior_unchanged_platform_observations": [
+        "real sample banner",
+        "first clear9crystals1800points3stars75ore82XP",
+        "Back pause and cold restore",
+        "earned rewarded continuation persisted before Resume",
+        "no second continuation after entitlement consumed",
+        "real Google test interstitial on third session round, dismissed into workshop",
+        "upgrade charged180once:216to36ore,gear1"
+      ],
+      "final_observations": [
+        "rapid native touch/recall/result transitions without teardown errors",
+        "force-stop before reward earned, cold restore continued=false and shots=0",
+        "continued play after interruption",
+        "1200x1920dpi320 result2475points14crystals2shots3stars+93ore97XP",
+        "1600x2560dpi300 result and chapter3 gameplay",
+        "return from browser requires explicit Resume",
+        "two Collect taps pay daily claim once:137to227ore,306to346XP,clears claimed",
+        "untouched chamber3 leave receipt0ore0XP"
+      ],
+      "native_unearned_user_close_verified": false,
+      "native_interrupted_before_earned_no_reward_verified": true,
+      "fully_offline_acceptance": "inconclusive: WIFI/data0 and airplane1 still left validated network101; connectivity and display defaults restored",
+      "selected_capture_count": 11,
+      "final_capture_count": 9,
+      "capture_manifest": "marketing/screenshots/android-provenance.json"
+    },
+    "browser": {
+      "installed_test_browser": "Chrome83 on task-owned Android emulator",
+      "secure_context": true,
+      "webgl2": true,
+      "webassembly_available": true,
+      "engine_global_defined": false,
+      "engine_parse_error": "SyntaxError: Unexpected token '='",
+      "web_gameplay_tested": false,
+      "modern_browser_play_tested": false,
+      "review_compatibility_fix": "replaceChildren removed; flex-gap margins; real static direct-file fallback images",
+      "review_refresh_verification": {
+        "status": "observed_pass",
+        "browser": "Chrome 83 on task-owned Android emulator",
+        "http_gallery_figures": 18,
+        "loaded_images_in_selected_profile": 6,
+        "missing_engine_visual_diagnostic_displayed": true,
+        "web_gameplay_tested": false,
+        "desktop_gameplay_and_home_cards_visually_confirmed": true,
+        "truthful_captions_visually_confirmed": true,
+        "local_screenshot": "build/browser/13-review-gallery.png"
+      },
+      "assembled_html_missing_engine_guard": true,
+      "official_engine_javascript_modified": false
+    },
+    "ci": {
+      "last_verified_run": 43475885486,
+      "last_verified_commit": "aa830e55a171d5f1858cae339a10f8011cf11af2",
+      "status": "success",
+      "url": "https://github.com/EthannYakabuski/prism-quarry/actions/runs/43475885486",
+      "snapshot_scope": "Run observed before final publication; not an assertion about later commits.",
+      "current_runs_url": "https://github.com/EthannYakabuski/prism-quarry/actions/workflows/ci.yml"
+    },
+    "publication": {
+      "repository": "https://github.com/EthannYakabuski/prism-quarry",
+      "pages_status": "blocked_by_automatic_approval_review",
+      "pages_action": "POST repos/EthannYakabuski/prism-quarry/pages build_type=workflow",
+      "pages_reason": "No trusted authorization for persistent public hosting while retained context records publication hold.",
+      "pages_retry_after_history_read": "denied; stopped",
+      "live_site_verified": false,
+      "google_play_publication": false
+    },
+    "not_verified": [
+      "modern-browser gameplay and persistence",
+      "physical devices",
+      "fully network-disconnected native play",
+      "ordinary native unearned ad close",
+      "subjective audio and thermal behavior",
+      "16KB device execution",
+      "ZIP alignment/BundleConfig declaration",
+      "production signing/IDs/consent/backend",
+      "Play Games backend",
+      "Play Console import"
+    ]
+  },
+  "local_evidence_sha256": {
+    "build/evidence/game-model.json": "989c5f911790414340d1ccfd11f2956a237dc17c141108b30e479ea5567f2f1f",
+    "build/evidence/game-ui.json": "429c6c2705f9a4dae981c08e7e4f41e635ceedb2000d56f88949a54a948d91d4",
+    "build/evidence/touch-regression-validation.json": "53bc1b456501dc2d47736f646be4007816ef87cc8556ad0f3623fa33573033fb",
+    "build/native/summary.json": "e2937e3913e3b6f99dbb50d66ba11676d8303be5b048de7eb3b4a5abcb9369f3",
+    "build/web-export-validation.json": "47cdff227db92240712ed8c9748ca03b2c988f133a60a1a60babe1d7f9c671d2"
+  }
+}

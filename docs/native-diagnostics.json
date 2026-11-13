@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-11-13T18:23:54.807157+00:00",
+  "package": "com.ethannyakabuski.prismquarry",
+  "device": "Android emulator-5560 (not a physical device)",
+  "scope": "Read-only saved launch log and current application PID filtered logcat; no inputs, networking settings, display changes or process termination performed.",
+  "sources": [
+    {
+      "phase": "before_fix",
+      "source": "build/native/previous/ordinary-launch.log",
+      "sha256": "f7a1d349783e4a4889f76ef401666e63fc83f6fbcd3a1fc3e9879011b32c1310",
+      "captured_utc": null,
+      "retained_device_timestamp_range": null,
+      "line_count": 785,
+      "parsed_entries": 784,
+      "godot_pids": [
+        12094
+      ],
+      "godot_error_line_count": 0,
+      "gdscript_error_count": 0,
+      "godot_engine_error_count": 0,
+      "godot_errors": [],
+      "fatal_or_anr_marker_count": 0,
+      "fatal_or_anr_markers": [],
+      "banner_metrics": {
+        "observations": 2,
+        "pixel_heights": [
+          0.0,
+          131.0
+        ],
+        "visible_menu_reserves_in_viewport_units": [
+          161.0
+        ]
+      },
+      "native_ad_events": [],
+      "advertising_network_lines_not_reproduced": 615
+    },
+    {
+      "phase": "before_fix",
+      "source": "build/native/previous/current-app-filtered.log",
+      "sha256": "ffb60f2a1240bdfbf55ad2303d7d528ae1cad1b203b1cc76cd2047b70d834bea",
+      "captured_utc": null,
+      "retained_device_timestamp_range": [
+        "11-13 12:53:42.447",
+        "11-13 12:55:42.989"
+      ],
+      "line_count": 19,
+      "parsed_entries": 18,
+      "godot_pids": [
+        12940
+      ],
+      "godot_error_line_count": 4,
+      "gdscript_error_count": 0,
+      "godot_engine_error_count": 2,
+      "godot_errors": [
+        {
+          "line": 8,
+          "timestamp": "11-13 12:54:19.172",
+          "pid": 12940,
+          "level": "E",
+          "tag": "godot",
+          "message": "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false"
+        },
+        {
+          "line": 9,
+          "timestamp": "11-13 12:54:19.172",
+          "pid": 12940,
+          "level": "E",
+          "tag": "godot",
+          "message": "   at: can_process (scene/main/node.cpp:889)"
+        },
+        {
+          "line": 11,
+          "timestamp": "11-13 12:54:24.111",
+          "pid": 12940,
+          "level": "E",
+          "tag": "godot",
+          "message": "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false"
+        },
+        {
+          "line": 12,
+          "timestamp": "11-13 12:54:24.111",
+          "pid": 12940,
+          "level": "E",
+          "tag": "godot",
+          "message": "   at: can_process (scene/main/node.cpp:889)"
+        }
+      ],
+      "fatal_or_anr_marker_count": 0,
+      "fatal_or_anr_markers": [],
+      "banner_metrics": {
+        "observations": 8,
+        "pixel_heights": [
+          0.0,
+          131.0
+        ],
+        "visible_menu_reserves_in_viewport_units": [
+          145.0,
+          161.0
+        ]
+      },
+      "native_ad_events": [
+        {
+          "context": "",
+          "event": "rewarded_presented"
+        },
+        {
+          "context": "",
+          "event": "rewarded_earned"
+        },
+        {
+          "context": "earned",
+          "event": "rewarded_dismissed"
+        }
+      ],
+      "advertising_network_lines_not_reproduced": 0
+    },
+    {
+      "phase": "final_fixed_apk",
+      "source": "build/native/final-touch-filtered.log",
+      "sha256": "5da6ba4b6a92728f5c1c18ceb668a3b258f715f8fe29e6240d70d98bf28b40d7",
+      "captured_utc": "2026-11-13T18:08:54.926429+00:00",
+      "retained_device_timestamp_range": [
+        "11-13 13:06:51.275",
+        "11-13 13:06:51.275"
+      ],
+      "line_count": 2,
+      "parsed_entries": 1,
+      "godot_pids": [
+        14306
+      ],
+      "godot_error_line_count": 0,
+      "gdscript_error_count": 0,
+      "godot_engine_error_count": 0,
+      "godot_errors": [],
+      "fatal_or_anr_marker_count": 0,
+      "fatal_or_anr_markers": [],
+      "banner_metrics": {
+        "observations": 1,
+        "pixel_heights": [
+          131.0
+        ],
+        "visible_menu_reserves_in_viewport_units": [
+          145.0
+        ]
+      },
+      "native_ad_events": [],
+      "advertising_network_lines_not_reproduced": 0
+    },
+    {
+      "phase": "final_fixed_apk",
+      "source": "build/native/final-offline-filtered.log",
+      "sha256": "219b749b466ec43b529b2f71374e51e805123228ad9c186ede1c6a99f0209240",
+      "captured_utc": "2026-11-13T18:08:54.859087+00:00",
+      "retained_device_timestamp_range": [
+        "11-13 13:07:06.767",
+        "11-13 13:08:46.206"
+      ],
+      "line_count": 10,
+      "parsed_entries": 9,
+      "godot_pids": [
+        14845
+      ],
+      "godot_error_line_count": 0,
+      "gdscript_error_count": 0,
+      "godot_engine_error_count": 0,
+      "godot_errors": [],
+      "fatal_or_anr_marker_count": 0,
+      "fatal_or_anr_markers": [],
+      "banner_metrics": {
+        "observations": 6,
+        "pixel_heights": [
+          0.0,
+          100.0,
+          131.0
+        ],
+        "visible_menu_reserves_in_viewport_units": [
+          119.0,
+          161.0
+        ]
+      },
+      "native_ad_events": [],
+      "advertising_network_lines_not_reproduced": 0
+    },
+    {
+      "phase": "final_fixed_apk",
+      "source": "build/native/final-end-qa-filtered.log",
+      "sha256": "2860bc81986fecabca10f218a94b1f12a4a770337654f9821a525ffa666c51c3",
+      "captured_utc": "2026-11-13T18:22:42.082557+00:00",
+      "retained_device_timestamp_range": [
+        "11-13 13:07:47.624",
+        "11-13 13:20:47.353"
+      ],
+      "line_count": 12,
+      "parsed_entries": 11,
+      "godot_pids": [
+        14845
+      ],
+      "godot_error_line_count": 0,
+      "gdscript_error_count": 0,
+      "godot_engine_error_count": 0,
+      "godot_errors": [],
+      "fatal_or_anr_marker_count": 0,
+      "fatal_or_anr_markers": [],
+      "banner_metrics": {
+        "observations": 11,
+        "pixel_heights": [
+          93.0,
+          100.0,
+          131.0
+        ],
+        "visible_menu_reserves_in_viewport_units": [
+          82.0,
+          88.0,
+          119.0,
+          161.0
+        ]
+      },
+      "native_ad_events": [],
+      "advertising_network_lines_not_reproduced": 0
+    }
+  ],
+  "advertising_urls_in_report": false,
+  "conclusion": "Retained final-APK captures, including the 18:22 UTC end-QA snapshot, contain no Godot engine error, GDScript error or fatal marker. The earlier retained event snapshot contains no Prism Quarry crash/ANR. The previous build had two nonfatal can_process errors, preserved above. System UI ANR is separate. Sparse retained logs do not establish a complete session trace.",
+  "limitations": [
+    "Logcat captures cover only retained entries and selected tags; absence of a marker does not establish all-session stability.",
+    "The event buffer contains non-game service ANRs; their presence does not establish an app ANR.",
+    "No real-device, 16KB-device, production ads or Play Games backend validation is claimed."
+  ],
+  "process_event_audit": {
+    "source": "build/native/process-events-final-filtered.log",
+    "sha256": "fbafafe486e1226f4515f157f238e2c64ceb6e38f2a71cef187e84284ad0cca5",
+    "retained_anr_events": 16,
+    "retained_crash_events": 0,
+    "app_anr_or_crash_events": [],
+    "system_ui_anr_events": [
+      {
+        "line": 2,
+        "timestamp": "11-13 12:21:24.983",
+        "tag": "am_anr",
+        "message": "[0,645,com.android.systemui,550026765,executing service com.android.systemui/.SystemUIService]"
+      }
+    ],
+    "other_non_game_anr_events": 15,
+    "timestamps": "Device log time as emitted; report recorded_utc is UTC."
+  },
+  "final_apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c",
+  "previous_apk_sha256": "8e8197219668567c475ae79f0e199ac4110b89fc0dc6902462103a9ba0a1ec80",
+  "final_filtered_diagnostics_passed": true,
+  "capture_coverage_note": "The PID 14306 capture retains only one entry, so the complete rapid-recall sequence is not independently reconstructed from this log. PID 14845 captures are also retained-window snapshots, not continuous monitoring.",
+  "offline_test": {
+    "status": "inconclusive",
+    "evidence_source": "coordinator QA update",
+    "reason": "An active Wi-Fi network remained despite the attempted radio settings change. The historical filename final-offline-filtered.log describes the attempted test, not verified offline connectivity.",
+    "network_settings_restored_by_coordinator": true,
+    "offline_success_claimed": false
+  }
+}

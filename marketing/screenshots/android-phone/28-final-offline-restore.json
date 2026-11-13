@@ -1,0 +1,15 @@
+{
+  "label": "28-final-offline-restore",
+  "profile": "phone",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:07:16.6359170Z",
+  "display_size": "Physical size: 1080x1920",
+  "display_density": "Physical density: 420",
+  "image": "marketing/screenshots/android-phone/28-final-offline-restore.png",
+  "width": 1080,
+  "height": 1920,
+  "image_sha256": "c0dc7721bd9665514293340dd0dda5d605424a001469a5ca32373fe1516351e3",
+  "apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+}

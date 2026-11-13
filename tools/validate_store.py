@@ -50,11 +50,26 @@ def main() -> None:
             path = (ROOT / entry["path"]).resolve()
             require(path.is_relative_to(ROOT), "Capture source path leaves repository")
             require(path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"], f"Capture source drift: {entry['path']}")
+    native_path = capture_root / "android-provenance.json"
+    native_captures = []
+    if native_path.is_file():
+        native_captures = json.loads(native_path.read_text(encoding="utf-8")).get("captures", [])
+        for capture in native_captures:
+            path = (capture_root / capture["path"]).resolve()
+            require(path.is_relative_to(capture_root), "Native capture path leaves screenshot directory")
+            require(png_size(path) == (capture["width"], capture["height"]), "Native capture dimensions differ")
+            require(hashlib.sha256(path.read_bytes()).hexdigest() == capture["sha256"], "Native capture hash differs")
+            metadata_path = (capture_root / capture["metadata"]).resolve()
+            require(metadata_path.is_relative_to(capture_root), "Native metadata path leaves screenshot directory")
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8-sig"))
+            require(metadata["image_sha256"] == capture["sha256"] and metadata["apk_sha256"] == capture["apk_sha256"], "Native capture provenance mismatch")
+            require(capture["physical_device"] is False and capture["device_class"] == "actual Android emulator", "Native device class must be explicit")
     for name in ("LICENSE", "NOTICE", "review/index.html", "review/style.css", "review/review.js", "public/index.html", "docs/STORE_AND_RELEASE.md"):
         require((ROOT / name).is_file(), f"Missing review/release file: {name}")
     print(f"Store draft validated; lengths {len(listing['title'])}/{len(listing['short_description'])}/{len(listing['full_description'])}; {len(captures)} genuine capture records present.")
     if not captures:
         print("Runtime screenshot evidence remains PENDING; this static pass is not a gameplay pass.")
+    print(f"Native Android emulator capture records validated: {len(native_captures)} (separate from desktop fixtures).")
 
 
 if __name__ == "__main__":

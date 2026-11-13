@@ -1,0 +1,15 @@
+{
+  "label": "29-final-offline-play",
+  "profile": "phone",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:07:52.8824400Z",
+  "display_size": "Physical size: 1080x1920",
+  "display_density": "Physical density: 420",
+  "image": "marketing/screenshots/android-phone/29-final-offline-play.png",
+  "width": 1080,
+  "height": 1920,
+  "image_sha256": "43ca9b7cada4c886ce39a01ac71bd3f5da6e072e42a25695d71162dad7f01443",
+  "apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+}

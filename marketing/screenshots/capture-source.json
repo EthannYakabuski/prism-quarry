@@ -1,6 +1,6 @@
 {
-  "state": "Frozen working tree before publication commit",
-  "captured_utc": "2026-11-13T17:36:16.8752776Z",
+  "state": "Frozen runtime after touch-teardown correction; file hashes identify source exactly",
+  "captured_utc": "2026-11-13T18:06:07.4881312Z",
   "runtime_files": [
     {
       "path": "game/cavern.gd",
@@ -14,8 +14,8 @@
     },
     {
       "path": "game/main.gd",
-      "sha256": "78fdd08f46d1047e1c9d1e0842b062242451970e9f8cf1d40ba38642bf0a0552",
-      "bytes": 31401
+      "sha256": "074759d140f4f40e9d13389e5adf853346e8f011d773d4ce93be504cf60589ca",
+      "bytes": 31635
     },
     {
       "path": "game/profile.gd",

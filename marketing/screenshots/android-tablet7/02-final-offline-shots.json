@@ -1,0 +1,15 @@
+{
+  "label": "02-final-offline-shots",
+  "profile": "tablet7",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:08:54.6907383Z",
+  "display_size": "Physical size: 1080x1920\r\nOverride size: 1200x1920",
+  "display_density": "Physical density: 420\r\nOverride density: 320",
+  "image": "marketing/screenshots/android-tablet7/02-final-offline-shots.png",
+  "width": 1200,
+  "height": 1920,
+  "image_sha256": "edbcfdb0418543f1cf3eb41ca94174182348bc30826b26f782a937672cf53191",
+  "apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+}

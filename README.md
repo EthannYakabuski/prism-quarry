@@ -24,7 +24,7 @@ python tools/assemble_site.py build/site
 python -m http.server 8768 --bind 127.0.0.1 --directory build/site
 ```
 
-Open `http://127.0.0.1:8768/` for the playable wrapper or `/review/` for the review. The raw source review needs an HTTP server to load evidence JSON. WebGL 2 is required; a browser without it has not passed runtime testing. Browser saves are local, and clearing site data removes progress. Web does not simulate native ad rewards.
+Open `http://127.0.0.1:8768/` for the playable wrapper or `/review/` for the review. Open review/index.html directly from disk to see genuine static fallback screenshots. Serving it over HTTP loads the provenance manifests and enables the complete galleries and profile controls. WebGL 2 is required; a browser without it has not passed runtime testing. Browser saves are local, and clearing site data removes progress. Web does not simulate native ad rewards.
 
 After matching templates, Java 17 and the Android SDK are available, the native presets are `Android` (debug AAB) and `Android Test APK`. See the platform setup for prerequisites and plugin configuration.
 
@@ -40,6 +40,7 @@ Use fresh isolated user-data directories for tests; never point a test at the ow
 ```sh
 godot --headless --path . --script tests/game_model_test.gd
 godot --headless --path . --script tests/game_ui_test.gd -- --qa-profile=user://qa-ui-unique-run.json
+python tools/run_touch_regression.py --godot /absolute/path/to/godot
 python platform/tests/run_tests.py --godot /absolute/path/to/godot
 python platform/tests/validate_platform.py
 python tools/validate_store.py

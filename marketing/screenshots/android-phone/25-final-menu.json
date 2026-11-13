@@ -1,0 +1,15 @@
+{
+  "label": "25-final-menu",
+  "profile": "phone",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:06:05.1422424Z",
+  "display_size": "Physical size: 1080x1920",
+  "display_density": "Physical density: 420",
+  "image": "marketing/screenshots/android-phone/25-final-menu.png",
+  "width": 1080,
+  "height": 1920,
+  "image_sha256": "adeea76258b103f04c77eee649b6a40be50c89c66411aa860663f23222b7aff7",
+  "apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+}

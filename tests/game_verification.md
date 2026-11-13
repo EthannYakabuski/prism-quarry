@@ -59,3 +59,24 @@ Paths, dimensions, SHA-256 values and runtime source hashes are recorded in
 Native Android, real SDK callbacks, Web browser interaction, physical touch,
 audio listening, accessibility, performance and human difficulty acceptance
 must be described separately from these checks.
+
+## Touch teardown regression
+
+The ordinary Android build exposed a nonfatal `can_process` diagnostic when a
+touch-triggered button replaced its screen. A graphical ScreenTouch fixture
+reproduced the exact error eight times across ten button transitions; the same
+mouse-only fixture produced zero. `_clear_ui` previously detached Controls
+synchronously while native touch-to-mouse dispatch still retained references.
+It now hides old Controls and lets `queue_free` detach them after dispatch.
+
+The same graphical touch fixture produced **zero** `can_process` errors after
+the correction, and all **90 UI checks passed again**. A headless run also
+completed all ten expected transitions with zero such errors. The new
+`game_touch_teardown_test.gd` asserts the ten screen outcomes and writes its
+report; the CI wrapper scans the completed engine log because Godot does not
+expose the consumed `--log-file` option to the script reliably. The paired
+local evidence is `build/evidence/touch-teardown-comparison.json`.
+
+All eighteen captures were regenerated after this correction and the singular
+`1 shot` result-label correction. Native repeat acceptance belongs to the
+rebuilt ordinary APK, not the earlier APK that first exposed the diagnostic.

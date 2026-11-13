@@ -1,0 +1,15 @@
+{
+  "label": "32-final-daily-claimed",
+  "profile": "phone",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:21:10.6336695Z",
+  "display_size": "Physical size: 1080x1920",
+  "display_density": "Physical density: 420",
+  "image": "marketing/screenshots/android-phone/32-final-daily-claimed.png",
+  "width": 1080,
+  "height": 1920,
+  "image_sha256": "5b8f979b11369fbacbd06bdbc5d94531f71540da396de978d16feaf4b7570095",
+  "apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+}

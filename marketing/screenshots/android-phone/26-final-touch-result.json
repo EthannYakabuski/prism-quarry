@@ -1,0 +1,15 @@
+{
+  "label": "26-final-touch-result",
+  "profile": "phone",
+  "source": "Actual Android emulator full framebuffer; no resizing or pixel editing",
+  "serial": "emulator-5560",
+  "physical_device": false,
+  "captured_utc": "2026-11-13T18:06:18.8789894Z",
+  "display_size": "Physical size: 1080x1920",
+  "display_density": "Physical density: 420",
+  "image": "marketing/screenshots/android-phone/26-final-touch-result.png",
+  "width": 1080,
+  "height": 1920,
+  "image_sha256": "364bca8837df0ce3168670221efa5b9473760a7d7e569411932c9f3db9ed39e4",
+  "apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c"
+}

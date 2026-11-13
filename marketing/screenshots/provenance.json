@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "captured_utc": "2026-11-13T17:36:16.5514778Z",
+  "captured_utc": "2026-11-13T18:06:06.6559217Z",
   "engine": "Godot 4.5.1 Compatibility / OpenGL 3.3 NVIDIA RTX A400",
-  "evidence_type": "Actual unmodified desktop runtime viewport captures with direct chamber-selection fixtures",
+  "evidence_type": "Actual unmodified desktop runtime viewport captures with direct chamber-selection fixtures; regenerated after touch-teardown and singular-shot correction",
   "capture_source": "capture-source.json",
   "captures": [
     {
@@ -72,7 +72,7 @@
       "method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
       "path": "phone/results.png",
       "profile": "phone",
-      "sha256": "1972df7589a8e8ea819f43e6afc5f909ebdba14d0d57a14835421e822064c0ea",
+      "sha256": "a89d98816ee1dbc242204c479a42fbdea03aba1a5c84e07b9eb3768826b93200",
       "source_commit": "working tree; capture-source.json hashes identify runtime files",
       "view": "results",
       "width": 1080
@@ -144,7 +144,7 @@
       "method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
       "path": "tablet7/results.png",
       "profile": "tablet7",
-      "sha256": "7da5bac605f560f5e282112a1502f079228b8812323e66d63587e3f1001dffd3",
+      "sha256": "cc68718a72633cf1debb7bfca40965e2a3fb661efdb1b7f2a57ef13388ee3d18",
       "source_commit": "working tree; capture-source.json hashes identify runtime files",
       "view": "results",
       "width": 1200
@@ -216,7 +216,7 @@
       "method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
       "path": "tablet10/results.png",
       "profile": "tablet10",
-      "sha256": "1894869151b972bbce14d4ad84b386e69eb201130c978c38ab8cebf18155b897",
+      "sha256": "1fdcf216e73529b6fd5dd19488e22021e2244863531a1e4d02a42bf992610b2d",
       "source_commit": "working tree; capture-source.json hashes identify runtime files",
       "view": "results",
       "width": 1600

@@ -67,7 +67,7 @@
 			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
 			"path": "phone/results.png",
 			"profile": "phone",
-			"sha256": "1972df7589a8e8ea819f43e6afc5f909ebdba14d0d57a14835421e822064c0ea",
+			"sha256": "a89d98816ee1dbc242204c479a42fbdea03aba1a5c84e07b9eb3768826b93200",
 			"source_commit": "working tree; capture-source.json hashes identify runtime files",
 			"view": "results",
 			"width": 1080
