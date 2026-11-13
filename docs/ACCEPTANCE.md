@@ -67,6 +67,7 @@ The [public repository](https://github.com/EthannYakabuski/prism-quarry) exists.
 | B07-B09 | Bank Shot wording, midnight/depth metrics, focus audio suspension | Wording/ZIP corrected; corresponding model/UI fixtures pass. Subjective audio remains separate. |
 | B10-B11 | Android build assets imported recursively; four AARs absent from clean clone | Ignore/preparation corrected, exact binaries tracked, exports/payload checks and corrected CI pass. |
 | B12 | Touch input detached UI during dispatch | Deferred hide/free correction reduces reproduced eight errors in ten transitions to zero; 90 UI checks, ten logged touch transitions and final native retest pass. Shot grammar also corrected. |
+| B13 | Linux template extraction lost the Gradle launcher's executable bit; compile SDK 35 was implicit in CI | Bootstrap restores POSIX mode 0755 for fresh and existing templates; CI explicitly installs SDK 35 and 36 and runs an isolated launcher regression. Local preparation checks pass; hosted Linux execution and Android build results are recorded separately in the final publication receipt and current CI. |
 
 Local headless logs retain root-certificate-store, dummy-renderer material and shutdown-resource diagnostics. Passing assertions and the targeted zero-teardown-error gate are not described as warning-free execution.
 
