@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "music_bus": "Music",
+  "sfx_bus": "SFX",
+  "recommended_music_volume_db": -9.0,
+  "music": {
+    "menu": {
+      "path": "res://assets/audio/music/menu.wav",
+      "title": "Workshop Lanterns",
+      "bpm": 60,
+      "bars": 8,
+      "frames": 1024000,
+      "sample_rate": 32000,
+      "loop": true,
+      "gain_db": -9.0,
+      "license": "Apache-2.0",
+      "source": "Original procedural composition in tools/prepare_audio.py"
+    },
+    "amber_hollow": {
+      "path": "res://assets/audio/music/amber_hollow.wav",
+      "title": "Warm Veins",
+      "bpm": 80,
+      "bars": 8,
+      "frames": 768000,
+      "sample_rate": 32000,
+      "loop": true,
+      "gain_db": -9.0,
+      "license": "Apache-2.0",
+      "source": "Original procedural composition in tools/prepare_audio.py"
+    },
+    "azure_grotto": {
+      "path": "res://assets/audio/music/azure_grotto.wav",
+      "title": "Blue Reflections",
+      "bpm": 64,
+      "bars": 8,
+      "frames": 960000,
+      "sample_rate": 32000,
+      "loop": true,
+      "gain_db": -9.0,
+      "license": "Apache-2.0",
+      "source": "Original procedural composition in tools/prepare_audio.py"
+    },
+    "violet_vault": {
+      "path": "res://assets/audio/music/violet_vault.wav",
+      "title": "The Quiet Vault",
+      "bpm": 72,
+      "bars": 8,
+      "frames": 853333,
+      "sample_rate": 32000,
+      "loop": true,
+      "gain_db": -9.0,
+      "license": "Apache-2.0",
+      "source": "Original procedural composition in tools/prepare_audio.py"
+    }
+  },
+  "sfx": {
+    "gem": {
+      "path": "res://assets/audio/sfx/gem.ogg",
+      "gain_db": -9.0,
+      "description": "Short brittle crystal fracture",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_impact-sounds",
+      "source_file": "Audio/impactGlass_light_001.ogg",
+      "sha256": "05e513fbd42829060eb37855f8c3866722ec5c39a8937c9bfde518cc609effa2",
+      "modifications": "None; exact source bytes"
+    },
+    "gem_alt": {
+      "path": "res://assets/audio/sfx/gem_alt.ogg",
+      "gain_db": -9.0,
+      "description": "Alternate crystal fracture",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_impact-sounds",
+      "source_file": "Audio/impactGlass_light_003.ogg",
+      "sha256": "765290ce32fa108c939a0dbd6fbacbcd05abde622b57b708eb8a64058ef4225a",
+      "modifications": "None; exact source bytes"
+    },
+    "ricochet": {
+      "path": "res://assets/audio/sfx/ricochet.ogg",
+      "gain_db": -12.0,
+      "description": "Small hard rail contact",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_impact-sounds",
+      "source_file": "Audio/impactMetal_light_002.ogg",
+      "sha256": "25a96f90a9a1f88a531e824e126f0519504625e5635e65a72e4f31611428db29",
+      "modifications": "None; exact source bytes"
+    },
+    "shot": {
+      "path": "res://assets/audio/sfx/shot.ogg",
+      "gain_db": -8.0,
+      "description": "Drill release with quarry texture",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_impact-sounds",
+      "source_file": "Audio/impactMining_002.ogg",
+      "sha256": "059558ec751115ca6b1441e00f0adc837c1a3eeb0a066b109e0fd879fc5d0b0c",
+      "modifications": "None; exact source bytes"
+    },
+    "chain": {
+      "path": "res://assets/audio/sfx/chain.ogg",
+      "gain_db": -11.0,
+      "description": "Fuller fracture for a growing chain",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_impact-sounds",
+      "source_file": "Audio/impactGlass_medium_002.ogg",
+      "sha256": "48616f22c95589ed9fe55babf0fd012721d7b2ef1b9e85c2ad6408a2cd7c164f",
+      "modifications": "None; exact source bytes"
+    },
+    "victory": {
+      "path": "res://assets/audio/sfx/victory.ogg",
+      "gain_db": -6.0,
+      "description": "Positive completed-chamber cue",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_interface-sounds",
+      "source_file": "Audio/confirmation_002.ogg",
+      "sha256": "33b17a9a9a2397c62b285c52c33a907fdffb476909c99e42dde603f6a7a8b12c",
+      "modifications": "None; exact source bytes"
+    },
+    "click": {
+      "path": "res://assets/audio/sfx/click.ogg",
+      "gain_db": -7.0,
+      "description": "Quiet interface press",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_interface-sounds",
+      "source_file": "Audio/click_001.ogg",
+      "sha256": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9",
+      "modifications": "None; exact source bytes"
+    },
+    "error": {
+      "path": "res://assets/audio/sfx/error.ogg",
+      "gain_db": -10.0,
+      "description": "Soft unavailable-action cue",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_interface-sounds",
+      "source_file": "Audio/error_008.ogg",
+      "sha256": "eba17ecb2a426bfd4a8a6acff5f8a86202b6424a77af0fd842e37809a1ab6d81",
+      "modifications": "None; exact source bytes"
+    },
+    "reward": {
+      "path": "res://assets/audio/sfx/reward.ogg",
+      "gain_db": 0.0,
+      "description": "Physical collected-haul cue",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_rpg-audio",
+      "source_file": "Audio/handleCoins2.ogg",
+      "sha256": "4b857968d64f9ac9336a10ffac6694d7547e1f01566ad6857b30bc8db3ee6c32",
+      "modifications": "None; exact source bytes"
+    },
+    "upgrade": {
+      "path": "res://assets/audio/sfx/upgrade.ogg",
+      "gain_db": -1.0,
+      "description": "Workshop rig fitting locks into place",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_rpg-audio",
+      "source_file": "Audio/metalClick.ogg",
+      "sha256": "9851a69d0c613e13bceef08060ecc4148f098ef487927cbebe270d642398a3b3",
+      "modifications": "None; exact source bytes"
+    },
+    "back": {
+      "path": "res://assets/audio/sfx/back.ogg",
+      "gain_db": -11.0,
+      "description": "Panel return cue",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_interface-sounds",
+      "source_file": "Audio/back_001.ogg",
+      "sha256": "07db973f79f6ae0f2edc34561e7592e24d0577455919fb602cb8ecc0da991dcf",
+      "modifications": "None; exact source bytes"
+    },
+    "recall": {
+      "path": "res://assets/audio/sfx/recall.ogg",
+      "gain_db": -10.0,
+      "description": "Puck recall cue",
+      "license": "CC0-1.0",
+      "source_pack": "kenney_interface-sounds",
+      "source_file": "Audio/minimize_003.ogg",
+      "sha256": "400e1041499de85ec8b5529a35ff36787288175c4696cf2018ecff24a3a3fd29",
+      "modifications": "None; exact source bytes"
+    }
+  },
+  "notes": "Music is original, seamless stereo PCM. Set AudioStreamWAV.loop_mode=1, loop_begin=0, loop_end=frames. Do not restart current track on every UI redraw. Per-cue gain assumes SFX bus 0dB; cap repeated impacts and pitch-vary gems gently."
+}

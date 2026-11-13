@@ -1,0 +1,34 @@
+Prism Quarry
+Copyright 2026 Ethann Nyakabuski and project contributors.
+
+Original source code in this project is licensed under the Apache License,
+Version 2.0. See LICENSE. Third-party files remain under their own licenses;
+the Apache license does not replace those terms.
+
+Kenney asset packs
+Actual supplied cave, environment, UI, particle and audio assets are used
+under their preserved source licenses. See assets/ and LICENSES/ for the
+pack notices, and docs/ART_AUDIO.md for source selection and provenance.
+Kenney: https://kenney.nl/
+
+Godot Engine
+Godot is licensed under the MIT license. Exported engine binaries and their
+bundled third-party dependencies retain their upstream notices.
+https://godotengine.org/license/
+
+Poing AdMob integration and Godot Play Game Services
+The supplied native plugins and AARs retain their MIT and upstream dependency
+notices. See LICENSES/admob-MIT.txt, LICENSES/GodotPlayGameServices-MIT.txt and
+LICENSES/NATIVE-NOTICES.md. Google SDK components remain subject to their
+respective terms and licenses. Inclusion does not imply endorsement.
+
+Branding and achievement artwork
+Project-specific generated artwork is promotional/artwork material, separate
+from unaltered gameplay captures. Prompts, source hashes and processing
+provenance are recorded in docs/ART_AUDIO.md and marketing/branding/.
+
+Original music and adapted/imported sound effects have their individual
+provenance and license details in docs/ART_AUDIO.md and assets/audio/licenses/.
+
+All trademarks and service names are used to identify their respective
+platforms or dependencies. No affiliation or endorsement is claimed.

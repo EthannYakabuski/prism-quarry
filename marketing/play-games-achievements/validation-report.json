@@ -1,0 +1,179 @@
+{
+  "result": "PASS - local static validation only",
+  "achievement_count": 20,
+  "entry_count": 22,
+  "total_points": 720,
+  "points_reserved": 1280,
+  "default_locale": "en-US",
+  "localization_rows": 0,
+  "zip_bytes": 9338716,
+  "zip_sha256": "04d294a6122d6ec07502eed943d5e25c21c25eb49bd533c4064db01baa54f14d",
+  "console_upload_performed": false,
+  "console_acceptance_verified": false,
+  "files": [
+    {
+      "name": "AchievementsIconsMappings.csv",
+      "bytes": 671,
+      "sha256": "9482da3ff94d2b7f6da6c6ef2e6612f48f116471814156822f0dc0a05e87b062"
+    },
+    {
+      "name": "AchievementsMetadata.csv",
+      "bytes": 1548,
+      "sha256": "a5dc03cae96f489863d880c9be3349c3723dda7bdfcda0a012a22cf978947f5f"
+    },
+    {
+      "name": "amber_cartographer.png",
+      "bytes": 495285,
+      "sha256": "61e9f308b041884930453cbb62c629f7b3b4bae8fc56c5eb07f6a086fa9386d7",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "azure_explorer.png",
+      "bytes": 505809,
+      "sha256": "2cca2e963769a8ad85ee734c0203262c62fb5afd745e72f53ce435902f48de12",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "bank_shot.png",
+      "bytes": 440028,
+      "sha256": "cdff47f3b1bb4a1f7ad3fa78abf1ec1c897ca073ecc321d83d78764217c151bf",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "cascade.png",
+      "bytes": 425051,
+      "sha256": "bfe2ee61eb50205bb714272718f6d093d3e5af27b30d352f803d707875faf989",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "chain_reaction.png",
+      "bytes": 440201,
+      "sha256": "e4f4709472729016c064f533daf69099c04c80b69df3d731a9cbe92d2e1c504d",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "clean_sweep.png",
+      "bytes": 449078,
+      "sha256": "4e95dfb03375a586022dabe3c60139ad7aa47d1421feef7ed42797dfb80c6581",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "constellation.png",
+      "bytes": 402307,
+      "sha256": "9df92cf7058e9b0af8197ad0ea2558fe37f2dd17396aba4fdd1c907adc60b892",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "crystal_collector.png",
+      "bytes": 470007,
+      "sha256": "190dd558fa0054c22f4c9169c01a66e796aa53d3e8dfe115656993606b853ad0",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "crystal_connoisseur.png",
+      "bytes": 490351,
+      "sha256": "57a5161cfd28ad2b6fc463722438884a35f13f94d8264a7fe70a62d59ec4330b",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "daily_spark.png",
+      "bytes": 437840,
+      "sha256": "f0a6ce3dbf56e7a0900fbd6377c751af81737a586f3b2b22230f9f90be591e49",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "deep_diver.png",
+      "bytes": 475038,
+      "sha256": "13cab3886c6f0991a919e8954032a94384fbd5a449cbb58402e76ad7f6df4ca6",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "first_fracture.png",
+      "bytes": 456181,
+      "sha256": "68bb4fc06479f6f39cdd8e758792bab67f092ae801d2ea12b4eda15fe58275eb",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "master_miner.png",
+      "bytes": 485660,
+      "sha256": "24e6003c75274a6bddfcae077043eaa933c926ca064d5ebaea19574e5ae42af5",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "seasoned_miner.png",
+      "bytes": 498230,
+      "sha256": "494bf27046e19154e1ade069acd6bd6ed64af7a0eea4e9781fd5221b1e34e087",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "spectacular.png",
+      "bytes": 479826,
+      "sha256": "60009e0da9920aa55da63f5090e56db9a061e5ce9564a28add7cc84e4cadbe3f",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "star_pocket.png",
+      "bytes": 490156,
+      "sha256": "b9dc2990c57a746e3d8067c44dc4a20b7a7bd8932081e2671158dc8a8a1d8bda",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "steady_hand.png",
+      "bytes": 459698,
+      "sha256": "48001ab69a4339c6216534386a15b9ac274d7b95b0d547d1abb6dc898a98a49d",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "vault_keeper.png",
+      "bytes": 507880,
+      "sha256": "f0b41a7f4cb0796e11d2288c81b715b6c42b56e1f3da99ecefe6def9c3b8dbea",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "week_of_wonder.png",
+      "bytes": 466442,
+      "sha256": "8b4d4757dac5c79ff03ca454ff1187bf460deee44f4fbc51ec4eef37aea58171",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "workshop_whiz.png",
+      "bytes": 463567,
+      "sha256": "3956d14c5a824c6d871b80af61ce45d68e1d70a4d40a69532749bd8e4a287653",
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "checked_at_utc": "2026-11-13T17:23:37.781605+00:00",
+  "catalog_sha256": "5924a5d926e3b977b5fd7d746d2b8a8b39efd390e8e17314307bafe23fa488f5",
+  "sources_checked_date": "2026-11-13",
+  "official_sources": [
+    "https://developer.android.com/games/pgs/integrate-achievements#zip-file-guidelines",
+    "https://developer.android.com/games/pgs/achievements#points_and_experience_points",
+    "https://support.google.com/googleplay/android-developer/answer/2990418?hl=en"
+  ],
+  "schema_convention": "Owner-confirmed Beacon plural IconsMappings",
+  "conservative_limits": {
+    "each_file_bytes_exclusive": 1000000,
+    "zip_bytes_exclusive": 200000000,
+    "max_files": 202
+  }
+}

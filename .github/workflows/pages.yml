@@ -1,0 +1,58 @@
+name: Deploy reviewed Web build
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: prism-quarry-pages
+  cancel-in-progress: false
+jobs:
+  prepare:
+    # The owner must separately authorize Pages and enable this repository variable.
+    if: github.ref == 'refs/heads/main' && vars.PRISM_PAGES_AUTHORIZED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install, import, test and export the exact revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          touch build/.gdignore
+          python tools/install_ci_godot.py "$RUNNER_TEMP/prism-godot"
+          export PATH="$RUNNER_TEMP/prism-godot:$PATH"
+          timeout 180 Godot_v4.5.1-stable_linux.x86_64 --headless --editor --path . --import
+          python tools/validate_store.py
+          python tools/build_achievement_import.py --verify marketing/play-games-achievements/prism-quarry-achievements-google-play.zip
+          python platform/tests/validate_platform.py
+          python platform/tests/run_tests.py --godot "$RUNNER_TEMP/prism-godot/Godot_v4.5.1-stable_linux.x86_64"
+          for suite in tests/game_model_test.gd tests/game_ui_test.gd; do
+            profile=$(mktemp -d "$RUNNER_TEMP/prism-tests-XXXXXX")
+            XDG_DATA_HOME="$profile" PRISM_TEST_ROOT="$profile" timeout 120 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --script "$suite" -- --qa-profile="user://qa-ui-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          done
+          mkdir -p build/site/play
+          timeout 180 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --export-release Web build/site/play/index.html
+          python tools/verify_web_export.py build/site/play --output build/web-export-validation.json
+          python tools/assemble_site.py build/site --require-clean --expected-sha "$GITHUB_SHA"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+          retention-days: 1
+  deploy:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy authorized Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

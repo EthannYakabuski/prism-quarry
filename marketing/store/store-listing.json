@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "draft_for_owner_review",
+  "release_ready": false,
+  "locale": "en-US",
+  "package_name": "com.ethannyakabuski.prismquarry",
+  "title": "Prism Quarry",
+  "short_description": "Aim a glowing drill. Ricochet through crystals. Build your little quarry.",
+  "full_description": "Find the perfect angle. Make the whole cavern sparkle.\n\nPrism Quarry is a one-finger arcade mining game about a small input and a satisfying chain reaction. Drag to aim your glowing drill puck, read the predicted path, and release. Bounce off the walls, fracture crystal seams and bring the haul back to your underground workshop.\n\nONE SHOT, A CRYSTAL CASCADE\nLook for a clever ricochet through each chamber. Clear objectives, a visible shot path and forgiving opening chambers help you learn through play. Short rounds and quick retries make it easy to try a new angle.\n\nTHREE WORLDS UNDER THE SURFACE\nWork through 30 authored chambers in Amber Hollow, Azure Grotto and Violet Vault. Warm rock, cool blue depths and luminous purple seams give each part of the quarry its own character.\n\nBUILD YOUR LITTLE WORKSHOP\nEarn ore and miner XP, improve your drill and rig, and unlock cosmetic choices. Your progress is saved locally, with achievements and records to track the moments that matter.\n\nA REASON TO RETURN\nTake on a seeded daily chamber, complete daily goals, collect seven-day login rewards or head into Endless Quarry for another expedition.\n\nPLAY AT YOUR PACE\nEnjoy one-finger controls, music and effects settings, adjustable feedback and a clear pause option. Core chamber success is possible without an ad or an upgrade.\n\nThe Android edition includes ads at natural breaks and an optional rewarded continuation after failure. Online Google Play Games features require the service to be available and configured. Core quarry progress works offline.\n\nHow much can you uncover with one brilliant angle?",
+  "application_type": "Game",
+  "proposed_category": "Arcade",
+  "proposed_discovery_tags": ["Arcade", "Puzzle", "Physics", "Single player", "Casual"],
+  "tags_note": "Discovery keywords are proposals; owner must choose supported Play Console tags that accurately fit the shipped game.",
+  "contains_ads": true,
+  "in_app_purchases": "None implemented in this development package; future DLC has no product or price.",
+  "content_rating": "Pending owner questionnaire; no rating claimed.",
+  "target_audience": "Pending owner declaration; no child-directed designation or age rating claimed.",
+  "developer_display_name": "OWNER_CONFIRM_REQUIRED",
+  "support_email": "OWNER_REQUIRED",
+  "support_url": "OWNER_REQUIRED",
+  "privacy_policy_url": "OWNER_REQUIRED_PUBLIC_HTTPS_URL",
+  "privacy_contact": "OWNER_REQUIRED",
+  "website_url": "OWNER_REQUIRED_IF_PUBLISHED",
+  "production_admob_app_id": "OWNER_REQUIRED_TEST_CONFIGURATION_ONLY",
+  "production_admob_unit_ids": "OWNER_REQUIRED_TEST_CONFIGURATION_ONLY",
+  "production_play_games_ids": "OWNER_REQUIRED_DISABLED_MAPPINGS",
+  "signing": "OWNER_REQUIRED_PRODUCTION_KEY_OUTSIDE_REPOSITORY",
+  "asset_paths": {
+    "icon": "marketing/app-icon-512.png",
+    "feature_graphic": "marketing/feature-graphic-1024x500.png",
+    "splash": "marketing/splash-1080x1920.png",
+    "screenshot_provenance": "marketing/screenshots/provenance.json"
+  },
+  "future_dlc": {
+    "title": "Sunken Geodes",
+    "status": "concept_only_not_included",
+    "concept": "Flooded chambers with refracting currents.",
+    "price": null,
+    "release_date": null
+  }
+}

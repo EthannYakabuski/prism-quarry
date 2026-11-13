@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "default_locale": "en-US",
+  "configured_locales": ["en-US"],
+  "achievements": [
+    {"key":"first_fracture","name":"First Fracture","description":"Break your first crystal.","metric":"crystals","threshold":1,"points":10,"icon":"res://marketing/achievements/first_fracture.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"cascade","name":"Crystal Cascade","description":"Break five crystals in a single chain reaction.","metric":"chains","threshold":5,"points":20,"icon":"res://marketing/achievements/cascade.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"chain_reaction","name":"Chain Reaction","description":"Break twelve crystals in a single chain reaction.","metric":"chains","threshold":12,"points":50,"icon":"res://marketing/achievements/chain_reaction.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"clean_sweep","name":"Clean Sweep","description":"Clear a chamber with every crystal collected.","metric":"perfect","threshold":1,"points":20,"icon":"res://marketing/achievements/clean_sweep.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"steady_hand","name":"Steady Hand","description":"Complete five successful quarry rounds.","metric":"clears","threshold":5,"points":20,"icon":"res://marketing/achievements/steady_hand.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"amber_cartographer","name":"Amber Cartographer","description":"Clear ten different campaign chambers.","metric":"campaign_clears","threshold":10,"points":25,"icon":"res://marketing/achievements/amber_cartographer.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"azure_explorer","name":"Azure Explorer","description":"Clear twenty different campaign chambers.","metric":"campaign_clears","threshold":20,"points":40,"icon":"res://marketing/achievements/azure_explorer.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"vault_keeper","name":"Vault Keeper","description":"Clear all thirty campaign chambers.","metric":"campaign_clears","threshold":30,"points":60,"icon":"res://marketing/achievements/vault_keeper.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"star_pocket","name":"Star Pocket","description":"Earn fifteen campaign stars.","metric":"stars","threshold":15,"points":20,"icon":"res://marketing/achievements/star_pocket.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"constellation","name":"Quarry Constellation","description":"Earn sixty campaign stars.","metric":"stars","threshold":60,"points":50,"icon":"res://marketing/achievements/constellation.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"master_miner","name":"Master Miner","description":"Earn all ninety campaign stars.","metric":"stars","threshold":90,"points":100,"icon":"res://marketing/achievements/master_miner.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"crystal_collector","name":"Crystal Collector","description":"Collect one hundred crystals across your quarry runs.","metric":"crystals","threshold":100,"points":20,"icon":"res://marketing/achievements/crystal_collector.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"crystal_connoisseur","name":"Crystal Connoisseur","description":"Collect one thousand crystals across your quarry runs.","metric":"crystals","threshold":1000,"points":50,"icon":"res://marketing/achievements/crystal_connoisseur.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"bank_shot","name":"Bank Shot","description":"Make twenty-five ricochets across your quarry runs.","metric":"ricochets","threshold":25,"points":20,"icon":"res://marketing/achievements/bank_shot.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"spectacular","name":"Spectacular Shift","description":"Score five thousand points in a single round.","metric":"best_score","threshold":5000,"points":40,"icon":"res://marketing/achievements/spectacular.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"deep_diver","name":"Deep Diver","description":"Reach depth five in the endless quarry.","metric":"endless_depth","threshold":5,"points":40,"icon":"res://marketing/achievements/deep_diver.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"daily_spark","name":"Daily Spark","description":"Complete a seeded daily chamber.","metric":"daily_clears","threshold":1,"points":15,"icon":"res://marketing/achievements/daily_spark.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"week_of_wonder","name":"Week of Wonder","description":"Claim the daily login gift on seven consecutive days.","metric":"login_streak","threshold":7,"points":40,"icon":"res://marketing/achievements/week_of_wonder.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"workshop_whiz","name":"Workshop Whiz","description":"Purchase five rig upgrades.","metric":"upgrades","threshold":5,"points":30,"icon":"res://marketing/achievements/workshop_whiz.png","incremental":false,"initial_state":"Revealed"},
+    {"key":"seasoned_miner","name":"Seasoned Miner","description":"Reach miner level ten.","metric":"level","threshold":10,"points":50,"icon":"res://marketing/achievements/seasoned_miner.png","incremental":false,"initial_state":"Revealed"}
+  ],
+  "leaderboards": [
+    {"key":"best_score","name":"Brilliant Shift","description":"Your highest score from a single quarry round.","metric":"best_score","score_order":"LARGER_IS_BETTER","icon":"res://marketing/leaderboards/best_score.png"},
+    {"key":"endless_depth","name":"Into the Deep","description":"The greatest depth you reached in the endless quarry.","metric":"endless_depth","score_order":"LARGER_IS_BETTER","icon":"res://marketing/leaderboards/endless_depth.png"},
+    {"key":"miner_xp","name":"Seasoned Prospectors","description":"Your lifetime miner experience points.","metric":"xp","score_order":"LARGER_IS_BETTER","icon":"res://marketing/leaderboards/miner_xp.png"}
+  ]
+}

@@ -1,0 +1,125 @@
+name: Validate and build
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      android:
+        description: Also build debug Android APK and AAB (no publication)
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: prism-quarry-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/prism-godot
+            ~/.local/share/godot/export_templates/4.5.1.stable
+          key: prism-godot-4.5.1-linux-v1
+      - name: Install official checksummed engine and Web templates
+        run: |
+          python tools/install_ci_godot.py "$RUNNER_TEMP/prism-godot"
+          echo "$RUNNER_TEMP/prism-godot" >> "$GITHUB_PATH"
+      - name: Import, validate and test isolated profiles
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          mkdir -p build
+          touch build/.gdignore
+          timeout 180 Godot_v4.5.1-stable_linux.x86_64 --headless --editor --path . --import
+          python tools/validate_store.py
+          python tools/build_achievement_import.py --self-test
+          python tools/build_achievement_import.py --verify marketing/play-games-achievements/prism-quarry-achievements-google-play.zip
+          python platform/tests/validate_platform.py
+          python platform/tests/run_tests.py --godot "$RUNNER_TEMP/prism-godot/Godot_v4.5.1-stable_linux.x86_64"
+          for suite in tests/game_model_test.gd tests/game_ui_test.gd; do
+            profile=$(mktemp -d "$RUNNER_TEMP/prism-tests-XXXXXX")
+            XDG_DATA_HOME="$profile" PRISM_TEST_ROOT="$profile" timeout 120 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --script "$suite" -- --qa-profile="user://qa-ui-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          done
+      - name: Export single-threaded Web and bind exact clean source
+        run: |
+          mkdir -p build/site/play
+          timeout 180 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --export-release Web build/site/play/index.html
+          python tools/verify_web_export.py build/site/play --output build/web-export-validation.json
+          python tools/assemble_site.py build/site --require-clean --expected-sha "$GITHUB_SHA"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prism-quarry-web-${{ github.sha }}
+          path: build/site
+          retention-days: 3
+          if-no-files-found: error
+  android:
+    if: github.event_name == 'workflow_dispatch' && inputs.android
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/prism-godot
+            ~/.local/share/godot/export_templates/4.5.1.stable
+          key: prism-godot-4.5.1-linux-android-v1
+      - name: Install official engine, templates and Android components
+        run: |
+          python tools/install_ci_godot.py "$RUNNER_TEMP/prism-godot" --android
+          echo "$RUNNER_TEMP/prism-godot" >> "$GITHUB_PATH"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-36" "build-tools;35.0.0" "ndk;28.1.13356709"
+      - name: Configure isolated editor and debug signing
+        shell: bash
+        run: |
+          mkdir -p "$HOME/.config/godot" "$RUNNER_TEMP/prism-signing"
+          cat > "$HOME/.config/godot/editor_settings-4.5.tres" <<EOF
+          [gd_resource type="EditorSettings" format=3]
+          [resource]
+          export/android/java_sdk_path = "$JAVA_HOME"
+          export/android/android_sdk_path = "$ANDROID_HOME"
+          EOF
+          keytool -genkeypair -keystore "$RUNNER_TEMP/prism-signing/debug.keystore" -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          echo "GODOT_ANDROID_KEYSTORE_DEBUG_PATH=$RUNNER_TEMP/prism-signing/debug.keystore" >> "$GITHUB_ENV"
+          echo "GODOT_ANDROID_KEYSTORE_DEBUG_USER=androiddebugkey" >> "$GITHUB_ENV"
+          echo "GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD=android" >> "$GITHUB_ENV"
+      - name: Build test packages
+        run: |
+          mkdir -p build
+          touch build/.gdignore
+          timeout 180 Godot_v4.5.1-stable_linux.x86_64 --headless --editor --path . --import
+          python platform/prepare_android.py --template "$HOME/.local/share/godot/export_templates/4.5.1.stable/android_source.zip"
+          mkdir -p build/android
+          timeout 900 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --export-debug Android build/android/prism-quarry-debug.aab
+          timeout 900 Godot_v4.5.1-stable_linux.x86_64 --headless --path . --export-debug 'Android Test APK' build/android/prism-quarry-test.apk
+          python platform/tests/validate_platform.py --artifact build/android/prism-quarry-debug.aab
+          python platform/tests/validate_platform.py --artifact build/android/prism-quarry-test.apk
+          python tools/verify_native_alignment.py build/android/prism-quarry-debug.aab --output build/android/native-alignment.json
+          test -z "$(git status --porcelain --untracked-files=all)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prism-quarry-android-debug-${{ github.sha }}
+          path: |
+            build/android/*.apk
+            build/android/*.aab
+            build/android/*.json
+          retention-days: 3
+          if-no-files-found: error

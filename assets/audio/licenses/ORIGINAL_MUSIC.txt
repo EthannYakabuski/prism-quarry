@@ -1,0 +1,11 @@
+Prism Quarry original score
+Copyright 2026 Ethann Yakabuski
+
+Workshop Lanterns, Warm Veins, Blue Reflections, and The Quiet Vault
+are original procedural compositions and synthesized performances created for
+Prism Quarry. They use no recorded samples, melodies, or third-party music.
+The note arrangements, synthesis code, and rendered music are licensed under
+the Apache License, Version 2.0; see the repository LICENSE.
+
+Kenney sound effects are separate CC0 assets; their source licenses are preserved
+in this folder and the exact source filenames and SHA256 hashes are in manifest.json.

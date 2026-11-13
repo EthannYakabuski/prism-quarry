@@ -1,0 +1,76 @@
+{
+	"captures": [
+		{
+			"description": "Home screen from the implemented game",
+			"device_class": "desktop viewport, not physical device or Android emulator",
+			"height": 1920,
+			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
+			"path": "tablet7/home.png",
+			"profile": "tablet7",
+			"sha256": "ef01802461fe864321d1857633d0abcf6792687170e72c7d7107826604717a35",
+			"source_commit": "working tree; capture-source.json hashes identify runtime files",
+			"view": "home",
+			"width": 1200
+		},
+		{
+			"description": "Gameplay screen from the implemented game",
+			"device_class": "desktop viewport, not physical device or Android emulator",
+			"height": 1920,
+			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
+			"path": "tablet7/gameplay.png",
+			"profile": "tablet7",
+			"sha256": "fb3341564e5540bf512d79fe84409c95e603a38f0ebdbef924190ebfb29a47c7",
+			"source_commit": "working tree; capture-source.json hashes identify runtime files",
+			"view": "gameplay",
+			"width": 1200
+		},
+		{
+			"description": "Azure screen from the implemented game",
+			"device_class": "desktop viewport, not physical device or Android emulator",
+			"height": 1920,
+			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
+			"path": "tablet7/azure.png",
+			"profile": "tablet7",
+			"sha256": "381f33fddf5188ccbe356711de23e1f26950b233511bd108743ffb6829e753e6",
+			"source_commit": "working tree; capture-source.json hashes identify runtime files",
+			"view": "azure",
+			"width": 1200
+		},
+		{
+			"description": "Violet screen from the implemented game",
+			"device_class": "desktop viewport, not physical device or Android emulator",
+			"height": 1920,
+			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
+			"path": "tablet7/violet.png",
+			"profile": "tablet7",
+			"sha256": "8d29cd10c40067ff0b4209087ccc25557fd1456624e21bc95f1ec7dd81a9970e",
+			"source_commit": "working tree; capture-source.json hashes identify runtime files",
+			"view": "violet",
+			"width": 1200
+		},
+		{
+			"description": "Workshop screen from the implemented game",
+			"device_class": "desktop viewport, not physical device or Android emulator",
+			"height": 1920,
+			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
+			"path": "tablet7/workshop.png",
+			"profile": "tablet7",
+			"sha256": "87ce5a695dcd5585cf7519da6d2a1af98caa75cd65542219528c6d9f4be9d2c9",
+			"source_commit": "working tree; capture-source.json hashes identify runtime files",
+			"view": "workshop",
+			"width": 1200
+		},
+		{
+			"description": "Results screen from the implemented game",
+			"device_class": "desktop viewport, not physical device or Android emulator",
+			"height": 1920,
+			"method": "Automated rendered Godot viewport; direct chamber selection fixture for environment views; results computed by actual Run.step",
+			"path": "tablet7/results.png",
+			"profile": "tablet7",
+			"sha256": "7da5bac605f560f5e282112a1502f079228b8812323e66d63587e3f1001dffd3",
+			"source_commit": "working tree; capture-source.json hashes identify runtime files",
+			"view": "results",
+			"width": 1200
+		}
+	]
+}

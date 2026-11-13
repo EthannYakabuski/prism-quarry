@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "admob": {
+    "test_mode": true,
+    "app_id": "ca-app-pub-3940256099942544~3347511713",
+    "banner_unit_id": "",
+    "interstitial_unit_id": "",
+    "rewarded_unit_id": "",
+    "tag_for_under_age_of_consent": false
+  },
+  "play_games": {
+    "enabled": false,
+    "game_id": "",
+    "achievements": {
+      "first_fracture": "", "cascade": "", "chain_reaction": "", "clean_sweep": "",
+      "steady_hand": "", "amber_cartographer": "", "azure_explorer": "", "vault_keeper": "",
+      "star_pocket": "", "constellation": "", "master_miner": "", "crystal_collector": "",
+      "crystal_connoisseur": "", "bank_shot": "", "spectacular": "", "deep_diver": "",
+      "daily_spark": "", "week_of_wonder": "", "workshop_whiz": "", "seasoned_miner": ""
+    },
+    "leaderboards": {"best_score": "", "endless_depth": "", "miner_xp": ""}
+  }
+}

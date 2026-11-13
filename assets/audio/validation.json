@@ -1,0 +1,276 @@
+{
+  "sample_rate": 32000,
+  "music": {
+    "menu": {
+      "frames": 1024000,
+      "channels": 2,
+      "peak": 0.3199768,
+      "peak_dbfs": -9.9,
+      "rms_dbfs": -21.83,
+      "clipped_samples": 0,
+      "dc_offset": 0.0,
+      "boundary_delta": 0.00588989,
+      "largest_adjacent_delta": 0.02798462,
+      "duration_seconds": 32.0,
+      "seam_delta_dbfs": -44.6
+    },
+    "amber_hollow": {
+      "frames": 768000,
+      "channels": 2,
+      "peak": 0.3199768,
+      "peak_dbfs": -9.9,
+      "rms_dbfs": -22.31,
+      "clipped_samples": 0,
+      "dc_offset": 0.0,
+      "boundary_delta": 0.00457764,
+      "largest_adjacent_delta": 0.02938843,
+      "duration_seconds": 24.0,
+      "seam_delta_dbfs": -46.79
+    },
+    "azure_grotto": {
+      "frames": 960000,
+      "channels": 2,
+      "peak": 0.3199768,
+      "peak_dbfs": -9.9,
+      "rms_dbfs": -21.42,
+      "clipped_samples": 0,
+      "dc_offset": -0.0,
+      "boundary_delta": 0.0090332,
+      "largest_adjacent_delta": 0.03442383,
+      "duration_seconds": 30.0,
+      "seam_delta_dbfs": -40.88
+    },
+    "violet_vault": {
+      "frames": 853333,
+      "channels": 2,
+      "peak": 0.3199768,
+      "peak_dbfs": -9.9,
+      "rms_dbfs": -21.01,
+      "clipped_samples": 0,
+      "dc_offset": 0.0,
+      "boundary_delta": 0.00534058,
+      "largest_adjacent_delta": 0.02566528,
+      "duration_seconds": 26.66666,
+      "seam_delta_dbfs": -45.45
+    }
+  },
+  "sfx": {
+    "gem": {
+      "sample_rate": 44100,
+      "channels": 2,
+      "duration_seconds": 0.20959,
+      "ogg_pages": 3,
+      "decoded_pcm_metrics": {
+        "frames": 9115,
+        "channels": 2,
+        "peak": 0.901721,
+        "peak_dbfs": -0.9,
+        "rms_dbfs": -21.3,
+        "clipped_samples": 0,
+        "dc_offset": 5.81e-05,
+        "boundary_delta": 0.00890287,
+        "largest_adjacent_delta": 0.23145995
+      },
+      "peak_at_recommended_gain_dbfs": -9.9
+    },
+    "gem_alt": {
+      "sample_rate": 44100,
+      "channels": 2,
+      "duration_seconds": 0.20959,
+      "ogg_pages": 3,
+      "decoded_pcm_metrics": {
+        "frames": 9115,
+        "channels": 2,
+        "peak": 0.8828444,
+        "peak_dbfs": -1.08,
+        "rms_dbfs": -21.01,
+        "clipped_samples": 0,
+        "dc_offset": 2.746e-05,
+        "boundary_delta": 0.00040768,
+        "largest_adjacent_delta": 0.21403113
+      },
+      "peak_at_recommended_gain_dbfs": -10.08
+    },
+    "ricochet": {
+      "sample_rate": 44100,
+      "channels": 2,
+      "duration_seconds": 0.23578,
+      "ogg_pages": 3,
+      "decoded_pcm_metrics": {
+        "frames": 10270,
+        "channels": 2,
+        "peak": 0.8535791,
+        "peak_dbfs": -1.38,
+        "rms_dbfs": -20.56,
+        "clipped_samples": 0,
+        "dc_offset": 4.194e-05,
+        "boundary_delta": 0.01936963,
+        "largest_adjacent_delta": 0.39902344
+      },
+      "peak_at_recommended_gain_dbfs": -13.38
+    },
+    "shot": {
+      "sample_rate": 44100,
+      "channels": 2,
+      "duration_seconds": 0.80467,
+      "ogg_pages": 4,
+      "decoded_pcm_metrics": {
+        "frames": 35486,
+        "channels": 2,
+        "peak": 0.8715247,
+        "peak_dbfs": -1.19,
+        "rms_dbfs": -22.91,
+        "clipped_samples": 0,
+        "dc_offset": 6.958e-05,
+        "boundary_delta": 0.1661592,
+        "largest_adjacent_delta": 0.16370124
+      },
+      "peak_at_recommended_gain_dbfs": -9.19
+    },
+    "chain": {
+      "sample_rate": 44100,
+      "channels": 2,
+      "duration_seconds": 0.54336,
+      "ogg_pages": 3,
+      "decoded_pcm_metrics": {
+        "frames": 23834,
+        "channels": 2,
+        "peak": 0.8906356,
+        "peak_dbfs": -1.01,
+        "rms_dbfs": -25.63,
+        "clipped_samples": 0,
+        "dc_offset": 6.18e-06,
+        "boundary_delta": 0.0088196,
+        "largest_adjacent_delta": 0.07172956
+      },
+      "peak_at_recommended_gain_dbfs": -12.01
+    },
+    "victory": {
+      "sample_rate": 44100,
+      "channels": 1,
+      "duration_seconds": 0.539,
+      "ogg_pages": 5,
+      "decoded_pcm_metrics": {
+        "frames": 23770,
+        "channels": 1,
+        "peak": 0.8957887,
+        "peak_dbfs": -0.96,
+        "rms_dbfs": -14.88,
+        "clipped_samples": 0,
+        "dc_offset": 3.1e-07,
+        "boundary_delta": 0.00088539,
+        "largest_adjacent_delta": 0.15710847
+      },
+      "peak_at_recommended_gain_dbfs": -6.96
+    },
+    "click": {
+      "sample_rate": 44100,
+      "channels": 1,
+      "duration_seconds": 0.10002,
+      "ogg_pages": 3,
+      "decoded_pcm_metrics": {
+        "frames": 4283,
+        "channels": 1,
+        "peak": 0.8557067,
+        "peak_dbfs": -1.35,
+        "rms_dbfs": -26.4,
+        "clipped_samples": 0,
+        "dc_offset": 0.00021765,
+        "boundary_delta": 0.05453487,
+        "largest_adjacent_delta": 0.40048417
+      },
+      "peak_at_recommended_gain_dbfs": -8.35
+    },
+    "error": {
+      "sample_rate": 44100,
+      "channels": 1,
+      "duration_seconds": 0.13932,
+      "ogg_pages": 4,
+      "decoded_pcm_metrics": {
+        "frames": 6144,
+        "channels": 1,
+        "peak": 0.895818,
+        "peak_dbfs": -0.96,
+        "rms_dbfs": -20.55,
+        "clipped_samples": 0,
+        "dc_offset": -7.899e-05,
+        "boundary_delta": 0.00213594,
+        "largest_adjacent_delta": 0.28600633
+      },
+      "peak_at_recommended_gain_dbfs": -10.96
+    },
+    "reward": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "duration_seconds": 0.33821,
+      "ogg_pages": 6,
+      "decoded_pcm_metrics": {
+        "frames": 16234,
+        "channels": 2,
+        "peak": 0.2919019,
+        "peak_dbfs": -10.7,
+        "rms_dbfs": -34.01,
+        "clipped_samples": 0,
+        "dc_offset": 7e-08,
+        "boundary_delta": 0.00053319,
+        "largest_adjacent_delta": 0.25099755
+      },
+      "peak_at_recommended_gain_dbfs": -10.7
+    },
+    "upgrade": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "duration_seconds": 0.44583,
+      "ogg_pages": 6,
+      "decoded_pcm_metrics": {
+        "frames": 21400,
+        "channels": 2,
+        "peak": 0.4503405,
+        "peak_dbfs": -6.93,
+        "rms_dbfs": -34.33,
+        "clipped_samples": 0,
+        "dc_offset": 2.029e-05,
+        "boundary_delta": 0.01588065,
+        "largest_adjacent_delta": 0.33355527
+      },
+      "peak_at_recommended_gain_dbfs": -7.93
+    },
+    "back": {
+      "sample_rate": 44100,
+      "channels": 1,
+      "duration_seconds": 0.06388,
+      "ogg_pages": 3,
+      "decoded_pcm_metrics": {
+        "frames": 2689,
+        "channels": 1,
+        "peak": 0.8958156,
+        "peak_dbfs": -0.96,
+        "rms_dbfs": -21.25,
+        "clipped_samples": 0,
+        "dc_offset": 3.347e-05,
+        "boundary_delta": 4.752e-05,
+        "largest_adjacent_delta": 0.35110447
+      },
+      "peak_at_recommended_gain_dbfs": -11.96
+    },
+    "recall": {
+      "sample_rate": 44100,
+      "channels": 1,
+      "duration_seconds": 0.21186,
+      "ogg_pages": 4,
+      "decoded_pcm_metrics": {
+        "frames": 9343,
+        "channels": 1,
+        "peak": 0.8916925,
+        "peak_dbfs": -1.0,
+        "rms_dbfs": -20.26,
+        "clipped_samples": 0,
+        "dc_offset": -7.5e-07,
+        "boundary_delta": 0.00257098,
+        "largest_adjacent_delta": 0.60327837
+      },
+      "peak_at_recommended_gain_dbfs": -11.0
+    }
+  },
+  "method": "Numerical PCM validation; original Ogg container checks and optional Blender aud decode. No subjective listening claim."
+}

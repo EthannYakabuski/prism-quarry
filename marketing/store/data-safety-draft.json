@@ -1,0 +1,20 @@
+{
+  "status": "not_a_console_declaration_owner_review_required",
+  "reviewed_at": "2026-11-13",
+  "scope": "Development source and planned production release, not a measured production network audit.",
+  "no_data_collected_claim": false,
+  "contains_ads": true,
+  "publisher_backend": "No custom publisher analytics, account or cloud-save backend implemented in this project.",
+  "data_inventory": [
+    {"component": "Local save", "data": "Settings, progression, claims, achievements, records and pending service submissions", "location": "Device or browser site storage", "console_answer": "Determine whether data ever leaves the device in final build; local-only storage is distinct from SDK transmission."},
+    {"component": "Google Mobile Ads / consent", "data": "Potential device identifiers, approximate location, app interactions and diagnostics per shipped SDK guidance", "location": "Native third-party service", "console_answer": "OWNER MUST VERIFY collection, sharing, purposes, optionality and retention against exact production SDK/configuration."},
+    {"component": "Google Play Games", "data": "Potential service authentication identifiers, achievement progress and leaderboard scores", "location": "Native third-party service when configured", "console_answer": "OWNER MUST VERIFY service configuration, authentication, submissions, account deletion and disclosure."}
+  ],
+  "encryption_in_transit_answer": "PENDING_PRODUCTION_VERIFICATION",
+  "deletion_request_answer": "PENDING_OWNER_PROCESS_AND_APPLICABLE_SERVICE_REVIEW",
+  "independent_security_review": "NOT_CLAIMED",
+  "families_and_target_audience": "PENDING_OWNER_DECLARATION",
+  "retention": "Local saves persist until data removal; platform backups and third-party retention need production review.",
+  "required_before_release": ["Confirm publisher identity and contact", "Inventory exact production SDK versions and network behavior", "Confirm consent markets and privacy-choice behavior", "Complete accurate Data safety answers", "Publish app-specific privacy policy and link it in-app", "Set and test deletion/support process"],
+  "references": ["https://support.google.com/googleplay/android-developer/answer/10144311", "https://developers.google.com/admob/android/privacy/play-data-disclosure", "https://support.google.com/googleplay/android-developer/answer/9859455"]
+}
