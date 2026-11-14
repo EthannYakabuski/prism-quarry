@@ -48,7 +48,7 @@ python tools/assemble_site.py build/site --require-clean --expected-sha <exact-c
 python -m http.server 8768 --bind 127.0.0.1 --directory build/site
 ```
 
-The separate **Deploy reviewed Web build** workflow is manual and additionally gated by `PRISM_PAGES_AUTHORIZED=true`. It cannot establish user authorization on its own. Pages has not been activated by this scaffold. The owner must authorize publication, configure Pages, enable the variable, dispatch the workflow, and verify the live `build.json` against the exact successful revision. Never bypass a permission rejection. No paid services or security settings are required by this package.
+The separate **Deploy reviewed Web build** workflow is manual and additionally gated by `PRISM_PAGES_AUTHORIZED=true`. The user explicitly authorized Pages publication on 2026-11-14; Pages activation and the gate were configured, and [deployment run 43541679015](https://github.com/EthannYakabuski/prism-quarry/actions/runs/43541679015) succeeded at `769b3cd9424f5f7181104f39791e092e56a72fa9`. The [live game](https://ethannyakabuski.github.io/prism-quarry/play/) and [review](https://ethannyakabuski.github.io/prism-quarry/review/) were checked. For each subsequent deployment, verify the [live build.json](https://ethannyakabuski.github.io/prism-quarry/build.json) against that run's exact successful revision. A workflow gate alone does not establish authorization. No paid services or security settings are required by this package.
 
 Godot's [Android export guide](https://docs.godotengine.org/en/4.5/tutorials/export/exporting_for_android.html) covers Java 17, SDK configuration and signing. The native presets and local prerequisites are documented in the platform setup notes. Windows distribution is not a target.
 

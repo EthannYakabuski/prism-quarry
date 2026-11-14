@@ -6,7 +6,8 @@
 
 30 authored chambers span Amber Hollow, Azure Grotto and Violet Vault. The game includes a seeded daily chamber, Endless Quarry, miner XP, drill/rig progression, cosmetics, daily goals, a seven-day login cycle, local achievements and records. Branding above is promotional illustration, not a gameplay screenshot. Exact implementation acceptance and untested checks belong in [the evidence record](docs/ACCEPTANCE.md).
 
-- [Styled review](review/index.html) and [capture provenance](marketing/screenshots/provenance.json)
+- [Play live](https://ethannyakabuski.github.io/prism-quarry/play/) and [live styled review](https://ethannyakabuski.github.io/prism-quarry/review/)
+- [Local styled review](review/index.html) and [capture provenance](marketing/screenshots/provenance.json)
 - [Store and release preparation](docs/STORE_AND_RELEASE.md)
 - [Android service setup](docs/PLATFORM_SETUP.md)
 - [Shared achievement/leaderboard catalog](game/catalog.json), [achievement ZIP](marketing/play-games-achievements/prism-quarry-achievements-google-play.zip), and [schema/validation notes](docs/ACHIEVEMENTS_IMPORT.md)
@@ -52,7 +53,7 @@ python tools/build_achievement_import.py --verify marketing/play-games-achieveme
 
 GitHub Actions validates and exports Web on standard hosted runners. Manual dispatch can also request Android test packages. Artifacts use bounded retention. The site assembler's `--require-clean --expected-sha <commit>` mode refuses a dirty or mismatched checkout after export; `build.json` binds source and Web files. See acceptance evidence for actual successful runs instead of assuming the workflow has passed.
 
-Pages is a separately gated, manual workflow. Its presence does not activate hosting or authorize publication. The review contains no claimed live URL until deployment is independently verified.
+Pages publication was explicitly authorized on 2026-11-14. The first verified deployment is [run 43541679015](https://github.com/EthannYakabuski/prism-quarry/actions/runs/43541679015) at `769b3cd9424f5f7181104f39791e092e56a72fa9`; the [live build identity](https://ethannyakabuski.github.io/prism-quarry/build.json) records the currently deployed revision, including subsequent documentation updates. The manual workflow remains gated. Actual desktop-browser aiming, chamber completion, banked progress across reload and paused-run recovery passed. Some pause/shot symbols render as missing-glyph boxes; text, counts and controls worked. See the acceptance record for browser-specific limits.
 
 Android advertising uses test configuration; production Play Games mappings are disabled. Production service IDs, consent/privacy declarations, support contact, signing and Google Play release remain owner work. Store/privacy/support text is explicitly a draft. Static achievement ZIP validation is not Console acceptance.
 

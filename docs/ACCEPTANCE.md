@@ -1,6 +1,6 @@
 # Prism Quarry acceptance record
 
-Evidence date: 2026-11-13. The corrected game has final Android debug APK/AAB exports, a matching single-threaded Web export, passing model/UI/touch/platform fixtures and genuine desktop/Android-emulator captures. This is development acceptance, not a production-release certification.
+Evidence dates: 2026-11-13 (native/build snapshot) and 2026-11-14 (live Pages and browser verification). The corrected game has final Android debug APK/AAB exports, a matching single-threaded Web export, passing model/UI/touch/platform fixtures and genuine desktop/Android-emulator captures. This is development acceptance, not a production-release certification.
 
 Runtime correction revision: [f0fdea95a100c1250e5e5b94f04b568142209629](https://github.com/EthannYakabuski/prism-quarry/commit/f0fdea95a100c1250e5e5b94f04b568142209629). [build-evidence.json](build-evidence.json) is the prepublication verification snapshot: five actual artifact identities and source/worktree state recorded on 2026-11-13. The snapshot includes [hosted run 43475885486](https://github.com/EthannYakabuski/prism-quarry/actions/runs/43475885486), which passed at aa830e55. For later publication state, compare the exact commit against [current CI runs](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/ci.yml); the final source SHA and CI outcome are recorded separately in the local publication receipt and delivery response.
 
@@ -45,17 +45,25 @@ The initial System UI ANR, splash transitions, OS overlays, repetitive frames an
 
 ## Browser and review
 
-The existing emulator browser is Chrome 83. Read-only diagnostics established a secure localhost context, WebGL2=true and WebAssembly availability. The fetched official engine JavaScript fails parsing with SyntaxError: Unexpected token '='; Engine remains undefined. **Web gameplay is not run. This is an old-browser JavaScript compatibility limit, not missing WebGL2.** Modern-browser load/input/persistence remains untested.
+**Live Web gameplay verified on 2026-11-14:** the isolated desktop in-app browser rendered the deployed game. Actual pointer drag/release cleared chamber 1 with nine crystals, 1,800 points and three stars, paying 75 ore/82 XP. Banking returned home at Miner 2, 125 ore and chamber 02; reloading retained that progress. In chamber 2, an actual shot reached eight crystals, 1,500 points and two shots remaining. Pause followed by reload restored SHIFT PAUSED and required explicit Resume; resuming retained the same crystals, score and shots. These are browser input and persistence observations, not simulated fixtures.
+
+Some pause/shot-symbol Unicode characters appeared as missing-glyph boxes. Text, counts and controls worked; this remains a font-presentation issue. A separate cloud Chromium browser rendered the review but lacked WebGL 2 for gameplay. Its environment limit does not negate the successful desktop-browser run or establish broader browser compatibility.
+
+After Resume, a second chamber-2 shot cleared 14 crystals total for 2,475 points, two ricochets, two shots and three stars, awarding 93 ore/97 XP. Reloading directly from the result returned home with 218 ore, Miner 2 and chamber 03 unlocked, without duplicating the payout. The supported-browser console warning/error reader returned an empty list at that completed result; this is a point-in-time observation, not a claim that the entire session was silent.
+
+**Earlier emulator-browser check, 2026-11-13:** Chrome 83 had a secure localhost context, WebGL2=true and WebAssembly availability, but the official engine JavaScript failed parsing with SyntaxError: Unexpected token '='; Engine remained undefined. Gameplay did not run in that browser because of old JavaScript support, not missing WebGL2.
 
 The review's replaceChildren calls were replaced with textContent clearing, and a flex-gap margin fallback was added for Chrome 83. The review also contains real static fallback images for direct file opening; HTTP enables full profile controls. The assembled game HTML checks for a missing Engine and displays an update-browser message before engine startup. Official index.js is unmodified. The HTTP review refresh was observed successfully in Chrome 83: 18 gallery figures were present and six images loaded for the selected profile. Actual desktop gameplay/home cards and their truthful captions were visually confirmed (local build/browser/13-review-gallery.png). The missing-engine visual diagnostic also displayed correctly. This confirms review rendering and the diagnostic, not Web gameplay.
 
-Earlier host attempts: IAB was unavailable; isolated host Chrome exited 0x80000003 without a page; a process-command-line query returned Access denied. No personal browser profile, security-warning bypass or security-setting change was used.
+Earlier host attempts on 2026-11-13: IAB was unavailable; isolated host Chrome exited 0x80000003 without a page; a process-command-line query returned Access denied. The isolated IAB was available for the successful 2026-11-14 run. No personal browser profile, security-warning bypass or security-setting change was used.
 
 ## Publication
 
 The [public repository](https://github.com/EthannYakabuski/prism-quarry) exists. Initial CI omitted four Poing AARs due to an upstream ignore rule; the exact licensed binaries were tracked and the subsequent hosted validation passed.
 
-**Pages remains blocked, not deployed.** Automatic approval review denied POST repos/EthannYakabuski/prism-quarry/pages with build_type=workflow. The single identical retry after history review was also denied: no trusted user message authorizes persistent public hosting while retained context records a publication hold. That action stopped. The local review and gated workflow are ready; no live URL or bypass is claimed. Google Play publication and achievement Console import were not performed.
+**Pages is live following explicit user authorization on 2026-11-14.** The first verified deployment, [run 43541679015](https://github.com/EthannYakabuski/prism-quarry/actions/runs/43541679015), succeeded at `769b3cd9424f5f7181104f39791e092e56a72fa9`: [play](https://ethannyakabuski.github.io/prism-quarry/play/) and [review](https://ethannyakabuski.github.io/prism-quarry/review/). Independent live HTTP checks passed for 98 responses, nine Web-file hashes, 516 PCK entries and all 29 capture images from that clean revision. The [live build.json](https://ethannyakabuski.github.io/prism-quarry/build.json) records the currently deployed commit; later documentation deployments have their own source identity.
+
+The Nov13 approval denials remain recorded in the unchanged, dated [prepublication snapshot](build-evidence.json). New explicit authorization permitted the Nov14 activation and deployment. Google Play publication and achievement Console import were not performed.
 
 ## Corrected defects and retained diagnostics
 
@@ -71,4 +79,4 @@ The [public repository](https://github.com/EthannYakabuski/prism-quarry) exists.
 
 Local headless logs retain root-certificate-store, dummy-renderer material and shutdown-resource diagnostics. Passing assertions and the targeted zero-teardown-error gate are not described as warning-free execution.
 
-Remaining owner work: production IDs/signing, privacy/support URLs and identity, Data safety/audience/rating declarations, production SDK/backend checks, physical devices, proven network-disconnected play, 16KB/ZIP packaging checks and modern-browser play. Sunken Geodes remains a future DLC concept only. See [HANDOFF.md](HANDOFF.md).
+Remaining owner work: production IDs/signing, privacy/support URLs and identity, Data safety/audience/rating declarations, production SDK/backend checks, physical devices, proven network-disconnected play, 16KB/ZIP packaging checks, broader browser coverage and the missing-symbol font presentation. Sunken Geodes remains a future DLC concept only. See [HANDOFF.md](HANDOFF.md).
