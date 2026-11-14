@@ -169,7 +169,7 @@ func _play_ui() -> void:
 	var top:=_margin(ui,Control.PRESET_TOP_WIDE,18,165)
 	var head:=_row(top)
 	var title:=label(("ENDLESS · DEPTH %d"%run.depth if run.mode=="endless" else "DAILY CHAMBER" if run.mode=="daily" else "CHAMBER %02d"%(run.chamber+1))+" · "+Chambers.THEMES[int(run.spec.theme)].to_upper(),14,GOLD);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL;head.add_child(title)
-	var pause:=button("Ⅱ",func():_pause(),true);pause.custom_minimum_size=Vector2(52,44);pause.size_flags_horizontal=0;head.add_child(pause)
+	var pause:=button("Pause",func():_pause(),true);pause.custom_minimum_size=Vector2(96,44);pause.size_flags_horizontal=0;head.add_child(pause)
 	var panel:=_panel(top);var row:=_row(panel)
 	hud_ore=label("",20);hud_ore.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(hud_ore);hud_score=label("",20,GOLD);hud_score.autowrap_mode=TextServer.AUTOWRAP_OFF;hud_score.custom_minimum_size.x=130;hud_score.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;row.add_child(hud_score)
 	hud_bar=ProgressBar.new();hud_bar.custom_minimum_size.y=9;hud_bar.show_percentage=false;hud_bar.add_theme_stylebox_override("background",style(Color("283f46"),5));hud_bar.add_theme_stylebox_override("fill",style(cavern.tint,5));panel.add_child(hud_bar)
@@ -188,7 +188,7 @@ func _update_hud() -> void:
 	hud_score.text="%s pts"%_number(run.score)
 	hud_ore.text="%d / %d crystals"%[run.stage_crystals,run.spec.goal]
 	hud_bar.max_value=run.spec.goal;hud_bar.value=run.stage_crystals
-	hud_shots.text="%s  %d %s LEFT"%["● ".repeat(run.shots),run.shots,"SHOT" if run.shots==1 else "SHOTS"]
+	hud_shots.text="%d %s LEFT"%[run.shots,"SHOT" if run.shots==1 else "SHOTS"]
 	if run.moving:hint.text="%d CRYSTAL COMBO · TAP RECALL TO RETURN"%run.shot_combo
 	elif run.stage_crystals>=int(run.spec.goal):hint.text="TARGET REACHED · BANK OR MINE EVERY CRYSTAL"
 	elif run.chamber==0 and run.mode=="campaign":hint.text="DRAG ON THE CAVE. RELEASE INTO THE GOLD VEIN."

@@ -76,6 +76,34 @@ func pointer(pos:Vector2, down:bool) -> void:
 	event.position=pos;event.global_position=pos;event.pressed=down
 	root.push_input(event,true)
 
+func check_play_hud_layout() -> void:
+	var original_size:Vector2i=root.size
+	var original_shots:int=game.run.shots
+	var original_run:Dictionary=game.run.snapshot()
+	for size in [Vector2i(360,640),Vector2i(540,960),Vector2i(1280,720)]:
+		root.size=size;await wait_layout()
+		var context:String=" at %dx%d"%[size.x,size.y]
+		var viewport:=Rect2(Vector2.ZERO,game.ui.size)
+		var pause:=find_button(game.ui,"Pause")
+		check(pause!=null,"readable Pause button exists"+context)
+		if pause:
+			pause.grab_focus()
+			check(not pause.disabled and pause.has_focus(),"Pause accepts keyboard focus"+context)
+			check(pause.size.x>=96 and pause.size.y>=44 and viewport.encloses(pause.get_global_rect()),"Pause hit area fits viewport"+context)
+			var text_size:Vector2=pause.get_theme_font("font").get_string_size(pause.text,HORIZONTAL_ALIGNMENT_LEFT,-1,pause.get_theme_font_size("font_size"))
+			var padding:Vector2=pause.get_theme_stylebox("normal").get_minimum_size()
+			check(text_size.x+padding.x<=pause.size.x+0.5 and text_size.y+padding.y<=pause.size.y+0.5,"Pause label fits its button"+context)
+			pause.release_focus()
+		# Six is the maximum accepted saved-model allowance; chamber starts use 3/4.
+		for sample in [[0,"0 SHOTS LEFT"],[1,"1 SHOT LEFT"],[3,"3 SHOTS LEFT"],[6,"6 SHOTS LEFT"]]:
+			game.run.shots=sample[0];game._update_hud();await wait_layout()
+			var shots:Label=game.hud_shots
+			check(shots.text==sample[1],"ASCII shot count: "+sample[1]+context)
+			var text_size:Vector2=shots.get_theme_font("font").get_string_size(shots.text,HORIZONTAL_ALIGNMENT_LEFT,-1,shots.get_theme_font_size("font_size"))
+			check(shots.get_line_count()==1 and text_size.x<=shots.size.x+0.5 and viewport.encloses(shots.get_global_rect()),"Shot count stays on one line within viewport: "+sample[1]+context)
+	root.size=original_size;game.run.shots=original_shots;game._update_hud();await wait_layout()
+	check(game.run.snapshot()==original_run and root.size==original_size,"HUD layout fixture restores model and viewport before physics")
+
 func finish_flight() -> void:
 	for frame in range(700):
 		if not game.run.moving:break
@@ -121,6 +149,7 @@ func execute() -> void:
 	game.start_run("campaign",0);await wait_layout()
 	check(game.screen=="play" and game.run.used==0,"fresh chamber is ready")
 	check(game.hud_score.size.x>=130 and game.hud_score.get_line_count()==1,"score HUD remains a single line")
+	await check_play_hud_layout()
 	var at:Vector2=game.cavern.board_to_screen(Vector2(0,2.5))
 	pointer_evidence={"method":"Viewport.push_input(InputEventMouseButton)","pointer_position":[at.x,at.y],"viewport":[root.size.x,root.size.y],"physical_input":false}
 	check(at.y>190 and at.y<game.ui.size.y-190,"first seam lies in interactive cave region")
@@ -132,7 +161,12 @@ func execute() -> void:
 	check(not game.dragging,"release clears drag state")
 	game._process(0.1)
 	check(game.run.position!=Run.ORIGIN,"launched drill advances")
-	game._pause()
+	var before_pause:Dictionary=game.run.snapshot()
+	var pause_button:=find_button(game.ui,"Pause")
+	if pause_button:
+		var pause_at:Vector2=pause_button.get_global_rect().get_center()
+		pointer(pause_at,true);pointer(pause_at,false)
+	check(game.screen=="pause" and game.run.snapshot()==before_pause,"Pause pointer click freezes exact flight without spending another shot")
 	var paused:Dictionary=game.run.snapshot()
 	game._process(0.1)
 	check(game.screen=="pause" and game.run.snapshot()==paused,"pause freezes complete model snapshot")
