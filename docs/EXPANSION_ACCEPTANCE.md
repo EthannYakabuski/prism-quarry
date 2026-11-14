@@ -1,6 +1,10 @@
-# 200-chamber expansion: local evidence
+# 200-chamber expansion: evidence and publication identity
 
-Snapshot date: 2026-11-14. This working tree contains the expansion; it has not been pushed or deployed. The public Pages build remains the earlier `58f069e27e0bdb14fad42a47a0d82a20ed489043` edition. Historical CI, browser and Android observations in [ACCEPTANCE.md](ACCEPTANCE.md), [build-evidence.json](build-evidence.json) and [ui-glyph-fix-evidence.json](ui-glyph-fix-evidence.json) remain bound to their original revisions.
+The expanded development edition contains 200 chambers, ten biomes and six twelve-rank workshop choices. Publication is authorized. The local checks below were recorded on 2026-11-14; [expansion-evidence.json](expansion-evidence.json) preserves their prepublication snapshot. Historical CI, browser and Android observations in [ACCEPTANCE.md](ACCEPTANCE.md), [build-evidence.json](build-evidence.json) and [ui-glyph-fix-evidence.json](ui-glyph-fix-evidence.json) remain bound to their original revisions.
+
+## Verify the published revision
+
+Open the [game](https://ethannyakabuski.github.io/prism-quarry/play/) or [review](https://ethannyakabuski.github.io/prism-quarry/review/), then compare [live build.json](https://ethannyakabuski.github.io/prism-quarry/build.json) with the exact source revision of its successful [validation](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/ci.yml) and [Pages](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/pages.yml) runs. The assembled review also displays source identity. These links identify where to verify publication; authorization, a prepared workflow and local acceptance do not themselves establish deployment success.
 
 ## Implemented scope
 
@@ -31,6 +35,8 @@ The matched-payout analysis applies the actual payout functions to the same reco
 All 72 workshop ranks cost 17,568 ore in total. A fixed-score spending benchmark reaches the first purchase after chamber 2; prioritizing only Longburn reaches rank twelve after chamber 116. This benchmark assumes a fresh profile, the first login gift, and one baseline three-star clear per chamber, without ads, replays, daily or quest income. It holds recorded shot outcomes fixed after purchases and is not an upgraded physics or human-progression test.
 
 ## Fresh capture provenance and visual review
+
+The original 426-input capture manifest remains unchanged. A separate [validation scope](../marketing/screenshots/capture-validation-scope.json) classifies 295 repository inputs as mandatory and exactly 131 ignored local SDK installation files as archival. Fresh checkouts may omit only that pinned SDK set; any present archival file must still match its original hash. The committed Android AARs, game, assets, capture fixture and exact post-capture label attestation remain strict. A Git-only temporary-checkout regression exercises successful validation, missing and changed mandatory inputs, corrupt present SDK copies, and attempts to broaden the optional classification.
 
 The [42-image manifest](../marketing/screenshots/provenance.json) and [source identity](../marketing/screenshots/capture-source.json) identify the frozen working tree by SHA256 `d626287db94a8afa57f92a967986726a6e01154b052ee340846b62aab2861059`, with 426 source-file hashes. The existing HEAD at capture was the older public revision; it is explicitly not presented as the expansion source commit. Three sequential graphical Godot 4.5.1 Compatibility runs used fresh isolated QA profiles and rendered 14 views each at 1080 x 1920, 1200 x 1920 and 1600 x 2560. Source hashes remained unchanged across the runs.
 
@@ -71,4 +77,4 @@ Both native packages report version 1.1.0/code 2, min API 24/target 36, Google s
 
 A desktop OpenGL window rendered, but no controllable native window was exposed to the input tool; no native input acceptance is inferred from that launch.
 
-Expanded Android installation/play, physical-device behavior, production ads/Play Games, signing and store publication are not established here. Fresh exact-revision CI and deployment remain separate steps. Do not use the historical native frames or old public build as evidence of this expansion.
+Expanded Android installation/play, physical-device behavior, production ads/Play Games, production signing and Google Play store publication are not established here. Hosted CI and deployment evidence must identify the exact served revision separately from the retained local receipt. Historical native frames and earlier public revisions do not prove this expansion's Android behavior.

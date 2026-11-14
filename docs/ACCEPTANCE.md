@@ -1,6 +1,6 @@
 # Prism Quarry acceptance record
 
-**Expansion snapshot, 2026-11-14:** the working tree now contains 200 chambers, ten biomes, six twelve-rank upgrades and 42 refreshed desktop captures. This expansion is local only: no new push, CI run or deployment is claimed; the public build remains `58f069e`. [EXPANSION_ACCEPTANCE.md](EXPANSION_ACCEPTANCE.md) records the new automated/browser checks, static exports and remaining Android acceptance. The sections below retain the dated 30-chamber/B14 history and must not be read as proof of the expansion. The Nov13 and B14 JSON receipts remain unchanged.
+**Expanded development edition:** 200 chambers, ten biomes, six twelve-rank upgrades and 42 genuine desktop captures. Publication is authorized; verify the exact served revision in [build.json](https://ethannyakabuski.github.io/prism-quarry/build.json) against the matching [validation](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/ci.yml) and [Pages](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/pages.yml) runs. [EXPANSION_ACCEPTANCE.md](EXPANSION_ACCEPTANCE.md) records automated/browser checks, static exports and remaining Android limits. Its dated local JSON receipt is prepublication evidence. The sections below retain the 30-chamber/B14 history and must not be read as proof of the expansion; historical JSON receipts remain unchanged.
 
 ## Historical edition record
 

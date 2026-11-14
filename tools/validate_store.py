@@ -3,10 +3,13 @@ from __future__ import annotations
 
 import json
 import hashlib
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import struct
 
 ROOT = Path(__file__).resolve().parents[1]
+# Pinned membership of this capture's 131 ignored SDK installation files.
+# The original 426-entry source manifest and all its hashes remain unchanged.
+ARCHIVAL_SDK_PATHS_SHA256 = "70740c9755da56a5ec80d7ef6dcc506e02657968fd650d3c6201dd51659e6d71"
 
 
 def require(condition: bool, message: str) -> None:
@@ -48,6 +51,46 @@ def verify_capture_label_patch(source: dict) -> set[str]:
     return {"game/main.gd"}
 
 
+def verify_capture_sources(source_path: Path) -> None:
+    require(source_path.resolve().is_relative_to(ROOT), "Capture manifest leaves repository")
+    source_bytes = source_path.read_bytes()
+    source = json.loads(source_bytes)
+    scope = json.loads((ROOT / "marketing/screenshots/capture-validation-scope.json").read_text(encoding="utf-8"))
+    require(scope.get("schema_version") == 1, "Unknown capture validation scope")
+    require(scope.get("capture_source_sha256") == hashlib.sha256(source_bytes).hexdigest(), "Capture scope does not match the original manifest")
+    archival = scope.get("archival_local_sdk_paths")
+    require(isinstance(archival, list) and all(isinstance(path, str) for path in archival), "Invalid archival SDK path list")
+    require(len(archival) == 131 and len(set(archival)) == 131, "Archival SDK classification must contain exactly 131 unique paths")
+    for name in archival:
+        relative = PurePosixPath(name)
+        require(not relative.is_absolute() and ".." not in relative.parts and "\\" not in name and relative.as_posix() == name, "Noncanonical archival SDK path")
+        allowed = name in {
+            "addons/admob/android/bin/ads/poing_godot_admob_ads.gd",
+            "addons/admob/android/bin/package.gd",
+        } or (name.startswith("addons/admob/ios/bin/") and relative.suffix in {".gd", ".plist", ".a", ".xib"})
+        require(allowed, "Archival classification is limited to known ignored SDK installation paths: " + name)
+    membership_hash = hashlib.sha256("\n".join(sorted(archival)).encode("utf-8")).hexdigest()
+    require(membership_hash == ARCHIVAL_SDK_PATHS_SHA256, "Archival SDK membership changed; repository sources cannot become optional")
+    archival = set(archival)
+    records = source["runtime_files"]
+    names = [entry["path"] for entry in records]
+    require(len(names) == len(set(names)) and archival.issubset(names), "Duplicate or missing captured input")
+    require(scope.get("required_repository_input_count") == 295 and len(names) - len(archival) == 295, "Expected all 295 mandatory repository capture inputs")
+    label_patch_paths = verify_capture_label_patch(source)
+    absent_archival = 0
+    for entry in records:
+        name = entry["path"]
+        path = (ROOT / name).resolve()
+        require(path.is_relative_to(ROOT), "Capture source path leaves repository")
+        if name in archival and not path.exists():
+            absent_archival += 1
+            continue
+        # Optional absence is not optional integrity: local SDK copies are still
+        # checked when present, and the four committed Android AARs stay required.
+        require(path.is_file() and (hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"] or name in label_patch_paths), "Capture source drift: " + name)
+    print(f"Capture inputs verified: 295 required repository files; {131 - absent_archival} present / {absent_archival} absent archival SDK files.")
+
+
 def main() -> None:
     listing = json.loads((ROOT / "marketing/store/store-listing.json").read_text(encoding="utf-8"))
     for key, limit in (("title", 30), ("short_description", 80), ("full_description", 4000)):
@@ -72,12 +115,7 @@ def main() -> None:
         for key in ("profile", "description", "method", "device_class"):
             require(bool(capture.get(key)), f"Capture lacks {key}: {relative}")
     if captures:
-        source = json.loads((capture_root / manifest["capture_source"]).read_text(encoding="utf-8"))
-        label_patch_paths = verify_capture_label_patch(source)
-        for entry in source["runtime_files"]:
-            path = (ROOT / entry["path"]).resolve()
-            require(path.is_relative_to(ROOT), "Capture source path leaves repository")
-            require(path.is_file() and (hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"] or entry["path"] in label_patch_paths), f"Capture source drift: {entry['path']}")
+        verify_capture_sources(capture_root / manifest["capture_source"])
     native_path = capture_root / "android-provenance.json"
     native_captures = []
     if native_path.is_file():

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "expansion_draft_local_only",
+  "status": "expanded_development_edition_store_draft",
   "release_ready": false,
   "locale": "en-US",
   "package_name": "com.ethannyakabuski.prismquarry",
@@ -50,6 +50,6 @@
     "chambers_per_biome": 20,
     "workshop_choices": 6,
     "ranks_per_choice": 12,
-    "acceptance_status": "42 genuine expanded desktop captures, local automated/browser checks and static APK/AAB/Web exports are recorded in docs/EXPANSION_ACCEPTANCE.md. New Android installation/play remains unverified. The public build remains the earlier edition; no expansion push, hosted CI or deployment is claimed."
+    "acceptance_status": "42 genuine expanded desktop captures, local automated/browser checks and static APK/AAB/Web exports are recorded in docs/EXPANSION_ACCEPTANCE.md. Publication is authorized; verify the exact served revision through live build.json and matching validation/Pages workflow results. The dated local receipt remains prepublication evidence. New Android installation/play and Google Play store release remain unverified."
   }
 }

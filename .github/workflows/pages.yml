@@ -27,6 +27,7 @@ jobs:
           export PATH="$RUNNER_TEMP/prism-godot:$PATH"
           timeout 180 Godot_v4.5.1-stable_linux.x86_64 --headless --editor --path . --import
           python tools/validate_store.py
+          python tests/test_capture_portability.py
           python tools/build_achievement_import.py --verify marketing/play-games-achievements/prism-quarry-achievements-google-play.zip
           python platform/tests/validate_platform.py
           python platform/tests/run_tests.py --godot "$RUNNER_TEMP/prism-godot/Godot_v4.5.1-stable_linux.x86_64"

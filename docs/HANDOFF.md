@@ -1,8 +1,8 @@
 # Prism Quarry handoff
 
-**Expansion snapshot, 2026-11-14:** the working tree now contains 200 chambers, ten biomes, six twelve-rank upgrades and 42 refreshed desktop captures. This expansion is local only: no new push, CI run or deployment is claimed; the public build remains `58f069e`. [EXPANSION_ACCEPTANCE.md](EXPANSION_ACCEPTANCE.md) records the new automated/browser checks, static exports and remaining Android acceptance. The sections below retain the dated 30-chamber/B14 history and must not be read as proof of the expansion. The Nov13 and B14 JSON receipts remain unchanged.
+**Expanded development edition:** 200 chambers, ten biomes, six twelve-rank upgrades and 42 genuine desktop captures. Publication is authorized. Use [served build.json](https://ethannyakabuski.github.io/prism-quarry/build.json) and its matching [validation](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/ci.yml) and [Pages](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/pages.yml) runs to identify the exact published revision. [EXPANSION_ACCEPTANCE.md](EXPANSION_ACCEPTANCE.md) records the expanded checks and remaining Android limits; its dated local JSON receipt remains prepublication evidence. The historical edition section below retains the earlier 30-chamber/B14 record, and the historical JSON receipts remain unchanged.
 
-## Current local expansion deliverables
+## Expansion deliverables
 
 The source has 200 chambers, ten biomes and six twelve-rank upgrades. The local review includes 42 genuine desktop captures, with original hashes and a narrow attestation for the later unpictured result-button text correction. See [expansion acceptance](EXPANSION_ACCEPTANCE.md), [exact local artifact receipt](expansion-evidence.json) and [economy/migration details](ECONOMY_AND_MIGRATION.md).
 
@@ -14,7 +14,7 @@ The source has 200 chambers, ten biomes and six twelve-rank upgrades. The local 
 | `review/index.html` | Direct-file review with current expansion fallback images; HTTP enables all 42 desktop captures and profile controls |
 | `marketing/play-games-achievements/prism-quarry-achievements-google-play.zip` | Updated milestone wording; unchanged keys/thresholds/points; SHA256 `f978d0f1338d01acee607fad9e713362a3e1ce35b735f63f2d5be7f5af5aa60e` |
 
-Build outputs are ignored local artifacts, not repository downloads. The ordinary Web export passed fresh-profile input, payout/reload, untouched-exit and unavailable-continuation checks; representative chambers 1, 101 and 200 were played separately in an explicitly seeded QA browser build. New Android installation/play remains unverified. A minor decorative Web floor/backwall palette difference is documented; gameplay remains readable. No new push, hosted CI, deployment or store publication is claimed.
+Build outputs listed above are ignored local artifacts, not repository downloads. The ordinary Web export passed local fresh-profile input, payout/reload, untouched-exit and unavailable-continuation checks; representative chambers 1, 101 and 200 were played separately in an explicitly seeded QA browser build. New Android installation/play remains unverified. A minor decorative Web floor/backwall palette difference is documented; gameplay remains readable. Publication status must be checked against the served identity and matching workflow results, separately from these local observations. No Google Play store publication is claimed.
 
 ## Historical edition record
 
