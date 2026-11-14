@@ -72,7 +72,7 @@
       picture.addEventListener("error", () => { figure.textContent = ""; figure.className = "pending"; figure.textContent = "Native capture file unavailable: " + capture.path; });
       link.append(picture);
       const caption = document.createElement("figcaption");
-      const title = document.createElement("strong"); title.textContent = capture.title;
+      const title = document.createElement("strong"); title.textContent = capture.title.replace(/^Final APK:/, "Nov13 APK:").replace(/^Prior build:/, "Nov13 earlier APK:");
       const details = document.createElement("span"); details.textContent = `${capture.width} × ${capture.height} · actual Android emulator. ${capture.description}`;
       const method = document.createElement("div"); method.textContent = capture.method;
       caption.append(title, details, method); figure.append(link, caption);

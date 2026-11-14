@@ -1,6 +1,7 @@
 {
-  "state": "Frozen runtime after touch-teardown correction; file hashes identify source exactly",
-  "captured_utc": "2026-11-13T18:06:07.4881312Z",
+  "state": "Frozen runtime after ASCII Pause and numeric-shot label correction; all 18 images freshly rendered from the identified source",
+  "captured_utc": "2026-11-14T02:04:16.443703+00:00",
+  "source_commit": "363d0f6c9728fc4ed72c9322fe9f688cd68510ac",
   "runtime_files": [
     {
       "path": "game/cavern.gd",
@@ -14,8 +15,8 @@
     },
     {
       "path": "game/main.gd",
-      "sha256": "074759d140f4f40e9d13389e5adf853346e8f011d773d4ce93be504cf60589ca",
-      "bytes": 31635
+      "sha256": "6537a29f52074ba0fd9d75151d8e83e8912a681820d801567c02a4af07e3da8f",
+      "bytes": 31608
     },
     {
       "path": "game/profile.gd",

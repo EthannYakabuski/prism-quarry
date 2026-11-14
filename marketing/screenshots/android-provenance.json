@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "status": "selected_clean_native_evidence",
-  "summary": "Actual Android emulator evidence: nine corrected-APK frames (SHA69581fe0...) across phone,7-inch and10-inch emulated size profiles, plus two explicitly labelled prior-APK Google test-ad QA frames. No physical devices. Full network disconnection was not established. All PNGs are unmodified; exact APK hashes are recorded per frame.",
+  "status": "retained_2026_11_13_native_evidence_before_ascii_label_fix",
+  "summary": "Historical Android emulator evidence from 2026-11-13, before the ASCII Pause/numeric-shot label fix: nine APK69581fe0... frames across phone, 7-inch and 10-inch emulated size profiles, plus two earlier APK8e819721... Google test-ad QA frames. These images do not depict the later label-corrected build. No physical devices; full network disconnection was not established. PNGs and per-frame APK hashes are unchanged.",
   "final_apk_sha256": "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c",
   "captures": [
     {
