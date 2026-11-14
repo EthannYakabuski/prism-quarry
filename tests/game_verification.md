@@ -1,6 +1,7 @@
 # Core verification
 
-Godot 4.5.1 Compatibility; final local core pass on 13 November 2026.
+Godot 4.5.1 Compatibility. Baseline core evidence is dated 13 November 2026;
+the local B14 label-correction rerun is dated 14 November 2026.
 
 `game_model_test.gd`: **189 checks, zero failures**. It simulates every authored
 chamber with the baseline drill, verifies three-star reachability within the
@@ -26,7 +27,8 @@ preview uses the same horizon and the same wall/bumper rules. It uses 90 Hz
 sampling while actual motion uses bounded 120 Hz substeps, so grazing contacts
 can differ slightly.
 
-`game_ui_test.gd`: **90 checks, zero failures**. A Viewport pointer press/release
+`game_ui_test.gd`: **128 checks, zero failures on 14 November 2026** after B14
+(the retained Nov13 pass had 90 checks). A Viewport pointer press/release
 actually launches the first seam. Checks include stationary pause, Back while
 paused, foreground/background audio and explicit resume, cold restoration,
 completion/results, repeated payouts, zero-activity abandonment, stale-run
@@ -47,9 +49,9 @@ the environment's root-certificate-store diagnostic, without a script
 exception. The real graphical capture passes emitted only the certificate
 diagnostic. No renderer error appeared in the graphical captures.
 
-`game_capture.gd` produced eighteen unmodified real viewport PNGs using OpenGL
-3.3 on NVIDIA RTX A400: phone 1080×1920, 7-inch viewport 1200×1920, and 10-inch
-viewport 1600×2560. Six views per profile: home, gameplay, Azure, Violet,
+The Nov14 `game_capture.gd` refresh produced eighteen unmodified real viewport PNGs using OpenGL
+3.3 on NVIDIA RTX A400: phone 1080 x 1920, 7-inch viewport 1200 x 1920, and 10-inch
+viewport 1600 x 2560. Six views per profile: home, gameplay, Azure, Violet,
 workshop and results. Later chambers are selected directly by a fixture;
 results are computed by the actual shot model. The screenshots are desktop
 viewport evidence, not physical Android-device screenshots or human gameplay.
@@ -77,6 +79,29 @@ report; the CI wrapper scans the completed engine log because Godot does not
 expose the consumed `--log-file` option to the script reliably. The paired
 local evidence is `build/evidence/touch-teardown-comparison.json`.
 
-All eighteen captures were regenerated after this correction and the singular
-`1 shot` result-label correction. Native repeat acceptance belongs to the
-rebuilt ordinary APK, not the earlier APK that first exposed the diagnostic.
+All eighteen Nov13 captures were regenerated after this correction and the
+singular `1 shot` result-label correction. Native repeat acceptance belongs
+to the corrected Nov13 ordinary APK, not the earlier APK that first exposed
+the diagnostic. Neither that APK nor those captures establishes the later
+B14 label correction.
+
+## B14 label correction, Nov14 local snapshot
+
+Revision `363d0f6c9728fc4ed72c9322fe9f688cd68510ac` replaces the unsupported pause
+symbol with ASCII `Pause`, sets its minimum control size to 96 x 44, and uses
+a numeric shot counter. The updated local UI suite passed **128 checks**;
+the touch regression passed **ten transitions with zero teardown errors**.
+
+The correction passed actual isolated desktop-browser verification in deployed
+revision `7950a924c434f5f7755bf311e9eee37b866173d1`: readable Pause and 3/2/1
+shot counters, Pause/Resume, chamber-3 completion and chamber-4 paused reload
+recovery retaining one shot, zero crystals and zero points. Validation run
+43544718140 and Pages run 43544773056 succeeded. Later documentation-only
+deployment continuity needs its own exact-SHA receipt. Retained Nov13 Android binary hashes,
+native captures and `docs/build-evidence.json` are unchanged historical
+evidence. All 18 desktop images were freshly captured from B14 in three sequential
+graphical runs with isolated QA profiles, then visually inspected. Pause and numeric
+shot labels are readable in all three viewport profiles. Dimensions, image hashes,
+six successful saves per run and unchanged 93-file source identity were verified.
+The previous desktop captures and manifests are preserved in the ignored local
+capture archive; the public desktop manifests identify the new frozen source.

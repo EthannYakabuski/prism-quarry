@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-11-14T02:12:56.358611+00:00",
+  "scope": "B14 ASCII Pause and numeric-shot label correction; local fixtures, genuine desktop captures, rebuilt Android static validation and verified live Web input/persistence",
+  "runtime_source_commit": "363d0f6c9728fc4ed72c9322fe9f688cd68510ac",
+  "capture_publication_commit": "7950a924c434f5f7755bf311e9eee37b866173d1",
+  "change": {
+    "pause_label": "Pause",
+    "pause_minimum_size": [
+      96,
+      44
+    ],
+    "shot_label": "Numeric count with SHOT/SHOTS LEFT; no symbol glyphs",
+    "physics_or_platform_logic_changed": false
+  },
+  "ui_fixture": {
+    "checks": 128,
+    "failures": [],
+    "evidence_class": "headless UI/input dispatch and synthetic lifecycle/reward/storage fixtures; not native SDK or physical-device acceptance",
+    "layout_sizes": [
+      [
+        360,
+        640
+      ],
+      [
+        540,
+        960
+      ],
+      [
+        1280,
+        720
+      ]
+    ],
+    "shot_counts_checked": [
+      0,
+      1,
+      3,
+      6
+    ],
+    "report": "build/evidence/game-ui.json",
+    "report_sha256": "c4d9efc84fd824f31b32a3748f24b8942f7534d402e40332ddbb0a9c9e21cc59"
+  },
+  "touch_fixture": {
+    "checks": 10,
+    "failures": [],
+    "can_process_errors": 0,
+    "evidence_class": "headless ScreenTouch dispatch fixture; not physical or Android device input",
+    "report": "build/evidence/touch-regression-validation.json",
+    "report_sha256": "5a9a523029f21bddcaf253fa9ac326e22f492c145846713f58bebd775c2e0260"
+  },
+  "desktop_captures": {
+    "images": 18,
+    "captured_utc": "2026-11-14T02:04:16.443703+00:00",
+    "runtime_source_files": 93,
+    "source_unchanged_during_capture": true,
+    "manifest": "marketing/screenshots/provenance.json",
+    "manifest_sha256": "f743bc63bdee4d2770c485352a6366156df0718668d4920fa6361a1a4487d8d6",
+    "source_manifest": "marketing/screenshots/capture-source.json",
+    "source_manifest_sha256": "a4d30410beae8f487ecc3dc52d12983fd3d3f8d0d95b55bc98db262639ea2e2b",
+    "visual_review": {
+      "images": 18,
+      "gameplay_views": "Pause and numeric shots readable across all three profiles; no overlap or missing-symbol boxes observed",
+      "other_views": "Home, workshop and results inspected by independent review agent",
+      "pixel_editing": false
+    },
+    "evidence_class": "Unmodified graphical Godot desktop fixtures, not Android or live-browser captures"
+  },
+  "android": {
+    "runtime_source_commit": "363d0f6c9728fc4ed72c9322fe9f688cd68510ac",
+    "runtime_matches_frozen_commit": true,
+    "evidence": "Debug exports and static package checks only; these refreshed binaries were not installed or played on Android.",
+    "old_played_artifacts_preserved_at": "build/native/pre-glyph-fix-20261114",
+    "engine": "4.5.1.stable.official.f62fdbde1",
+    "package": "com.ethannyakabuski.prismquarry",
+    "artifacts": [
+      {
+        "file": "build/android/prism-quarry-test.apk",
+        "bytes": 274649002,
+        "sha256": "2d448b5ef11dd8ac8d3b302faa35271ed2c9649f4b86dd271f7803680cff14ff",
+        "source_fingerprint_sha256": "8d4bee2e8e8bfc0879009a822f25d30bf46864fe350c68c11784625a91164c26",
+        "source_unchanged_during_export": true,
+        "export_returncode": 0,
+        "fresh_artifact": true,
+        "platform_validation_passed": true,
+        "elf_64bit_load_alignment_16kb_pass": true,
+        "payload": {
+          "asset_entries": 522,
+          "test_configuration": true,
+          "blank_disabled_pgs": true,
+          "forbidden_entries": [],
+          "added_entries": [],
+          "removed_entries": [],
+          "changed_entries_from_played_build": [
+            "assets.sparsepck",
+            "game/main.gdc"
+          ]
+        },
+        "native_played": false,
+        "export_error_markers": [],
+        "export_stderr_bytes": 0
+      },
+      {
+        "file": "build/android/prism-quarry-debug.aab",
+        "bytes": 102129568,
+        "sha256": "2c84afade5ab16a22d536f22828129c258dfd633353e277333d53488da4eb39a",
+        "source_fingerprint_sha256": "8d4bee2e8e8bfc0879009a822f25d30bf46864fe350c68c11784625a91164c26",
+        "source_unchanged_during_export": true,
+        "export_returncode": 0,
+        "fresh_artifact": true,
+        "platform_validation_passed": true,
+        "elf_64bit_load_alignment_16kb_pass": true,
+        "payload": {
+          "asset_entries": 522,
+          "test_configuration": true,
+          "blank_disabled_pgs": true,
+          "forbidden_entries": [],
+          "added_entries": [],
+          "removed_entries": [],
+          "changed_entries_from_played_build": [
+            "assets.sparsepck",
+            "game/main.gdc"
+          ]
+        },
+        "native_played": false,
+        "export_error_markers": [],
+        "export_stderr_bytes": 0
+      }
+    ],
+    "both_exports_used_same_source": true,
+    "limitations": [
+      "No refreshed Android runtime test",
+      "No physical-device or 16KB-device execution",
+      "No ZIP alignment or AAB BundleConfig page-size declaration check",
+      "Debug signing only; no Play publication"
+    ],
+    "apk_manifest": {
+      "package": "com.ethannyakabuski.prismquarry",
+      "min_sdk": 24,
+      "target_sdk": 36,
+      "google_sample_admob_app_id_present": true,
+      "play_games_app_id_absent": true,
+      "manifest_check": "PASS"
+    }
+  },
+  "android_receipt": {
+    "source": "build/native/glyph-fix/summary.json",
+    "sha256": "f342072414d161c758e742a513b76d5ea3ca18b180e6c41649de4bb25f2799c5",
+    "actual_artifact_hashes_reread_and_matched": true
+  },
+  "corrected_live_verification": {
+    "status": "passed",
+    "verified_date": "2026-11-14",
+    "tested_source_commit": "7950a924c434f5f7755bf311e9eee37b866173d1",
+    "runtime_source_commit": "363d0f6c9728fc4ed72c9322fe9f688cd68510ac",
+    "validation_run": {
+      "id": 43544718140,
+      "conclusion": "success",
+      "url": "https://github.com/EthannYakabuski/prism-quarry/actions/runs/43544718140"
+    },
+    "pages_run": {
+      "id": 43544773056,
+      "conclusion": "success",
+      "url": "https://github.com/EthannYakabuski/prism-quarry/actions/runs/43544773056"
+    },
+    "play_url": "https://ethannyakabuski.github.io/prism-quarry/play/",
+    "review_url": "https://ethannyakabuski.github.io/prism-quarry/review/",
+    "current_source_identity_url": "https://ethannyakabuski.github.io/prism-quarry/build.json",
+    "http_verification": {
+      "passed": true,
+      "responses": 98,
+      "web_file_hashes": 9,
+      "pck_entries": 516,
+      "only_changed_pck_script_from_pre_fix_payload": "main.gdc",
+      "desktop_captures": 18,
+      "historical_native_captures": 11
+    },
+    "browser": {
+      "environment": "Isolated desktop in-app browser",
+      "method": "Actual pointer input, rendered game and page reload; no save fixtures injected",
+      "initial_retained_progress": {
+        "miner_level": 2,
+        "ore": 218,
+        "next_chamber": 3
+      },
+      "labels": {
+        "pause": "Pause",
+        "observed_shot_labels": [
+          "3 SHOTS LEFT",
+          "2 SHOTS LEFT",
+          "1 SHOT LEFT"
+        ],
+        "missing_glyph_boxes": false,
+        "clipping_observed": false
+      },
+      "chamber_3": {
+        "pause_resume_initial_state": {
+          "shots": 3,
+          "crystals": 0,
+          "score": 0
+        },
+        "actual_drag_shot": true,
+        "result": {
+          "crystals": 20,
+          "score": 6750,
+          "ricochets": 1,
+          "shots_used": 1,
+          "stars": 3,
+          "ore_awarded": 159,
+          "xp_awarded": 115
+        }
+      },
+      "chamber_4": {
+        "initial_shots": 3,
+        "actual_drag_then_immediate_recall_cycles": 2,
+        "shots_after_each_cycle": [
+          2,
+          1
+        ],
+        "pause_then_reload_restored": "SHIFT PAUSED",
+        "explicit_resume_required": true,
+        "resumed_state": {
+          "shots": 1,
+          "crystals": 0,
+          "score": 0
+        },
+        "pause_label_readable_after_reload": true
+      },
+      "console_warning_error_entries_at_final_query": [],
+      "console_scope": "Point-in-time query; not a whole-session warning-free claim",
+      "storage_cleared": false,
+      "personal_browser_profile_used": false,
+      "security_settings_changed": false
+    },
+    "earlier_verified_pre_fix_live_commit": "769b3cd9424f5f7181104f39791e092e56a72fa9"
+  },
+  "historical_evidence": {
+    "nov13_receipt": "docs/build-evidence.json",
+    "nov13_receipt_sha256": "191a6e435d1520cd20b64fca5a31ff7f62719dec53be834e3eb4c167710c653e",
+    "native_manifest": "marketing/screenshots/android-provenance.json",
+    "native_images": 11,
+    "native_images_are_historical_pre_label_fix": true,
+    "native_capture_apk_hashes": [
+      "69581fe0ab4ece0fa08a7fab40eb2084f747500aa6a3254faa740022eec5b60c",
+      "8e8197219668567c475ae79f0e199ac4110b89fc0dc6902462103a9ba0a1ec80"
+    ]
+  },
+  "updated_utc": "2026-11-14T02:20:18.948800+00:00",
+  "final_documentation_publication": {
+    "status": "separate_continuity_receipt_required",
+    "scope": "Later evidence-only documentation commit; gameplay verification remains bound to tested7950a924 and unchanged runtime363d0f6",
+    "local_receipt": "build/publication-glyph-fix-final.json",
+    "receipt_is_git_ignored": true,
+    "current_source_identity_url": "https://ethannyakabuski.github.io/prism-quarry/build.json",
+    "deployment_of_final_documentation_claimed": false
+  }
+}
