@@ -6,8 +6,8 @@
   "points_reserved": 1280,
   "default_locale": "en-US",
   "localization_rows": 0,
-  "zip_bytes": 9338716,
-  "zip_sha256": "04d294a6122d6ec07502eed943d5e25c21c25eb49bd533c4064db01baa54f14d",
+  "zip_bytes": 9338709,
+  "zip_sha256": "f978d0f1338d01acee607fad9e713362a3e1ce35b735f63f2d5be7f5af5aa60e",
   "console_upload_performed": false,
   "console_acceptance_verified": false,
   "files": [
@@ -18,8 +18,8 @@
     },
     {
       "name": "AchievementsMetadata.csv",
-      "bytes": 1548,
-      "sha256": "a5dc03cae96f489863d880c9be3349c3723dda7bdfcda0a012a22cf978947f5f"
+      "bytes": 1550,
+      "sha256": "0673f8e13a7438a309c3bca66fdfef8c7f57217046a7d43b311e981d25396ce7"
     },
     {
       "name": "amber_cartographer.png",
@@ -162,8 +162,8 @@
       "height": 512
     }
   ],
-  "checked_at_utc": "2026-11-13T17:23:37.781605+00:00",
-  "catalog_sha256": "5924a5d926e3b977b5fd7d746d2b8a8b39efd390e8e17314307bafe23fa488f5",
+  "checked_at_utc": "2026-11-14T03:57:12.862713+00:00",
+  "catalog_sha256": "021d3ce5ad404794744fa41f0a7e2ea5cd053a00b83a2d980fe7988fd6129c0b",
   "sources_checked_date": "2026-11-13",
   "official_sources": [
     "https://developer.android.com/games/pgs/integrate-achievements#zip-file-guidelines",

@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-11-14T04:41:45.378017+00:00",
+  "state": "Local uncommitted expansion; not pushed, hosted CI-tested or deployed. Public Pages remains the earlier 58f069e edition.",
+  "publication_performed": false,
+  "head_at_capture": "58f069e27e0bdb14fad42a47a0d82a20ed489043",
+  "final_runtime_source": {
+    "sha256": "4b5bcf9e4903282b5ae1f846025e63ff15d8037ea89db88bd6b9664ced33e08d",
+    "file_count": 443,
+    "scope": [
+      "project.godot",
+      "export_presets.cfg",
+      "LICENSE",
+      "NOTICE",
+      "game",
+      "scenes",
+      "platform",
+      "addons",
+      "assets",
+      "LICENSES"
+    ],
+    "exclusions": [
+      "*.uid",
+      "*.import",
+      "*.pyc",
+      "__pycache__"
+    ],
+    "main_gd_sha256": "b7045cccc9b2d64730e10d189f6bad4164d2135999315a185c71f04d7947b3d1",
+    "all_exports_same_source": true,
+    "source_unchanged_during_exports": true
+  },
+  "automated_checks": {
+    "campaign": {
+      "checks": 4398,
+      "failures": 0,
+      "campaign_baseline_replays": 200,
+      "seeded_daily_baseline_replays": 200,
+      "daily_mirrored_layouts": 108,
+      "upgraded_replays_claimed": false
+    },
+    "profile_economy": {
+      "checks": 8732,
+      "failures": 0
+    },
+    "historical_native_save_migration": {
+      "actual_prior_qa_saves": 5,
+      "checks": 30,
+      "failures": 0,
+      "new_native_play": false
+    },
+    "ui_final_label": {
+      "checks": 219,
+      "failures": 0,
+      "source_unchanged": true
+    },
+    "touch_final_label": {
+      "transitions": 10,
+      "failures": 0,
+      "can_process_errors": 0
+    },
+    "platform_callbacks": {
+      "checks": 36,
+      "failures": 0,
+      "fresh_isolated_project": true,
+      "native_sdk_proof": false
+    },
+    "capture_attestation": {
+      "checks": 6,
+      "failures": [],
+      "cases": [
+        "exact approved label patch accepted",
+        "unknown patch kind rejected",
+        "unrelated source path rejected",
+        "wrong current hash rejected",
+        "unrelated edit rejected even with matching updated current hash",
+        "changed capture fixture rejected"
+      ],
+      "scope": "Temporary copied files only; real game and capture bytes were not modified."
+    }
+  },
+  "captures": {
+    "desktop_count": 42,
+    "visually_reviewed": 42,
+    "historical_native_count": 11,
+    "captured_runtime_sha256": "d626287db94a8afa57f92a967986726a6e01154b052ee340846b62aab2861059",
+    "captured_runtime_file_count": 426,
+    "post_capture_label_patch": {
+      "kind": "final_chamber_button_text_only",
+      "path": "game/main.gd",
+      "captured_sha256": "b814a5159b890939819f5fc6f7cd50ea454a86fb779fc34d3c6ff60a94bbaa2f",
+      "current_sha256": "b7045cccc9b2d64730e10d189f6bad4164d2135999315a185c71f04d7947b3d1",
+      "old_label": "Back to the workshop",
+      "new_label": "Return home",
+      "reason": "The result branch used after the final campaign chamber or a non-campaign win returns home; the previous label named the workshop. Callback and behavior unchanged.",
+      "image_scope": "None of these 42 images shows that result branch. The results fixture is campaign chamber one; image bytes and original capture source hashes are preserved.",
+      "verification": "Reversing the one exact final-result button statement reproduces the captured main.gd hash; all other captured source files must still match. Capture script hash also must match."
+    },
+    "manifest": "../marketing/screenshots/provenance.json"
+  },
+  "android": {
+    "apk": {
+      "passed": true,
+      "artifact": {
+        "path": "build/expansion-20261114/android/prism-quarry-test.apk",
+        "bytes": 274771924,
+        "sha256": "0c4395be2dd47dab846d0fc4b9113b555e2494694fa27914f4cff8d27a50be74"
+      },
+      "ordinary_player_build": true,
+      "build_and_static_verification_only": true,
+      "native_played": false,
+      "source_fingerprint": "4b5bcf9e4903282b5ae1f846025e63ff15d8037ea89db88bd6b9664ced33e08d",
+      "source_file_count": 443,
+      "source_unchanged_during_export": true,
+      "prior_artifact_unchanged": true,
+      "manifest": {
+        "package": "com.ethannyakabuski.prismquarry",
+        "version_name": "1.1.0",
+        "version_code": 2,
+        "min_sdk": 24,
+        "target_sdk": 36,
+        "google_sample_admob_app_id_present": true,
+        "play_games_app_id_absent": true,
+        "source": "actual binary APK manifest"
+      },
+      "signature_verified": true,
+      "signing_status": "verified_debug_certificate",
+      "signing_certificate_sha256": "8382ec1c56494eb35141e0ed29986d2ec5009c529b096a2fd60d5fc5c5213e4f",
+      "same_certificate_as_previous": true,
+      "same_signing_status_as_previous": true,
+      "native_libraries": {
+        "arm64-v8a": [
+          "libc++_shared.so",
+          "libgodot_android.so"
+        ],
+        "x86": [
+          "libc++_shared.so",
+          "libgodot_android.so"
+        ],
+        "x86_64": [
+          "libc++_shared.so",
+          "libgodot_android.so"
+        ]
+      },
+      "elf_64bit_load_alignment_16kb_pass": true,
+      "payload": {
+        "asset_entries": 539,
+        "all_zip_crc_valid": true,
+        "required_entries": [
+          "game/main.gdc",
+          "game/run.gdc",
+          "game/profile.gdc",
+          "game/upgrades.gdc",
+          "game/chambers.gdc",
+          "game/chambers_legacy.gdc",
+          "game/chamber_expansion_data.gdc",
+          "game/campaign_blueprints.json",
+          "platform/config.json",
+          "game/catalog.json"
+        ],
+        "forbidden_entries": [],
+        "test_configuration_matches_source": true,
+        "blank_disabled_pgs": true,
+        "runtime_script_sha256": {
+          "game/main.gdc": "2e79088fed92f7784a36347007759ef4b9c93ded419564a42c37fa3c8be102ca",
+          "game/run.gdc": "67fb02db6b6cb4861f5346b2df3f0ea72821e2b245367a42e84c7ff77251ca41",
+          "game/profile.gdc": "acc2ff17fae5a204d73101feda97358e51fa41146926c8eb57887940646cc94f",
+          "game/upgrades.gdc": "cca8f7cb7c1d9f979817b682ad515883c67dcec0983577e66707ed08893bf1ad",
+          "game/chambers.gdc": "a2d129f326d3142582c02e92e564f9855de5a6817475e4b33a01312548ca7225",
+          "game/chambers_legacy.gdc": "02da5434e53329dd6831a1055a30398081565d66d674c10e3c487f40ceb2f3f4",
+          "game/chamber_expansion_data.gdc": "808ea999c2aa569a2ed4916933964d7e59972670338a28cc85c03add84e798b6"
+        }
+      },
+      "limitations": [
+        "No new Android device gameplay or update-install test",
+        "No 16KB-device execution or ZIP/page-size configuration claim",
+        "APK debug signed; AAB unsigned development bundle; no store publication"
+      ]
+    },
+    "aab": {
+      "passed": true,
+      "artifact": {
+        "path": "build/expansion-20261114/android/prism-quarry-debug.aab",
+        "bytes": 102253043,
+        "sha256": "5bc87f3da28cf5452f335befc0abec3034a87e39ddc31bd979d13b9f5c90d5a2"
+      },
+      "ordinary_player_build": true,
+      "build_and_static_verification_only": true,
+      "native_played": false,
+      "source_fingerprint": "4b5bcf9e4903282b5ae1f846025e63ff15d8037ea89db88bd6b9664ced33e08d",
+      "source_file_count": 443,
+      "source_unchanged_during_export": true,
+      "prior_artifact_unchanged": true,
+      "manifest": {
+        "package": "com.ethannyakabuski.prismquarry",
+        "version_code": 2,
+        "version_name": "1.1.0",
+        "min_sdk": 24,
+        "target_sdk": 36,
+        "admob_app_id": "ca-app-pub-3940256099942544~3347511713",
+        "play_games_app_id": null,
+        "play_games_app_id_present": false,
+        "google_sample_admob_app_id_present": true,
+        "play_games_app_id_absent": true,
+        "manifest_sha256": "a67fd87da06b6bbbe12b12c9ebe2fd6979d6748db4bb0aa4c2b7bc9999c0a274"
+      },
+      "signature_verified": false,
+      "signing_status": "unsigned_development_bundle",
+      "signing_certificate_sha256": null,
+      "same_certificate_as_previous": null,
+      "same_signing_status_as_previous": true,
+      "native_libraries": {
+        "arm64-v8a": [
+          "libc++_shared.so",
+          "libgodot_android.so"
+        ],
+        "x86": [
+          "libc++_shared.so",
+          "libgodot_android.so"
+        ],
+        "x86_64": [
+          "libc++_shared.so",
+          "libgodot_android.so"
+        ]
+      },
+      "elf_64bit_load_alignment_16kb_pass": true,
+      "payload": {
+        "asset_entries": 539,
+        "all_zip_crc_valid": true,
+        "required_entries": [
+          "game/main.gdc",
+          "game/run.gdc",
+          "game/profile.gdc",
+          "game/upgrades.gdc",
+          "game/chambers.gdc",
+          "game/chambers_legacy.gdc",
+          "game/chamber_expansion_data.gdc",
+          "game/campaign_blueprints.json",
+          "platform/config.json",
+          "game/catalog.json"
+        ],
+        "forbidden_entries": [],
+        "test_configuration_matches_source": true,
+        "blank_disabled_pgs": true,
+        "runtime_script_sha256": {
+          "game/main.gdc": "2e79088fed92f7784a36347007759ef4b9c93ded419564a42c37fa3c8be102ca",
+          "game/run.gdc": "67fb02db6b6cb4861f5346b2df3f0ea72821e2b245367a42e84c7ff77251ca41",
+          "game/profile.gdc": "acc2ff17fae5a204d73101feda97358e51fa41146926c8eb57887940646cc94f",
+          "game/upgrades.gdc": "cca8f7cb7c1d9f979817b682ad515883c67dcec0983577e66707ed08893bf1ad",
+          "game/chambers.gdc": "a2d129f326d3142582c02e92e564f9855de5a6817475e4b33a01312548ca7225",
+          "game/chambers_legacy.gdc": "02da5434e53329dd6831a1055a30398081565d66d674c10e3c487f40ceb2f3f4",
+          "game/chamber_expansion_data.gdc": "808ea999c2aa569a2ed4916933964d7e59972670338a28cc85c03add84e798b6"
+        }
+      },
+      "limitations": [
+        "No new Android device gameplay or update-install test",
+        "No 16KB-device execution or ZIP/page-size configuration claim",
+        "APK debug signed; AAB unsigned development bundle; no store publication"
+      ]
+    }
+  },
+  "web_export": {
+    "result": "PASS - static exported-byte validation only",
+    "godot": "4.5.1",
+    "pck_version": 3,
+    "pck_entries": 533,
+    "all_entry_checksums_verified": true,
+    "web_threads": false,
+    "required_entries": [
+      "project.binary",
+      "game/catalog.json",
+      "assets/audio/manifest.json",
+      "platform/config.json",
+      "scenes/main.tscn.remap",
+      "game/main.gdc",
+      "game/run.gdc",
+      "game/profile.gdc",
+      "game/chambers.gdc",
+      "game/chambers_legacy.gdc",
+      "game/chamber_expansion_data.gdc",
+      "game/cavern.gdc",
+      "game/upgrades.gdc",
+      "platform/services.gdc",
+      "LICENSE",
+      "NOTICE"
+    ],
+    "unwanted_entries": [],
+    "browser_load_or_gameplay_tested": false,
+    "files": {
+      "index.apple-touch-icon.png": {
+        "bytes": 63976,
+        "sha256": "6f7a23ff81144a91a277a6179e4fb3453eb3ac6fb040a7a73cbbb9c8d9f7c2c4"
+      },
+      "index.audio.position.worklet.js": {
+        "bytes": 2973,
+        "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+      },
+      "index.audio.worklet.js": {
+        "bytes": 7298,
+        "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+      },
+      "index.html": {
+        "bytes": 5487,
+        "sha256": "7f4d3ca0a9fccc84c2206bc291a52009df08cc6586edf9eac2561007f4ddec0e"
+      },
+      "index.icon.png": {
+        "bytes": 420306,
+        "sha256": "1ff2bfabda1a2edcf24f4e2817ccdb57b63c7ae8bf40878a58141c081d5499a7"
+      },
+      "index.js": {
+        "bytes": 305185,
+        "sha256": "8a7c7d57f7da69bb71da9de302480b87e4c7ecb467ce643665b4a288683cd18f"
+      },
+      "index.pck": {
+        "bytes": 11123184,
+        "sha256": "bba01c58012a72d9f04b35ee82e8054ff00d668c53d6f0960c24c62018e7be6b"
+      },
+      "index.png": {
+        "bytes": 1326474,
+        "sha256": "72eb5ec53a345a4ed9e152f4e0b43ca7d7001fbf811b303f11298a3afef0cbdf"
+      },
+      "index.wasm": {
+        "bytes": 38034280,
+        "sha256": "6498359ba889796a0d95a2f71113ac184badc0f2d84cf28f4103c7e399d2d547"
+      }
+    },
+    "format_reference": "https://github.com/godotengine/godot/blob/4.5.1-stable/core/io/file_access_pack.cpp"
+  },
+  "web_game_scripts_identical_to_apk": {
+    "game/cavern.gdc": true,
+    "game/chamber_expansion_data.gdc": true,
+    "game/chambers.gdc": true,
+    "game/chambers_legacy.gdc": true,
+    "game/main.gdc": true,
+    "game/profile.gdc": true,
+    "game/run.gdc": true,
+    "game/upgrades.gdc": true
+  },
+  "achievement_package": {
+    "path": "marketing/play-games-achievements/prism-quarry-achievements-google-play.zip",
+    "bytes": 9338709,
+    "sha256": "f978d0f1338d01acee607fad9e713362a3e1ce35b735f63f2d5be7f5af5aa60e",
+    "achievements": 20,
+    "entries": 22,
+    "points": 720,
+    "console_import_performed": false
+  },
+  "actual_browser_scope": {
+    "environment": "isolated local desktop in-app browser",
+    "fixture": "base gear, 2500 initial ore, all campaign chambers unlocked",
+    "manually_played_chambers": [
+      1,
+      101,
+      200
+    ],
+    "chamber_200_manual_stars": 1,
+    "observations": "EXPANSION_ACCEPTANCE.md",
+    "live_deployment_test": false,
+    "android_play": false,
+    "physics_observations_precede_final_text_only_label_patch": true
+  },
+  "actual_browser_observations": {
+    "date": "2026-11-14",
+    "kind": "Actual supported CUA pointer input in isolated desktop in-app browser; observations transcribed from screenshots",
+    "origin": "http://127.0.0.1:8768/",
+    "build_receipt": "qa-web-build.json",
+    "fixture": "Local-only copied Web project: base equipment, all 200 chambers selectable, 2500 seeded ore. This is not earned progression or an ordinary release build.",
+    "source_boundary": "Gameplay below precedes the single result-button literal correction from Back to the workshop to Return home. No other runtime source changed afterward; final UI regression covers the correction.",
+    "observations": [
+      {
+        "case": "chamber 1",
+        "input": "actual drag/release",
+        "crystals": 9,
+        "score": 1800,
+        "shots": 1,
+        "stars": 3,
+        "ore": 15,
+        "xp": 82,
+        "result": "popup over cave; reload home retained 2515 ore and Miner 2"
+      },
+      {
+        "case": "chamber 101",
+        "input": "four actual manually aimed shots",
+        "crystals": 17,
+        "score": 2625,
+        "shots": 4,
+        "ricochets": 8,
+        "stars": 3,
+        "ore": 20,
+        "xp": 106,
+        "interruption": "Pause during third shot, browser reload, paused cold restore, explicit Resume, same run completed",
+        "result": "home 2535 ore"
+      },
+      {
+        "case": "chamber 200",
+        "input": "four actual manually aimed shots then Bank haul",
+        "crystals": 18,
+        "total_crystals": 21,
+        "score": 3400,
+        "shots": 4,
+        "ricochets": 10,
+        "stars": 1,
+        "ore": 22,
+        "xp": 109,
+        "result": "CHAMBER CLEAR board hold visibly observed, followed by popup; home 2557 ore"
+      },
+      {
+        "case": "workshop",
+        "input": "actual Prism resonator purchase",
+        "before_ore": 2557,
+        "after_ore": 2522,
+        "cost": 35,
+        "result": "browser reload retained 2522 ore; workshop showed rank 1/12, current 2.15 m, next 2.19 m, next price 53"
+      },
+      {
+        "case": "console",
+        "result": "No warn/error entries returned at end of this QA session"
+      }
+    ],
+    "limits": [
+      "Not Android device/emulator input",
+      "Not all 200 manually played",
+      "Not a human difficulty or play-duration study",
+      "Exact clear/popup durations verified by automated UI tests, not stopwatch measurement",
+      "Final chamber manually reached quota and one star; all 200 three-star solutions are separate automated physics evidence"
+    ],
+    "cleanup": "QA browser tab closed; cooperative loopback server shutdown verified exit 0"
+  },
+  "limitations": [
+    "Expanded Android installation/play and physical-device behavior are unverified.",
+    "AAB is an unsigned development bundle; APK uses a verified debug signature, not production signing.",
+    "Static ELF LOAD alignment is not 16KB-device execution or AAB page-size/ZIP-alignment proof.",
+    "No new hosted CI, Pages deployment, production services, Console import or Play publication is claimed."
+  ],
+  "actual_ordinary_browser": {
+    "environment": "isolated local desktop in-app browser, final ordinary Web export",
+    "seeded_fixture": false,
+    "initial_state": {
+      "ore": 10,
+      "campaign_chamber": 1
+    },
+    "chamber_1": {
+      "input": "actual drag/release",
+      "crystals": 9,
+      "points": 1800,
+      "stars": 3,
+      "ore_award": 15,
+      "xp_award": 82,
+      "after_reload": {
+        "ore": 25,
+        "miner_level": 2,
+        "campaign_chamber": 2
+      }
+    },
+    "untouched_chamber_2_exit": {
+      "actions": "Pause, Leave, confirm bank",
+      "ore_before": 25,
+      "ore_after": 25,
+      "award": 0
+    },
+    "failed_run": {
+      "input": "three actual drag/recall shots",
+      "crystals": 0,
+      "points": 0,
+      "stars": 0,
+      "continuation_available": false,
+      "unavailable_text_visible": true,
+      "fake_entitlement": false,
+      "ore_award": 1,
+      "home_ore_after_bank": 26,
+      "basis": "floor(8 * 0.2); distinct from an untouched exit"
+    },
+    "console_warn_error_query_at_end": [],
+    "final_result_Return_home_label_observed": false,
+    "final_label_verification": "219 local UI checks; this ordinary browser session did not revisit chamber 200 after the label patch",
+    "decorative_palette_variance": {
+      "observed": "floor/backwall more silver-grey than separate QA/desktop captures",
+      "gameplay_obstruction": false,
+      "cause": "unconfirmed; source GLBs, cave colormap, metadata and cavern code matched and no duplicate asset import UID was found, but imported scene blobs differed between caches",
+      "assets_or_caches_changed_to_address_it": false
+    },
+    "live_deployment_test": false,
+    "android_play": false
+  }
+}

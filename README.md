@@ -4,7 +4,9 @@
 
 ![Prism Quarry illustrated feature artwork](marketing/feature-graphic-1024x500.png)
 
-30 authored chambers span Amber Hollow, Azure Grotto and Violet Vault. The game includes a seeded daily chamber, Endless Quarry, miner XP, drill/rig progression, cosmetics, daily goals, a seven-day login cycle, local achievements and records. Branding above is promotional illustration, not a gameplay screenshot. Exact implementation acceptance and untested checks belong in [the evidence record](docs/ACCEPTANCE.md).
+This development branch expands the quarry to **200 campaign chambers across ten biomes**, with twenty chambers in each. Amber Hollow, Azure Grotto and Violet Vault return alongside Copper Foundry, Jade Canopy, Frostglass Caverns, Ember Rift, Moonstone Archive, Obsidian Crown and Prismatic Depths. Six workshop choices offer twelve ranks each: Longburn drill, Echo lens, Salvage rig, Focus tip, Prism resonator and Combo calibrator. Smaller ore payouts give those choices a longer place in the campaign; every chamber is designed for base equipment.
+
+The game also includes a seeded daily chamber, Endless Quarry, miner XP, cosmetics, daily goals, a seven-day login cycle, local achievements and records. Branding above is promotional illustration. **Local expansion snapshot:** 42 freshly rendered desktop captures now cover all ten biomes and the expanded UI. Local campaign, profile/economy and UI fixtures have passing reports; independent browser/native acceptance is tracked in the [expansion record](docs/EXPANSION_ACCEPTANCE.md). The public live links still serve the earlier `58f069e` edition; this expansion has not been pushed or deployed. See the [expansion scope](INITIAL_VECTOR_EXPANSION.md) and the dated [evidence record](docs/ACCEPTANCE.md).
 
 - [Play live](https://ethannyakabuski.github.io/prism-quarry/play/) and [live styled review](https://ethannyakabuski.github.io/prism-quarry/review/)
 - [Local styled review](review/index.html) and [capture provenance](marketing/screenshots/provenance.json)
@@ -25,7 +27,7 @@ python tools/assemble_site.py build/site
 python -m http.server 8768 --bind 127.0.0.1 --directory build/site
 ```
 
-Open `http://127.0.0.1:8768/` for the playable wrapper or `/review/` for the review. Open review/index.html directly from disk to see genuine static fallback screenshots. Serving it over HTTP loads the provenance manifests and enables the complete galleries and profile controls. WebGL 2 is required; a browser without it has not passed runtime testing. Browser saves are local, and clearing site data removes progress. Web does not simulate native ad rewards.
+Open `http://127.0.0.1:8768/` for the playable wrapper or `/review/` for the review. Open review/index.html directly from disk to see genuine static fallback screenshots. Serving it over HTTP loads the provenance manifests and enables the complete galleries and profile controls. The 42 desktop captures show the expansion; the 11 native images remain historical Nov13 evidence. Each manifest identifies the actual source and capture method. WebGL 2 is required; a browser without it has not passed runtime testing. Browser saves are local, and clearing site data removes progress. Web does not simulate native ad rewards.
 
 After matching templates, Java 17 and the Android SDK are available, the native presets are `Android` (debug AAB) and `Android Test APK`. See the platform setup for prerequisites and plugin configuration.
 
@@ -50,6 +52,8 @@ python tools/build_achievement_import.py --verify marketing/play-games-achieveme
 ```
 
 ## Verification and publication
+
+The following deployment and test results describe earlier revisions. They do not certify the 200-chamber expansion, its balance, save migration or new scenery. New evidence must identify the exact expanded source and artifact hashes.
 
 GitHub Actions validates and exports Web on standard hosted runners. Manual dispatch can also request Android test packages. Artifacts use bounded retention. The site assembler's `--require-clean --expected-sha <commit>` mode refuses a dirty or mismatched checkout after export; `build.json` binds source and Web files. See acceptance evidence for actual successful runs instead of assuming the workflow has passed.
 

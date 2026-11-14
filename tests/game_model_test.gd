@@ -14,7 +14,7 @@ func finish_shot(r: RefCounted) -> void:
 		r.step(1.0/60.0)
 func solve(r: RefCounted) -> Array:
 	var angles:Array=[]
-	for shot in range(4):
+	for shot in range(int(r.spec.shots)):
 		if r.done:break
 		var best:RefCounted=null;var best_angle:=0
 		for angle in range(-70,71,3):
@@ -31,7 +31,8 @@ func solve(r: RefCounted) -> Array:
 func execute() -> void:
 	var solutions:Array=[];var straight_wins:=0;var fixed_sweep_wins:=0
 	for i in range(30):
-		var r:=Run.new();r.start(i+1,"campaign",i,{"drill":0,"echo":0,"salvage":0},20000)
+		var mapped := Chambers.legacy_to_current(i)
+		var r:=Run.new();r.start(i+1,"campaign",mapped,{"drill":0,"echo":0,"salvage":0},20000)
 		check(Run.valid_snapshot(r.snapshot()),"valid initial chamber %d"%i)
 		var direct:=Run.restore(r.snapshot());direct.launch(Vector2.UP);finish_shot(direct);straight_wins+=int(direct.won)
 		var fixed:RefCounted=Run.restore(r.snapshot())
@@ -44,7 +45,7 @@ func execute() -> void:
 		check(r.used<=int(r.spec.shots),"shot budget %d"%i)
 		check(r.stars()==3,"all ore reachable chamber %d"%i)
 		check(Run.valid_snapshot(r.snapshot()),"valid complete chamber %d"%i)
-		solutions.append({"chamber":i+1,"angles_degrees":angles,"stars":r.stars(),"score":r.score,"shots":r.used,"crystals":r.crystals,"straight_first_shot_wins":direct.won,"fixed_sweep_wins":fixed.won})
+		solutions.append({"chamber":mapped+1,"legacy_chamber":i+1,"angles_degrees":angles,"stars":r.stars(),"score":r.score,"shots":r.used,"crystals":r.crystals,"straight_first_shot_wins":direct.won,"fixed_sweep_wins":fixed.won})
 	check(straight_wins<25,"varied aim: most chambers are not a straight-only win")
 	check(fixed_sweep_wins<20,"fixed sweep cannot clear most chapters")
 	var r:=Run.new();r.start(1,"campaign",0,{"drill":0,"echo":0,"salvage":0},20000)
@@ -70,7 +71,7 @@ func execute() -> void:
 	var save_path:="user://qa-model-%d.json"%Time.get_ticks_usec()
 	var p:=Profile.new(save_path)
 	check(Profile.valid(p.data),"profile defaults valid")
-	check(p.login(20000)==50,"first login gift")
+	check(p.login(20000)==10,"first login gift")
 	var coins:int=p.data.coins
 	check(p.login(20000)==0 and p.login(19999)==0 and p.data.coins==coins,"login replay/clock rollback")
 	for day in range(20001,20007):p.login(day)

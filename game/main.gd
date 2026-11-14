@@ -3,6 +3,9 @@ const Run = preload("res://game/run.gd")
 const Profile = preload("res://game/profile.gd")
 const Cavern = preload("res://game/cavern.gd")
 const Chambers = preload("res://game/chambers.gd")
+const Upgrades = preload("res://game/upgrades.gd")
+const CLEAR_HOLD_SECONDS := 0.85
+const RESULT_APPEAR_SECONDS := 0.28
 const INK := Color("10232c")
 const CREAM := Color("f6e9cc")
 const MUTED := Color("a9bdc4")
@@ -37,6 +40,14 @@ var music_key:=""
 var audio_manifest: Dictionary={}
 var starting:=false
 var app_focused:=true
+var clear_remaining:=0.0
+var clearing_run_id:=-1
+var clearing_depth:=-1
+var result_elapsed:=0.0
+var result_panel:Control
+var result_shade:ColorRect
+var result_buttons:Array=[]
+var map_biome:=-1
 
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
@@ -75,7 +86,7 @@ func _ready() -> void:
 	_sync_metrics()
 	if not profile.data.active.is_empty():
 		run=Run.restore(profile.data.active);cavern.build(run,int(profile.data.skin))
-		if run.done:_result()
+		if run.done:_pause("Your chamber is safe. Resume to see your haul.")
 		else:_pause("Your chamber is safe. Resume when you're ready.")
 	else:
 		_preview_run();home()
@@ -114,6 +125,7 @@ func _clear_ui() -> void:
 		child.queue_free()
 	hud_score=null;hud_ore=null;hud_shots=null;hud_bar=null;hint=null;banner_spacer=null;toast_label=null;reward_button=null;reward_hint=null
 	dragging=false;cavern.trajectory.visible=false
+	result_panel=null;result_shade=null;result_buttons.clear()
 
 func _margin(parent: Control, preset: int, top: int=20, bottom: int=-20) -> VBoxContainer:
 	var m:=MarginContainer.new();m.set_anchors_and_offsets_preset(preset);m.offset_left=24;m.offset_right=-24;m.offset_top=top;m.offset_bottom=bottom;parent.add_child(m)
@@ -133,7 +145,7 @@ func _menu_state(value: String) -> void:
 	screen=value;_clear_ui()
 	if service:service.set_banner_visible(value in ["home","result"])
 	cavern.reduced_motion=not profile.data.motion
-	_music("menu" if value in ["home","workshop","map","daily","journal","settings"] else ["amber_hollow","azure_grotto","violet_vault"][int(run.spec.theme)])
+	_music("menu" if value in ["home","workshop","map","daily","journal","settings"] else ["amber_hollow","azure_grotto","violet_vault"][int(run.spec.theme)%3])
 
 func _preview_run() -> void:
 	run=Run.new();run.start(0,"campaign",profile.unlocked_chamber(),profile.data.gear,Profile.today());cavern.build(run,int(profile.data.skin))
@@ -162,6 +174,7 @@ func start_run(mode: String, index: int) -> void:
 	run=Run.new();run.start(id,mode,index,profile.data.gear,Profile.today())
 	if not profile.store_run(run.snapshot()):starting=false;toast(profile.last_error);return
 	receipt={};reward_waiting=false;aim=Vector2(0,-1)
+	clear_remaining=0.0;clearing_run_id=-1;clearing_depth=-1;result_elapsed=0.0
 	cavern.build(run,int(profile.data.skin));starting=false;_play_ui()
 
 func _play_ui() -> void:
@@ -235,16 +248,25 @@ func _recall() -> void:
 	else:toast("Aim at the cave, then release to launch.")
 
 func _bank() -> void:
+	if screen not in ["play","depth"] or fullscreen:return
 	if run.moving:toast("Recall the drill before banking.");return
 	if run.mode!="endless" and run.stage_crystals<int(run.spec.goal):toast("Mine %d more crystals to complete this chamber."%(int(run.spec.goal)-run.stage_crystals));return
 	run.bank()
-	if _checkpoint():_result()
+	if _checkpoint():_after_step()
 
 func _process(delta: float) -> void:
 	if is_instance_valid(toast_label):
 		toast_time-=delta
 		if toast_time<=0:toast_label.queue_free();toast_label=null
-	if screen!="play" or fullscreen or run==null:return
+	if fullscreen or not app_focused or run==null:return
+	if screen=="clearing":
+		clear_remaining=maxf(0.0,clear_remaining-minf(delta,0.1))
+		if clear_remaining<=0.0:_finish_clear()
+		return
+	if screen=="result":
+		_animate_result(delta)
+		return
+	if screen!="play":return
 	var was_moving:bool=run.moving
 	run.step(delta)
 	var gems:=0
@@ -265,14 +287,54 @@ func _process(delta: float) -> void:
 		if _checkpoint():_after_step()
 
 func _after_step() -> void:
-	if run.done:_result()
-	elif run.stage_ready:
-		_menu_state("depth")
-		var card:=_dialog("SEAM COMPLETE", "A little deeper, a little brighter.")
-		card.add_child(label("%s points · %d crystals"%[_number(run.score),run.crystals],22,GOLD))
-		card.add_child(button("Descend to depth %d  ›"%(run.depth+1),_descend))
-		card.add_child(button("Bank this haul",_bank,true))
+	if run.done:
+		if run.won:_begin_clear()
+		else:_result()
+	elif run.stage_ready:_begin_clear()
 	else:cavern.show_preview(run.preview(aim))
+
+func _begin_clear() -> void:
+	if run==null or not ((run.done and run.won) or run.stage_ready):return
+	if not _checkpoint():return
+	if clearing_run_id!=run.run_id or clearing_depth!=run.depth:
+		clearing_run_id=run.run_id;clearing_depth=run.depth;clear_remaining=CLEAR_HOLD_SECONDS
+	if clear_remaining<=0.0:_finish_clear();return
+	# Keep the existing cavern/effects alive while the final cascade is readable.
+	if screen!="play":_play_ui()
+	screen="clearing";dragging=false;cavern.trajectory.visible=false
+	hint.text="SEAM CLEAR  -  BEAUTIFUL WORK" if run.stage_ready else "CHAMBER CLEAR  -  BEAUTIFUL WORK"
+	for b in _buttons_in(ui):
+		if b.text!="Pause":b.disabled=true
+
+func _finish_clear() -> void:
+	if not run.stage_ready:_result();return
+	_menu_state("depth")
+	var card:=_dialog("SEAM COMPLETE", "A little deeper, a little brighter.")
+	card.add_child(label("%s points - %d crystals"%[_number(run.score),run.crystals],22,GOLD))
+	card.add_child(button("Descend to depth %d  >"%(run.depth+1),_descend))
+	card.add_child(button("Bank this haul",_bank,true))
+
+func _buttons_in(node:Node) -> Array[Button]:
+	var found:Array[Button]=[]
+	if node.is_queued_for_deletion():return found
+	if node is Button:found.append(node)
+	for child in node.get_children():found.append_array(_buttons_in(child))
+	return found
+
+func _animate_result(delta:float) -> void:
+	if not is_instance_valid(result_panel) or not is_instance_valid(result_shade):return
+	result_elapsed=minf(RESULT_APPEAR_SECONDS,result_elapsed+minf(delta,0.1))
+	var t:=clampf(result_elapsed/RESULT_APPEAR_SECONDS,0.0,1.0)
+	var eased:=1.0-pow(1.0-t,3.0)
+	result_shade.modulate.a=eased
+	result_panel.modulate.a=eased
+	result_panel.pivot_offset=result_panel.size*0.5
+	result_panel.scale=Vector2.ONE*(lerpf(0.88,1.0,eased) if profile.data.motion else 1.0)
+	if t>=1.0:
+		for entry in result_buttons:
+			if is_instance_valid(entry.button):entry.button.disabled=entry.disabled
+		result_buttons.clear()
+		_services_updated()
 
 func _checkpoint() -> bool:
 	if run==null or run.run_id<=int(profile.data.last_paid_run):return true
@@ -285,6 +347,7 @@ func _dialog(title_text: String, description: String) -> VBoxContainer:
 	var shade:=ColorRect.new();shade.color=Color(0.01,0.025,0.04,0.67);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);ui.add_child(shade)
 	var center:=CenterContainer.new();center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);center.offset_left=24;center.offset_right=-24;center.offset_top=25;center.offset_bottom=-35-_reserve();ui.add_child(center)
 	var panel:=PanelContainer.new();panel.custom_minimum_size.x=minf(492,ui.size.x-48);panel.add_theme_stylebox_override("panel",style(Color("112d38"),22));center.add_child(panel)
+	if screen=="result":result_panel=panel;result_shade=shade
 	var v:=VBoxContainer.new();v.add_theme_constant_override("separation",14);panel.add_child(v)
 	var title:=label(title_text,30,GOLD);title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;v.add_child(title)
 	if not description.is_empty():
@@ -306,7 +369,9 @@ func _pause(message: String="Take a breath. Your drill can wait.", save: bool=tr
 	card.add_child(button("Resume drilling",func():
 		if fullscreen:toast("Your drill will be ready when this closes.");return
 		if not _checkpoint():toast(profile.last_error);return
-		if run.done:_result()
+		if run.done:
+			if run.won and run.run_id>int(profile.data.last_paid_run):_begin_clear()
+			else:_result()
 		elif run.stage_ready:_after_step()
 		else:_play_ui()))
 	card.add_child(button("Settings",show_settings,true))
@@ -331,6 +396,7 @@ func _settle() -> bool:
 	return true
 
 func _result() -> void:
+	if run==null or not run.done or screen=="result":return
 	if not _checkpoint():return
 	if run.won and not _settle():_pause(profile.last_error);return
 	_menu_state("result")
@@ -342,8 +408,8 @@ func _result() -> void:
 	card.add_child(label("%d crystals  ·  best combo ×%d\n%d ricochets  ·  %d %s"%[run.crystals,run.best_combo,run.ricochets,run.used,"shot" if run.used==1 else "shots"],19,MUTED))
 	if run.won:
 		card.add_child(label("+%d ore   +%d XP"%[receipt.get("coins",profile.data.last_receipt.get("coins",0)),receipt.get("xp",profile.data.last_receipt.get("xp",0))],22,GOLD))
-		if run.mode=="campaign" and run.chamber<29:card.add_child(button("Next chamber  ›",func():var index:int=run.chamber+1;start_run("campaign",index);_interstitial()))
-		else:card.add_child(button("Back to the workshop",func():_preview_run();home();_interstitial()))
+		if run.mode=="campaign" and run.chamber<Chambers.COUNT-1:card.add_child(button("Next chamber  ›",func():var index:int=run.chamber+1;start_run("campaign",index);_interstitial()))
+		else:card.add_child(button("Return home",func():_preview_run();home();_interstitial()))
 	else:
 		card.add_child(label("%d / %d crystals found. Your haul is kept when you finish."%[run.stage_crystals,run.spec.goal],18))
 		if not run.continued:
@@ -352,6 +418,10 @@ func _result() -> void:
 			reward_hint=label("Extra shots are unavailable right now.",15,MUTED);reward_hint.visible=reward_button.disabled;card.add_child(reward_hint)
 	card.add_child(button("Try this chamber again",_retry,true))
 	card.add_child(button("Bank & return home",if_settled_home,true))
+	result_elapsed=0.0
+	for b in _buttons_in(card):
+		result_buttons.append({"button":b,"disabled":b.disabled});b.disabled=true
+	_animate_result(0.0)
 	sound("victory" if run.won else "back")
 
 func _retry() -> void:
@@ -379,7 +449,7 @@ func _reward_finished(earned: bool) -> void:
 
 func _fullscreen_pending(_reason: String) -> void:
 	fullscreen=true;dragging=false
-	if screen in ["play","depth"]:_pause("Your chamber is safe. Tap Resume when you're ready.")
+	if screen in ["play","clearing","depth"] or (screen=="result" and result_elapsed<RESULT_APPEAR_SECONDS):_pause("Your chamber is safe. Tap Resume when you're ready.")
 	else:_checkpoint()
 
 func _fullscreen_changed(showing: bool) -> void:
@@ -394,7 +464,7 @@ func _interstitial_finished(_shown: bool) -> void:
 	_audio_state()
 
 func _services_updated() -> void:
-	if screen=="result" and not reward_waiting and not fullscreen and is_instance_valid(reward_button):
+	if screen=="result" and result_elapsed>=RESULT_APPEAR_SECONDS and not reward_waiting and not fullscreen and is_instance_valid(reward_button):
 		reward_button.disabled=not service or not service.can_reward()
 		if is_instance_valid(reward_hint):reward_hint.visible=reward_button.disabled
 
@@ -404,7 +474,7 @@ func _sync_metrics() -> void:
 
 func _back() -> void:
 	if fullscreen:return
-	if screen=="play":_pause()
+	if screen in ["play","clearing"] or (screen=="result" and result_elapsed<RESULT_APPEAR_SECONDS):_pause()
 	elif screen=="result":if_settled_home()
 	elif screen=="pause":toast("Tap Resume when you're ready.")
 	elif screen in ["settings","workshop","daily","journal","map"]:
@@ -416,7 +486,7 @@ func _notification(what: int) -> void:
 	if what==NOTIFICATION_WM_GO_BACK_REQUEST:_back()
 	elif what in [NOTIFICATION_APPLICATION_PAUSED,NOTIFICATION_APPLICATION_FOCUS_OUT]:
 		app_focused=false;_audio_state()
-		if screen=="play":_pause("Your shift was interrupted. Tap Resume when you're ready.")
+		if screen in ["play","clearing"] or (screen=="result" and result_elapsed<RESULT_APPEAR_SECONDS):_pause("Your shift was interrupted. Tap Resume when you're ready.")
 		elif run and run.run_id>int(profile.data.last_paid_run):_checkpoint()
 	elif what==NOTIFICATION_WM_CLOSE_REQUEST:_checkpoint()
 	elif what in [NOTIFICATION_APPLICATION_RESUMED,NOTIFICATION_APPLICATION_FOCUS_IN]:app_focused=true;_audio_state();_refresh_day()
@@ -436,33 +506,50 @@ func _page(title_text: String, subtitle: String) -> VBoxContainer:
 	var content:=VBoxContainer.new();content.add_theme_constant_override("separation",12);content.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(content)
 	return content
 
-func show_map() -> void:
+func show_map(biome:int=-1) -> void:
+	var frontier:int=profile.unlocked_chamber()
+	map_biome=clampi(int(frontier/Chambers.BIOME_SIZE) if biome<0 else biome,0,Chambers.THEMES.size()-1)
 	_menu_state("map")
-	var v:=_page("THE QUARRY","30 little wonders. Clear a chamber to open the next.")
-	for t in range(3):
-		v.add_child(label(Chambers.THEMES[t].to_upper(),21,Cavern.PALETTES[t]))
-		for i in range(t*10,t*10+10):
-			var stars:int=int(profile.data.stars[i]) if profile.data.stars.size()>i else 0
-			var row:=_row(v)
-			var b:=button("%02d  %s"%[i+1,Chambers.NAMES[i]],func():start_run("campaign",i),true);b.disabled=i>profile.unlocked_chamber();row.add_child(b)
-			for star in range(3):
-				var icon:=TextureRect.new();icon.texture=load("res://assets/ui/star.png" if star<stars else "res://assets/ui/star_empty.png");icon.custom_minimum_size=Vector2(22,40);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(icon)
+	var v:=_page("THE QUARRY","200 chambers across ten biomes. Every chamber can be cleared with the starting drill.")
+	var navigation:=_row(v)
+	var previous:=button("< Previous",func():show_map(map_biome-1),true)
+	previous.disabled=map_biome==0;previous.add_theme_font_size_override("font_size",17);navigation.add_child(previous)
+	var position_label:=label("%d / %d"%[map_biome+1,Chambers.THEMES.size()],17,MUTED)
+	position_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;position_label.vertical_alignment=VERTICAL_ALIGNMENT_CENTER;position_label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;navigation.add_child(position_label)
+	var following:=button("Next >",func():show_map(map_biome+1),true)
+	following.disabled=map_biome>=Chambers.THEMES.size()-1;following.add_theme_font_size_override("font_size",17);navigation.add_child(following)
+	var first:=map_biome*Chambers.BIOME_SIZE
+	v.add_child(label(Chambers.THEMES[map_biome].to_upper(),22,Cavern.PALETTES[map_biome]))
+	v.add_child(label("Chambers %d-%d  |  Unlocked through %d"%[first+1,first+Chambers.BIOME_SIZE,frontier+1],16,MUTED))
+	for i in range(first,mini(first+Chambers.BIOME_SIZE,Chambers.COUNT)):
+		var stars:int=int(profile.data.stars[i]) if profile.data.stars.size()>i else 0
+		var row:=_row(v)
+		var b:=button("%03d  %s"%[i+1,Chambers.make(i).name],func():start_run("campaign",i),true)
+		b.alignment=HORIZONTAL_ALIGNMENT_LEFT;b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;b.add_theme_font_size_override("font_size",18)
+		b.disabled=i>frontier;row.add_child(b)
+		for star in range(3):
+			var icon:=TextureRect.new();icon.texture=load("res://assets/ui/star.png" if star<stars else "res://assets/ui/star_empty.png");icon.custom_minimum_size=Vector2(18,40);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(icon)
 
 func show_workshop() -> void:
 	_menu_state("workshop")
-	var v:=_page("YOUR WORKSHOP","Miner %d · %d XP · %d ore"%[profile.level(),profile.data.xp,profile.data.coins])
-	var defs:Dictionary={"drill":["Flywheel","Stay in the chamber 0.15 seconds longer per rank."],"echo":["Echo coil","Link neighboring crystal seams a little farther."],"salvage":["Ore catcher","Bank one extra ore per crystal for each rank."]}
-	for key in defs:
-		var rank:int=profile.data.gear[key];var card:=_panel(v)
-		card.add_child(label("%s   %d / 4"%[defs[key][0],rank],24,GOLD));card.add_child(label(defs[key][1],18,MUTED))
-		var b:=button("Upgrade · %d ore"%(180+rank*240) if rank<4 else "Fully upgraded",func():
+	var v:=_page("YOUR WORKSHOP","Miner %d  |  %d XP  |  %d ore"%[profile.level(),profile.data.xp,profile.data.coins])
+	v.add_child(label("Six ways to shape your drill. Upgrades give more freedom; every chamber is possible with starting equipment.",17,MUTED))
+	for key in Upgrades.KEYS:
+		var rank:int=profile.data.gear[key];var cap:int=Upgrades.cap(key);var card:=_panel(v)
+		card.add_child(label("%s  %d / %d"%[Upgrades.title(key),rank,cap],23,GOLD))
+		card.add_child(label(Upgrades.description(key),17,MUTED))
+		card.add_child(label("Now: "+Upgrades.effect_label(key,rank),17))
+		if rank<cap:card.add_child(label("Next: "+Upgrades.next_effect_label(key,rank),17,GOLD))
+		var price:int=Upgrades.price(key,rank)
+		var b:=button("Upgrade - %d ore"%price if rank<cap else "Fully upgraded",func():
 			if profile.upgrade(key):sound("upgrade");_sync_metrics();show_workshop()
 			else:toast(profile.last_error if not profile.last_error.is_empty() else "Mine a little more ore first."))
-		b.disabled=rank>=4;card.add_child(b)
+		b.disabled=rank>=cap or int(profile.data.coins)<price;card.add_child(b)
+		if rank<cap and int(profile.data.coins)<price:card.add_child(label("%d more ore needed"%(price-int(profile.data.coins)),15,MUTED))
 	v.add_child(label("DRILL FINISHES",21,GOLD))
 	for i in range(3):
 		var unlocked:bool=profile.level()>=1+i*3
-		var b:=button(["Seafoam","Sunfire","Amethyst"][i]+(" · equipped" if profile.data.skin==i else "" if unlocked else " · miner %d"%(1+i*3)),func():profile.setting("skin",i);cavern.build(run,i);show_workshop(),true);b.disabled=not unlocked;v.add_child(b)
+		var b:=button(["Seafoam","Sunfire","Amethyst"][i]+(" - equipped" if profile.data.skin==i else "" if unlocked else " - miner %d"%(1+i*3)),func():profile.setting("skin",i);cavern.build(run,i);show_workshop(),true);b.disabled=not unlocked;v.add_child(b)
 
 func show_daily() -> void:
 	_refresh_day()
@@ -471,11 +558,11 @@ func show_daily() -> void:
 	var card:=_panel(v);card.add_child(label("DAY %d OF 7"%profile.data.streak,23,GOLD));card.add_child(label("Today's gift is already in your ore pouch. Return tomorrow to keep your streak glowing.",18,MUTED))
 	var days:=_row(card)
 	for i in range(7):
-		var item:=label("%s\n%d"%["●" if i<profile.data.streak else "○",50+i*15],15,GOLD if i<profile.data.streak else MUTED);item.size_flags_horizontal=Control.SIZE_EXPAND_FILL;item.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;days.add_child(item)
+		var item:=label("%s\n%d"%["●" if i<profile.data.streak else "○",Profile.login_reward(i+1)],15,GOLD if i<profile.data.streak else MUTED);item.size_flags_horizontal=Control.SIZE_EXPAND_FILL;item.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;days.add_child(item)
 	v.add_child(button("Play today's chamber  ›",func():start_run("daily",0)))
 	var goals:Dictionary={"crystals":["Mine 40 crystals",40],"clears":["Clear 3 chambers",3],"ricochets":["Make 15 ricochets",15]}
 	for key in goals:
-		card=_panel(v);card.add_child(label(goals[key][0],22));card.add_child(label("%d / %d · +90 ore, +40 XP"%[mini(int(profile.data.quest[key]),int(goals[key][1])),goals[key][1]],18,MUTED))
+		card=_panel(v);card.add_child(label(goals[key][0],22));card.add_child(label("%d / %d - +%d ore, +%d XP"%[mini(int(profile.data.quest[key]),int(goals[key][1])),goals[key][1],Profile.QUEST_COINS,Profile.QUEST_XP],18,MUTED))
 		var claimed:bool=profile.data.quest_claims.has(key)
 		var b:=button("Claimed" if claimed else "Collect reward",func():
 			if profile.claim_quest(key,Profile.today()):sound("reward");_sync_metrics();show_daily()
@@ -509,7 +596,7 @@ func show_settings() -> void:
 		if service:service.request_privacy_options();toast(service.status())
 		else:toast("No advertising connection is active here."),true))
 	v.add_child(label("Aim anywhere inside the cave, then release. Matching shapes link into a chain. White prisms fracture nearby colors. Brass rings bounce the drill; the bottom opening returns it. Recall ends a shot early. Mine the target for one star, 88% for two, every crystal for three.",18,MUTED))
-	v.add_child(label("Prism Quarry · 1.0\nOriginal code: Apache-2.0. Models, UI and sounds: Kenney CC0. Original music. See bundled notices.",15,MUTED))
+	v.add_child(label("Prism Quarry · 1.1\nOriginal code: Apache-2.0. Models, UI and sounds: Kenney CC0. Original music. See bundled notices.",15,MUTED))
 
 func _reserve() -> float:return maxf(60,service.menu_bottom_reserve(ui)) if service else 0
 func _reserve_changed() -> void:

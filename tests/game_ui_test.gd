@@ -104,11 +104,17 @@ func check_play_hud_layout() -> void:
 	root.size=original_size;game.run.shots=original_shots;game._update_hud();await wait_layout()
 	check(game.run.snapshot()==original_run and root.size==original_size,"HUD layout fixture restores model and viewport before physics")
 
-func finish_flight() -> void:
+func finish_presentation() -> void:
+	for frame in range(120):
+		if game.screen!="clearing" and (game.screen!="result" or game.result_elapsed>=game.RESULT_APPEAR_SECONDS):break
+		game._process(1.0/60.0)
+
+func finish_flight(presentation:bool=true) -> void:
 	for frame in range(700):
 		if not game.run.moving:break
 		game._process(1.0/60.0)
 	check(not game.run.moving,"flight completes within bounded simulation")
+	if presentation:finish_presentation()
 
 func fail_fixture() -> void:
 	game.start_run("campaign",0)
@@ -116,7 +122,145 @@ func fail_fixture() -> void:
 		game.run.launch(Vector2.UP)
 		game.run.recall()
 	game._checkpoint();game._result()
+	finish_presentation()
 	check(game.run.done and not game.run.won and game.screen=="result","failed-round fixture established")
+
+func check_clear_presentation() -> void:
+	game.start_run("campaign",0);await wait_layout()
+	var coins:int=game.profile.data.coins
+	var rounds:int=game.profile.data.totals.rounds
+	var cavern_id:int=game.cavern.get_instance_id()
+	game.run.launch(Vector2.UP);finish_flight(false)
+	check(game.screen=="clearing" and game.clear_remaining>0.8,"final crystal enters a readable hold instead of immediate results")
+	check(is_instance_valid(game.hud_score) and not is_instance_valid(game.result_panel),"clear hold keeps gameplay HUD and has no result overlay")
+	check(game.cavern.effects.get_child_count()>0,"final crystal particles survive into clear hold")
+	check(game.profile.data.active.done and game.profile.data.active.won and game.profile.data.coins==coins,"terminal victory saved before reveal without paying early")
+	check(find_button(game.ui,"Bank haul").disabled and not find_button(game.ui,"Pause").disabled,"clear hold blocks banking but retains Pause")
+	var finished_run:Dictionary=game.run.snapshot()
+	game._bank();game._recall();game._process(0.1)
+	check(game.run.snapshot()==finished_run and game.screen=="clearing","clear hold rejects bank/recall and freezes finished physics")
+	var remaining:float=game.clear_remaining
+	press("Pause");game._process(1.0)
+	check(game.screen=="pause" and is_equal_approx(game.clear_remaining,remaining),"Pause freezes the clear delay")
+	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	check(game.screen=="pause","clear interruption requires explicit Resume")
+	press("Resume drilling")
+	check(game.screen=="clearing" and is_equal_approx(game.clear_remaining,remaining),"Resume preserves remaining clear delay")
+	game._fullscreen_pending("clear fixture");game._fullscreen_changed(false)
+	check(game.screen=="pause" and game.run.snapshot()==finished_run,"fullscreen interruption preserves terminal clear without auto-resume")
+	press("Resume drilling")
+	# Cold restoration uses the saved terminal model, never the owner's profile.
+	game.queue_free();await process_frame;await process_frame;await load_game()
+	check(game.screen=="pause" and game.run.done and game.run.won and game.profile.data.coins==coins,"cold unpaid victory restores paused without lost or premature payout")
+	press("Resume drilling")
+	check(game.screen=="clearing","cold victory resumes through readable clear hold")
+	cavern_id=game.cavern.get_instance_id()
+	for frame in range(60):
+		if game.screen=="result":break
+		game._process(1.0/60.0)
+	check(game.screen=="result" and game.result_elapsed==0.0,"hold ends at the start of a popup animation")
+	check(game.cavern.get_instance_id()==cavern_id and game.result_panel.modulate.a==0.0,"popup begins transparent over the retained cavern")
+	check(find_button(game.ui,"Try this chamber again").disabled,"popup actions wait until reveal finishes")
+	game._process(0.1)
+	check(game.result_panel.modulate.a>0.0 and game.result_panel.modulate.a<1.0 and game.result_panel.scale.x<1.0,"result dialog fades and grows through an intermediate state")
+	coins=game.profile.data.coins
+	check(game.profile.data.totals.rounds==rounds+1 and game.profile.data.active.is_empty(),"revealed victory settles exactly one round")
+	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT);game._process(1.0)
+	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	check(game.screen=="pause" and game.profile.data.coins==coins,"popup lifecycle interruption pauses and preserves paid receipt")
+	press("Resume drilling");finish_presentation();await wait_layout()
+	check(game.screen=="result" and is_equal_approx(game.result_panel.modulate.a,1.0) and game.result_panel.scale==Vector2.ONE,"explicit Resume finishes result popup")
+	check(not find_button(game.ui,"Try this chamber again").disabled,"finished popup exposes actions")
+	game._result();game._after_step();finish_presentation()
+	check(game.profile.data.coins==coins and game.profile.data.totals.rounds==rounds+1,"duplicate completion and result requests do not pay twice")
+	# Final-shot clear and reduced motion follow the same saved hold/settle path.
+	game.profile.setting("motion",false)
+	game.start_run("campaign",0);game.run.shots=1;game.run.launch(Vector2.UP);finish_flight(false)
+	check(game.screen=="clearing" and game.run.shots==0 and game.run.won,"last available shot still receives clear hold")
+	for frame in range(60):
+		if game.screen=="result":break
+		game._process(1.0/60.0)
+	game._process(0.1)
+	check(game.result_panel.scale==Vector2.ONE and game.result_panel.modulate.a>0.0,"reduced motion keeps popup stationary while fading")
+	finish_presentation();game.profile.setting("motion",true)
+	# A new run cancels old presentation state; no timer can settle it later.
+	game.start_run("campaign",0);game.run.launch(Vector2.UP);finish_flight(false)
+	var old_id:int=game.run.run_id
+	game.start_run("campaign",1);var new_id:int=game.run.run_id
+	for frame in range(100):game._process(1.0/60.0)
+	check(game.screen=="play" and new_id!=old_id and game.run.run_id==new_id and not game.run.done,"new run cancels stale clear presentation")
+	fail_fixture()
+	check(game.screen=="result" and not game.run.won and game.clear_remaining==0.0,"failure opens retry popup without a victory hold")
+
+func check_expanded_pages() -> void:
+	game.if_settled_home();await wait_layout()
+	game.show_map(9);await wait_layout()
+	var level_buttons:Array[Button]=[]
+	for b in all_buttons(game.ui):
+		if b.text.length()>=3 and b.text.substr(0,3).is_valid_int():level_buttons.append(b)
+	check(game.map_biome==9 and level_buttons.size()==20,"campaign map renders only one twenty-chamber biome")
+	check(level_buttons[0].text.begins_with("181") and level_buttons[-1].text.begins_with("200"),"last biome exposes chambers181 through200")
+	check(find_button(game.ui,"Next >").disabled and not find_button(game.ui,"< Previous").disabled,"biome navigation clamps its final page")
+	press("< Previous");await wait_layout()
+	check(game.map_biome==8,"biome paging navigates without starting a run")
+	game.show_map(0);await wait_layout()
+	check(find_button(game.ui,"< Previous").disabled,"biome navigation clamps its first page")
+	game.show_workshop();await wait_layout()
+	var purchases:=0
+	for b in all_buttons(game.ui):
+		if b.text.begins_with("Upgrade -") or b.text=="Fully upgraded":purchases+=1
+	check(purchases==6,"workshop exposes six independent upgrade tracks")
+	var original_size:Vector2i=root.size
+	for size in [Vector2i(360,640),Vector2i(540,960),Vector2i(1280,720)]:
+		root.size=size;await wait_layout()
+		var page_bounds:=Rect2(Vector2.ZERO,game.ui.size)
+		var back:=find_button(game.ui,"‹ Back")
+		check(back!=null and page_bounds.encloses(back.get_global_rect()),"workshop Back remains accessible at %dx%d"%[size.x,size.y])
+		for b in all_buttons(game.ui):
+			check(b.get_global_rect().position.x>=-0.5 and b.get_global_rect().end.x<=game.ui.size.x+0.5,"workshop controls fit horizontal bounds: "+b.text+" at %dx%d"%[size.x,size.y])
+	root.size=original_size;game.home();await wait_layout()
+
+func check_endless_clear_hold() -> void:
+	game.start_run("endless",0)
+	var coins:int=game.profile.data.coins
+	game.run.launch(Vector2.UP);finish_flight(false)
+	check(game.run.stage_ready and not game.run.done and game.screen=="clearing","endless seam uses the readable hold before descent")
+	check(game.profile.data.active.stage_ready and game.profile.data.coins==coins,"endless hold checkpoints the seam without settling the run")
+	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	check(game.screen=="pause","endless clear interruption requires explicit Resume")
+	game.queue_free();await process_frame;await process_frame;await load_game()
+	check(game.screen=="pause" and game.run.stage_ready,"cold endless clear restores paused at the ready seam")
+	press("Resume drilling")
+	check(game.screen=="clearing","cold endless Resume retains the seam reveal")
+	finish_presentation()
+	check(game.screen=="depth" and game.profile.data.coins==coins,"endless hold opens descent without terminal payout")
+	game._descend()
+	check(game.screen=="play" and game.run.depth==2 and game.run.crystals==9,"descent keeps the mined haul and starts the next seam")
+	game._pause();game._leave_prompt();press("Bank & return home")
+
+func check_long_result_layout() -> void:
+	game.start_run("campaign",0);game.run.launch(Vector2.UP);finish_flight(false)
+	# A rendering-only title fixture: actual first-seam physics supplies the haul.
+	# No late-chamber completion or late-level gameplay is claimed by this check.
+	game.run.spec.name=preload("res://game/chambers.gd").make(199).name
+	game.run.spec.theme=9
+	finish_presentation()
+	var original_size:Vector2i=root.size
+	for size in [Vector2i(360,640),Vector2i(540,960),Vector2i(1280,720)]:
+		root.size=size;await wait_layout()
+		var bounds:=Rect2(Vector2.ZERO,game.ui.size)
+		check(bounds.encloses(game.result_panel.get_global_rect()),"long-name result card fits viewport at %dx%d"%[size.x,size.y])
+		for b in all_buttons(game.result_panel):
+			check(bounds.encloses(b.get_global_rect()) and b.size.y>=56,"long-name result action remains visible and touchable: "+b.text+" at %dx%d"%[size.x,size.y])
+	root.size=original_size
+	# UI routing fixture on an already-paid result; this does not claim final-level physics coverage.
+	game.run.chamber=preload("res://game/chambers.gd").COUNT-1
+	game._menu_state("pause");game._result();finish_presentation();await wait_layout()
+	check(find_button(game.ui,"Return home")!=null and find_button(game.ui,"Back to the workshop")==null,"final campaign primary action accurately names its home destination")
+	press("Return home");await wait_layout()
+	check(game.screen=="home","final campaign Return home action opens the home screen")
 
 func execute() -> void:
 	for arg in OS.get_cmdline_user_args():
@@ -132,7 +276,7 @@ func execute() -> void:
 	await load_game()
 	check(game.profile.path==save_path,"isolated QA profile selected")
 	check(game.screen=="home","first launch home")
-	check(game.profile.data.coins==50,"one first-day gift in isolated profile")
+	check(game.profile.data.coins==Profile.login_reward(1),"one first-day gift in isolated profile")
 	var home_buttons:=all_buttons(game.ui)
 	check(home_buttons.size()==7,"home has seven primary navigation buttons")
 	var viewport:=Rect2(Vector2.ZERO,game.ui.size)
@@ -245,7 +389,7 @@ func execute() -> void:
 	real_path=game.profile.path;game.profile.path="user://qa-ui-missing-%d/blocked.json"%Time.get_ticks_usec()
 	game._result()
 	check(game.screen=="pause","result save failure stays paused")
-	game.profile.path=real_path;press("Resume drilling")
+	game.profile.path=real_path;press("Resume drilling");finish_presentation()
 	check(game.screen=="result" and game.profile.data.active.is_empty(),"done-state Resume retries save and opens result")
 
 	# Simulate a process left open across a day boundary by moving only its
@@ -258,11 +402,11 @@ func execute() -> void:
 	coins=game.profile.data.coins
 	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
-	check(game.profile.data.streak==3 and game.profile.data.coins==coins+80,"foreground refresh awards one next-day gift")
+	check(game.profile.data.streak==3 and game.profile.data.coins==coins+Profile.login_reward(3),"foreground refresh awards one next-day gift")
 	check(game.profile.data.quest_day==Profile.today() and game.profile.data.quest.crystals==0 and game.profile.data.quest_claims.is_empty(),"foreground refresh resets daily goals")
 	check(game.screen=="pause","day refresh does not resume gameplay")
 	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
-	check(game.profile.data.coins==coins+80,"repeated foreground does not duplicate daily gift")
+	check(game.profile.data.coins==coins+Profile.login_reward(3),"repeated foreground does not duplicate daily gift")
 	game.profile.setting("music",false);game._audio_state()
 	game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT);game._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
 	check(game.music.stream_paused,"music Off survives foreground lifecycle")
@@ -302,6 +446,10 @@ func execute() -> void:
 	var before_stale:Dictionary=semantics.data.duplicate(true)
 	check(semantics.settle(stale,Profile.today()).is_empty() and semantics.data==before_stale,"stale older run cannot settle over current active run")
 
+	await check_clear_presentation()
+	await check_endless_clear_hold()
+	await check_long_result_layout()
+	await check_expanded_pages()
 	var final_report:Dictionary={"checks":checks.size(),"failures":failures,"assertions":checks,"pointer_evidence":pointer_evidence,"evidence_kind":"headless UI/input dispatch and synthetic lifecycle/reward/storage fixtures; not native SDK or physical-device acceptance"}
 	DirAccess.make_dir_recursive_absolute("res://build/evidence")
 	var report:=FileAccess.open("res://build/evidence/game-ui.json",FileAccess.WRITE)

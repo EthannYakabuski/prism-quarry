@@ -1,5 +1,18 @@
 extends Node3D
-const PALETTES := [Color("e8aa57"),Color("55d6e8"),Color("be8ef3")]
+const PALETTES := [Color("e8aa57"),Color("55d6e8"),Color("be8ef3"),Color("dc9662"),Color("79d29f"),Color("b4e7ef"),Color("ed8769"),Color("b5c1e7"),Color("91adc6"),Color("e4b6ea")]
+## Index contract matches Chambers.THEMES; all dressing stays outside the rail inset.
+const BIOMES := [
+	{"name":"Amber Hollow","rock":"566270","floor":"39484a","stone":"b5a18a","metal":"a27648","lamp":"ffce70","signature":"timber_workings_bushes"},
+	{"name":"Azure Grotto","rock":"496875","floor":"314c57","stone":"829b9b","metal":"758d8c","lamp":"8bdde8","signature":"mushroom_beds_moss"},
+	{"name":"Violet Vault","rock":"60566c","floor":"453e56","stone":"96879e","metal":"9885ad","lamp":"d2adf4","signature":"violet_geode_clusters"},
+	{"name":"Copper Foundry","rock":"68584e","floor":"3c3c3d","stone":"a98365","metal":"b77a4c","lamp":"ffd095","signature":"pressure_tanks_forged_braces"},
+	{"name":"Jade Canopy","rock":"3d6256","floor":"2c4540","stone":"738e75","metal":"807859","lamp":"a1e7bc","signature":"canopy_trees_moss_logs"},
+	{"name":"Frostglass Caverns","rock":"7595a5","floor":"344b59","stone":"b5cad1","metal":"8cabb8","lamp":"d9f6ff","signature":"ice_spires_stepped_shelves"},
+	{"name":"Ember Rift","rock":"514444","floor":"382f34","stone":"84615a","metal":"95675e","lamp":"ffa56f","signature":"split_basalt_static_fissures"},
+	{"name":"Moonstone Archive","rock":"646d80","floor":"3b4154","stone":"b8b9cb","metal":"989bb7","lamp":"d7ddff","signature":"ruin_columns_stone_shelves"},
+	{"name":"Obsidian Crown","rock":"303846","floor":"292e3b","stone":"5b6577","metal":"727f94","lamp":"adcee8","signature":"basalt_crown_buttresses"},
+	{"name":"Prismatic Depths","rock":"5e5871","floor":"393649","stone":"938aa5","metal":"a79bb7","lamp":"f1dbff","signature":"radial_geode_ridges"}
+]
 const ORE_COLORS := [Color("ffbc48"),Color("57e7ef"),Color("cc8bff"),Color("f6f2cc")]
 var camera: Camera3D
 var scenery: Node3D
@@ -12,6 +25,7 @@ var ore_nodes: Array[Node3D]=[]
 var theme_index:=0
 var materials: Dictionary={}
 var models: Dictionary={}
+var model_materials: Dictionary={}
 var reduced_motion:=false
 var tint:=PALETTES[0]
 
@@ -82,16 +96,20 @@ func _recolor(node: Node3D, path: String) -> void:
 		for i in range(node.mesh.get_surface_count()):
 			var original:Material=node.get_active_material(i)
 			if not original is StandardMaterial3D:continue
+			var cache_key: String="%s:%d:%d"%[path,original.get_instance_id(),theme_index]
+			if model_materials.has(cache_key):
+				node.set_surface_override_material(i,model_materials[cache_key]);continue
 			var mat:StandardMaterial3D=original.duplicate()
 			mat.metallic=0.0;mat.roughness=0.95
 			if path.contains("/nature/rock"):
-				mat.albedo_color=Color("354650") if original.resource_name=="grass" else Color("566270")
-				if theme_index==1:mat.albedo_color=mat.albedo_color.lerp(Color("365c68"),0.4)
-				if theme_index==2:mat.albedo_color=mat.albedo_color.lerp(Color("51465f"),0.4)
+				mat.albedo_color=Color(BIOMES[theme_index].rock).darkened(0.2) if original.resource_name=="grass" else Color(BIOMES[theme_index].rock)
 			elif path.contains("template-floor"):
-				mat.albedo_color=[Color("39484a"),Color("314c57"),Color("453e56")][theme_index]
+				mat.albedo_color=Color(BIOMES[theme_index].floor)
 			elif path.contains("/cave/"):
-				mat.albedo_color=[Color("b5a18a"),Color("829b9b"),Color("96879e")][theme_index]
+				mat.albedo_color=Color(BIOMES[theme_index].stone)
+			elif path.contains("/industrial/"):
+				mat.albedo_color=Color(BIOMES[theme_index].metal);mat.metallic=0.35;mat.roughness=0.65
+			model_materials[cache_key]=mat
 			node.set_surface_override_material(i,mat)
 	for child in node.get_children():
 		if child is Node3D:_recolor(child,path)
@@ -100,9 +118,11 @@ func clear(node: Node) -> void:
 	for child in node.get_children():node.remove_child(child);child.queue_free()
 
 func build(run: RefCounted, skin: int=0) -> void:
-	theme_index=int(run.spec.theme);tint=PALETTES[theme_index]
+	theme_index=clampi(int(run.spec.theme),0,BIOMES.size()-1);tint=PALETTES[theme_index]
 	for node in [scenery,ore_root,links,effects,trajectory]:clear(node)
 	ore_nodes.clear()
+	scenery.set_meta("biome_name",BIOMES[theme_index].name)
+	scenery.set_meta("biome_signature",BIOMES[theme_index].signature)
 	# A real Kenney tiled cave floor with exposed strata and irregular rock shoulders.
 	for x in range(-2,3):
 		for z in range(-3,4):
@@ -110,7 +130,11 @@ func build(run: RefCounted, skin: int=0) -> void:
 	for side in [-1,1]:
 		for z in range(-3,4):
 			model("res://assets/cave/template-wall-half.glb",Vector3(side*4.75,0,z*1.9),Vector3(1.4,0.9+0.22*posmod(z,3),2.12),side*PI/2)
-			model("res://assets/nature/rock_largeA.glb" if z%2==0 else "res://assets/nature/rock_largeB.glb",Vector3(side*(5.15+0.2*cos(z)),0.2,z*2.0),Vector3(2.2,1.5+0.4*posmod(z,3),2.1),z*0.6)
+			var shoulder_height:float=1.5+0.4*posmod(z,3)
+			if theme_index==5:shoulder_height=0.8+0.2*posmod(z,2)
+			elif theme_index==8:shoulder_height=2.0+0.6*posmod(z,3)
+			elif theme_index==3:shoulder_height=1.1
+			model("res://assets/nature/rock_largeA.glb" if z%2==0 else "res://assets/nature/rock_largeB.glb",Vector3(side*(5.15+0.2*cos(z)),0.2,z*2.0),Vector3(2.2,shoulder_height,2.1),z*0.6)
 			if z<2:
 				model("res://assets/cave/template-floor-layer.glb",Vector3(side*5.1,-0.7,z*2.2),Vector3(3.1,0.75,2.5),side*PI/2)
 	for x in range(-2,3):
@@ -119,10 +143,10 @@ func build(run: RefCounted, skin: int=0) -> void:
 	# Dark playable inset, metallic rails and etched wall bounce markers.
 	box(scenery,Vector3(0,-0.29,0.15),Vector3(8.1,0.12,10.6),Color("263031").lerp(tint,0.09))
 	for side in [-1,1]:
-		box(scenery,Vector3(side*4.02,0.17,0.1),Vector3(0.14,0.22,10.6),Color("a27648"))
+		box(scenery,Vector3(side*4.02,0.17,0.1),Vector3(0.14,0.22,10.6),Color(BIOMES[theme_index].metal))
 		for z in range(-5,6):
 			box(scenery,Vector3(side*3.97,0.31,z),Vector3(0.16,0.05,0.2),tint)
-	box(scenery,Vector3(0,0.17,-5),Vector3(8.1,0.22,0.16),Color("a27648"))
+	box(scenery,Vector3(0,0.17,-5),Vector3(8.1,0.22,0.16),Color(BIOMES[theme_index].metal))
 	for z in range(-5,6):
 		for x in [-3.8,3.8]:
 			var crack:=BoxMesh.new();crack.size=Vector3(0.36,0.008,0.024)
@@ -144,14 +168,11 @@ func build(run: RefCounted, skin: int=0) -> void:
 		for z in [-4.3,1.0,5.0]:
 			box(scenery,Vector3(side*4.65,1.3,z),Vector3(0.16,1.1,0.16),Color("563f2d"))
 			var lamp:=SphereMesh.new();lamp.radius=0.2;lamp.height=0.4;lamp.radial_segments=8;lamp.rings=4
-			mesh(scenery,lamp,Vector3(side*4.65,1.9,z),Color("ffce70"),2.0)
-			var light:=OmniLight3D.new();light.position=Vector3(side*4.4,2,z);light.light_color=Color("ffc277");light.light_energy=0.45;light.omni_range=3.7;scenery.add_child(light)
-	for j in range(12):
-		var side:=1 if j%2==0 else -1
-		var z: float=-5.0+float(j)*0.85
-		if theme_index==1:model("res://assets/nature/mushroom_tanGroup.glb",Vector3(side*4.45,0.5,z),Vector3(0.7,0.7,0.6),j)
-		elif theme_index==2:_crystal(scenery,Vector3(side*4.5,0.6,z),2,0.7)
-		else:model("res://assets/nature/plant_bushSmall.glb",Vector3(side*4.45,0.45,z),Vector3(0.65,0.45,0.6),j)
+			mesh(scenery,lamp,Vector3(side*4.65,1.9,z),Color(BIOMES[theme_index].lamp),0.7)
+			# Two unshadowed local lights total; decorative bulbs use shared materials.
+			if z==1.0:
+				var light:=OmniLight3D.new();light.position=Vector3(side*4.4,2,z);light.light_color=Color(BIOMES[theme_index].lamp);light.light_energy=0.35;light.omni_range=4.5;scenery.add_child(light)
+	_biome_dressing()
 	for b in run.spec.bumpers:
 		var foot:=CylinderMesh.new();foot.top_radius=b.r;foot.bottom_radius=b.r+0.07;foot.height=0.3;foot.radial_segments=12
 		mesh(scenery,foot,world(Vector2(b.x,b.y),0.18),Color("786653"))
@@ -167,15 +188,93 @@ func build(run: RefCounted, skin: int=0) -> void:
 	for i in range(run.ore.size()):
 		for j in range(i+1,run.ore.size()):
 			var a:Dictionary=run.ore[i];var b:Dictionary=run.ore[j]
-			if a.kind!=b.kind or int(a.hp)==0 or int(b.hp)==0:continue
+			if int(a.hp)==0 or int(b.hp)==0:continue
+			if a.kind!=b.kind and int(a.kind)!=3 and int(b.kind)!=3:continue
 			var p:=Vector2(a.x,a.y);var q:=Vector2(b.x,b.y)
-			if p.distance_to(q)>1.1:continue
+			var link_kind:int=3 if int(a.kind)==3 or int(b.kind)==3 else int(a.kind)
+			if p.distance_to(q)>run.chain_radius(link_kind):continue
 			var vein:=BoxMesh.new();vein.size=Vector3(0.035,0.025,p.distance_to(q))
 			var line:=mesh(links,vein,world((p+q)/2,0.07),ORE_COLORS[a.kind].darkened(0.5),0.2)
 			line.rotation.y=-atan2(q.x-p.x,q.y-p.y)
 	var drill_color:Color=[Color("62f1ed"),Color("ffbd67"),Color("cd9bff")][clampi(skin,0,2)]
 	drill.get_child(1).material_override=material(drill_color,1.2)
 	drill.position=world(run.position,0.42)
+
+func _decor_spire(at: Vector3, height: float, radius: float, color: Color, sides: int=6) -> MeshInstance3D:
+	var shape:=CylinderMesh.new();shape.top_radius=radius*0.12;shape.bottom_radius=radius;shape.height=height;shape.radial_segments=sides
+	return mesh(scenery,shape,at+Vector3(0,height/2,0),color)
+
+func _biome_dressing() -> void:
+	# Static silhouettes and props, not extra hazards. No scenery enters |x| < 4.1.
+	# The back-wall features remain behind z=-5.8, away from the ore/aiming surface.
+	var stone:=Color(BIOMES[theme_index].stone)
+	var metal:=Color(BIOMES[theme_index].metal)
+	match theme_index:
+		0:
+			for side in [-1,1]:
+				for j in range(4):
+					model("res://assets/nature/plant_bushSmall.glb",Vector3(side*4.65,0.45,-4.6+j*2.6),Vector3(0.7,0.5,0.7),j)
+				model("res://assets/nature/log_stack.glb",Vector3(side*5.05,0.4,4.3),Vector3(1.3,0.9,1.3),PI/2)
+		1:
+			for side in [-1,1]:
+				for j in range(5):
+					model("res://assets/nature/mushroom_tanGroup.glb",Vector3(side*4.65,0.5,-4.8+j*2.1),Vector3(0.85,0.8,0.8),j)
+				for z in [-3.3,2.6]:model("res://assets/nature/hanging_moss.glb",Vector3(side*5.0,1.4,z),Vector3(1.1,1.4,1.0),side*PI/2)
+		2:
+			for side in [-1,1]:
+				for j in range(5):
+					var at:=Vector3(side*4.8,0.5,-4.8+j*2.1)
+					_crystal(scenery,at,2,1.1);_crystal(scenery,at+Vector3(side*0.4,0,0.3),2,0.65)
+			model("res://assets/cave/gate-rock.glb",Vector3(0,0,-6.9),Vector3(3.8,2.4,1.1))
+		3:
+			for side in [-1,1]:
+				for z in [-3.9,0.0,3.9]:
+					box(scenery,Vector3(side*5.0,1.1,z),Vector3(0.24,2.2,0.28),metal)
+					var brace:=box(scenery,Vector3(side*5.1,1.3,z),Vector3(0.18,1.7,0.2),metal.darkened(0.2));brace.rotation.z=side*0.45
+				model("res://assets/industrial/detail-tank.glb",Vector3(side*5.2,0.45,-1.8),Vector3(1.35,1.65,1.5),side*PI/2)
+				model("res://assets/industrial/chimney-small.glb",Vector3(side*5.2,0.3,4.4),Vector3(1.0,2.4,1.0))
+			box(scenery,Vector3(0,1.7,-6.7),Vector3(8.6,0.3,0.4),metal)
+		4:
+			for side in [-1,1]:
+				for z in [-4.0,0.8,4.5]:model("res://assets/nature/tree_plateau_dark.glb",Vector3(side*5.7,0.3,z),Vector3(2.2,2.9,1.7),side)
+				for z in [-2.0,2.8]:
+					model("res://assets/nature/hanging_moss.glb",Vector3(side*4.9,1.0,z),Vector3(1.0,1.7,1.0),side*PI/2)
+					model("res://assets/nature/log_stack.glb",Vector3(side*4.9,0.2,z+0.6),Vector3(1.1,0.65,1.2),PI/2)
+		5:
+			for side in [-1,1]:
+				for j in range(4):
+					var z:float=-4.7+j*2.5
+					model("res://assets/cave/template-floor-layer-raised.glb",Vector3(side*5.1,0.2,z),Vector3(1.6,0.55,1.7),side*PI/2)
+					var ice:=_decor_spire(Vector3(side*5.05,0.75,z),1.2+0.35*(j%3),0.45,Color("8caebf"),5);ice.rotation.z=side*0.15
+					_decor_spire(Vector3(side*5.55,0.7,z+0.35),0.8,0.3,Color("b4d0d9"),5)
+		6:
+			for side in [-1,1]:
+				for j in range(4):
+					var z:float=-4.7+j*2.6
+					var peak:=_decor_spire(Vector3(side*5.15,0.25,z),1.6+0.35*(j%2),0.75,Color("3e343b"),5);peak.rotation.z=side*0.18
+					var seam:=BoxMesh.new();seam.size=Vector3(0.13,0.04,1.7)
+					mesh(scenery,seam,Vector3(side*4.58,0.5,z),Color("e27550"),0.55)
+			model("res://assets/cave/gate-rock.glb",Vector3(0,-0.1,-6.8),Vector3(5.0,2.8,1.2))
+		7:
+			for side in [-1,1]:
+				for z in [-4.5,-0.8,3.0]:
+					box(scenery,Vector3(side*5.0,1.1,z),Vector3(0.7,2.2,0.7),stone)
+					for y in [0.4,1.25,2.1]:box(scenery,Vector3(side*5.0,y,z),Vector3(1.25,0.16,1.25),stone.darkened(0.15))
+			model("res://assets/cave/gate.glb",Vector3(0,0,-6.6),Vector3(4.0,2.7,1.2))
+			model("res://assets/cave/stairs.glb",Vector3(0,-0.15,-7.0),Vector3(5.0,0.7,1.5),PI)
+		8:
+			for side in [-1,1]:
+				for j in range(5):
+					var z:float=-4.8+j*2.1
+					var crown:=_decor_spire(Vector3(side*5.2,0.3,z),1.2+0.55*(j%3),0.75,Color("242f40"),5);crown.rotation.z=side*0.2
+					box(scenery,Vector3(side*4.7,0.7,z),Vector3(0.55,0.22,1.1),metal.darkened(0.2))
+		9:
+			for side in [-1,1]:
+				for j in range(4):
+					var at:=Vector3(side*5.05,0.4,-4.8+j*2.7)
+					model("res://assets/cave/template-floor-layer-raised.glb",at,Vector3(1.6,0.6,1.6),j)
+					for k in range(3):_crystal(scenery,at+Vector3(side*(k-1)*0.28,0.55,k*0.2),posmod(j+k,3),0.7+0.25*k)
+			for j in range(5):_crystal(scenery,Vector3(-3.2+j*1.6,0.2,-6.5),j%3,1.2+0.25*(j%2))
 
 func _crystal(parent: Node3D, at: Vector3, kind: int, size: float) -> Node3D:
 	var prism:=CylinderMesh.new();prism.top_radius=0;prism.bottom_radius=size*0.38;prism.height=size;prism.radial_segments=[3,4,6,8][kind]

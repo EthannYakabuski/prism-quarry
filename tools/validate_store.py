@@ -21,6 +21,33 @@ def png_size(path: Path) -> tuple[int, int]:
     return struct.unpack(">II", data[16:24])
 
 
+def verify_capture_label_patch(source: dict) -> set[str]:
+    """Allow only the documented, unpictured final-chamber button text change.
+
+    Reverse that exact statement and require the original capture hash. A new
+    expected hash alone cannot authorize unrelated runtime drift.
+    """
+    patch = source.get("post_capture_label_patch")
+    if not patch:
+        return set()
+    require(patch.get("kind") == "final_chamber_button_text_only", "Unknown post-capture change")
+    require(patch.get("path") == "game/main.gd", "Unexpected post-capture path")
+    records = [entry for entry in source["runtime_files"] if entry["path"] == "game/main.gd"]
+    require(len(records) == 1, "Missing or duplicate captured main script")
+    original_sha = records[0]["sha256"]
+    require(patch.get("captured_sha256") == original_sha, "Post-capture original hash mismatch")
+    old = b'else:card.add_child(button("Back to the workshop",func():_preview_run();home();_interstitial()))'
+    new = b'else:card.add_child(button("Return home",func():_preview_run();home();_interstitial()))'
+    current = (ROOT / "game/main.gd").read_bytes()
+    require(current.count(new) == 1 and old not in current, "Post-capture label statement differs")
+    require(hashlib.sha256(current).hexdigest() == patch.get("current_sha256"), "Post-capture current hash mismatch")
+    require(hashlib.sha256(current.replace(new, old, 1)).hexdigest() == original_sha, "Post-capture change is not limited to the approved label")
+    script = ROOT / source.get("capture_script", "")
+    require(script.is_file() and script.resolve().is_relative_to(ROOT), "Capture script is missing")
+    require(hashlib.sha256(script.read_bytes()).hexdigest() == source.get("capture_script_sha256"), "Capture fixture changed after capture")
+    return {"game/main.gd"}
+
+
 def main() -> None:
     listing = json.loads((ROOT / "marketing/store/store-listing.json").read_text(encoding="utf-8"))
     for key, limit in (("title", 30), ("short_description", 80), ("full_description", 4000)):
@@ -46,10 +73,11 @@ def main() -> None:
             require(bool(capture.get(key)), f"Capture lacks {key}: {relative}")
     if captures:
         source = json.loads((capture_root / manifest["capture_source"]).read_text(encoding="utf-8"))
+        label_patch_paths = verify_capture_label_patch(source)
         for entry in source["runtime_files"]:
             path = (ROOT / entry["path"]).resolve()
             require(path.is_relative_to(ROOT), "Capture source path leaves repository")
-            require(path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"], f"Capture source drift: {entry['path']}")
+            require(path.is_file() and (hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"] or entry["path"] in label_patch_paths), f"Capture source drift: {entry['path']}")
     native_path = capture_root / "android-provenance.json"
     native_captures = []
     if native_path.is_file():

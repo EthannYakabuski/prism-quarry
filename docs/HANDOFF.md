@@ -1,5 +1,23 @@
 # Prism Quarry handoff
 
+**Expansion snapshot, 2026-11-14:** the working tree now contains 200 chambers, ten biomes, six twelve-rank upgrades and 42 refreshed desktop captures. This expansion is local only: no new push, CI run or deployment is claimed; the public build remains `58f069e`. [EXPANSION_ACCEPTANCE.md](EXPANSION_ACCEPTANCE.md) records the new automated/browser checks, static exports and remaining Android acceptance. The sections below retain the dated 30-chamber/B14 history and must not be read as proof of the expansion. The Nov13 and B14 JSON receipts remain unchanged.
+
+## Current local expansion deliverables
+
+The source has 200 chambers, ten biomes and six twelve-rank upgrades. The local review includes 42 genuine desktop captures, with original hashes and a narrow attestation for the later unpictured result-button text correction. See [expansion acceptance](EXPANSION_ACCEPTANCE.md), [exact local artifact receipt](expansion-evidence.json) and [economy/migration details](ECONOMY_AND_MIGRATION.md).
+
+| Local path | Scope |
+| --- | --- |
+| `build/expansion-20261114/android/prism-quarry-test.apk` | Version 1.1.0/code 2; verified debug signature, same prior certificate; SHA256 `0c4395be2dd47dab846d0fc4b9113b555e2494694fa27914f4cff8d27a50be74` |
+| `build/expansion-20261114/android/prism-quarry-debug.aab` | Unsigned development bundle; SHA256 `5bc87f3da28cf5452f335befc0abec3034a87e39ddc31bd979d13b9f5c90d5a2` |
+| `build/expansion-20261114/site/play/` | Final ordinary single-threaded Web export; 533 PCK entries and nine file hashes verified |
+| `review/index.html` | Direct-file review with current expansion fallback images; HTTP enables all 42 desktop captures and profile controls |
+| `marketing/play-games-achievements/prism-quarry-achievements-google-play.zip` | Updated milestone wording; unchanged keys/thresholds/points; SHA256 `f978d0f1338d01acee607fad9e713362a3e1ce35b735f63f2d5be7f5af5aa60e` |
+
+Build outputs are ignored local artifacts, not repository downloads. The ordinary Web export passed fresh-profile input, payout/reload, untouched-exit and unavailable-continuation checks; representative chambers 1, 101 and 200 were played separately in an explicitly seeded QA browser build. New Android installation/play remains unverified. A minor decorative Web floor/backwall palette difference is documented; gameplay remains readable. No new push, hosted CI, deployment or store publication is claimed.
+
+## Historical edition record
+
 The Godot 4.5.1 project includes the verified live label-corrected Web build at `7950a924c434f5f7755bf311e9eee37b866173d1`, rebuilt Nov14 Android debug APK/AAB, genuine captures, styled review and store materials. Runtime correction revision: `363d0f6c9728fc4ed72c9322fe9f688cd68510ac`. Local fixtures and actual live-browser checks pass. The refreshed Android packages pass static checks but have not been installed or played; Nov13 native captures and the earlier receipt remain historical evidence. Later documentation-only publication needs its own exact build-identity receipt.
 
 - [Repository](https://github.com/EthannYakabuski/prism-quarry)

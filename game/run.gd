@@ -1,9 +1,11 @@
 extends RefCounted
 const Chambers = preload("res://game/chambers.gd")
+const Upgrades = preload("res://game/upgrades.gd")
 const ORIGIN := Vector2(0,10.35)
 const SPEED := 12.0
 const RADIUS := 0.18
 var run_id := 0
+var version := 2
 var mode := "campaign"
 var chamber := 0
 var seed_value := 0
@@ -11,7 +13,7 @@ var day := 0
 var depth := 1
 var spec: Dictionary
 var ore: Array = []
-var gear := {"drill":0,"echo":0,"salvage":0}
+var gear := Upgrades.normalize({})
 var shots := 3
 var used := 0
 var score := 0
@@ -32,10 +34,10 @@ var stage_ready := false
 var events: Array = []
 
 func start(id: int, kind: String, index: int, equipment: Dictionary, today: int) -> void:
-	run_id=id; mode=kind; chamber=clampi(index,0,29); day=today
-	gear=equipment.duplicate(true)
+	run_id=id; mode=kind; chamber=clampi(index,0,Chambers.COUNT-1); day=today
+	gear=Upgrades.normalize(equipment)
 	seed_value=today*7919+17 if mode=="daily" else 0
-	if mode=="daily": chamber=posmod(today*13,30)
+	if mode=="daily": chamber=posmod(today*13,Chambers.COUNT)
 	_setup()
 
 func _setup() -> void:
@@ -72,9 +74,12 @@ func step(delta: float) -> void:
 			ricochets+=1;events.append({"type":"ricochet","at":position})
 		for i in range(ore.size()):
 			var c: Dictionary=ore[i]
-			if int(c.hp)>0 and position.distance_to(Vector2(c.x,c.y))<0.50:
+			if int(c.hp)>0 and position.distance_to(Vector2(c.x,c.y))<Upgrades.hit_radius(int(gear.focus)):
 				_fracture(i)
-		if position.y>10.65 or shot_time>float(spec.flight)+float(gear.drill)*0.15 or remaining()==0: recall()
+		if position.y>10.65 or shot_time>float(spec.flight)+Upgrades.flight_bonus(int(gear.drill)) or remaining()==0: recall()
+
+func chain_radius(kind:int) -> float:
+	return Upgrades.prism_radius(int(gear.prism)) if kind==3 else Upgrades.echo_radius(int(gear.echo))
 
 func _fracture(index: int) -> void:
 	var queue: Array[int]=[index]
@@ -86,14 +91,14 @@ func _fracture(index: int) -> void:
 		var source:=Vector2(ore[i].x,ore[i].y)
 		for j in range(ore.size()):
 			if int(ore[j].hp)<=0 or queue.has(j):continue
-			var radius:=1.08+float(gear.echo)*0.06
+			var radius:=chain_radius(int(ore[i].kind))
 			var same:=int(ore[i].kind)==int(ore[j].kind)
-			if int(ore[i].kind)==3:radius=2.1;same=true
+			if int(ore[i].kind)==3:same=true
 			if same and source.distance_to(Vector2(ore[j].x,ore[j].y))<=radius:queue.append(j)
 	chains=maxi(chains,broken.size())
 	for i in broken:
 		crystals+=1;stage_crystals+=1;shot_combo+=1
-		score+=100+mini(shot_combo-1,20)*25
+		score+=roundi((100+mini(shot_combo-1,20)*25)*Upgrades.combo_multiplier(int(gear.combo)))
 		events.append({"type":"gem","at":Vector2(ore[i].x,ore[i].y),"kind":int(ore[i].kind),"index":i})
 	best_combo=maxi(best_combo,shot_combo)
 	if broken.size()>=4:events.append({"type":"chain","at":position,"count":broken.size()})
@@ -109,7 +114,7 @@ func recall() -> void:
 
 func next_depth() -> bool:
 	if not stage_ready or mode!="endless" or done:return false
-	depth+=1;chamber=posmod(chamber+7,30);seed_value=depth*917+31
+	depth+=1;chamber=posmod(chamber+7,Chambers.COUNT);seed_value=depth*917+31
 	_setup();return true
 
 func bank() -> void:
@@ -137,7 +142,7 @@ func preview(direction: Vector2) -> PackedVector2Array:
 	var p:=ORIGIN
 	var v:=Vector2(sin(a),-cos(a))*SPEED
 	var bounces:=0
-	for s in range(ceili((float(spec.flight)+float(gear.drill)*0.15)*90.0)):
+	for s in range(ceili((float(spec.flight)+Upgrades.flight_bonus(int(gear.drill)))*90.0)):
 		p+=v/90.0
 		var bounce:=false
 		if absf(p.x)>3.78:p.x=clampf(p.x,-3.78,3.78);v.x=-v.x;bounce=true
@@ -154,7 +159,7 @@ func preview(direction: Vector2) -> PackedVector2Array:
 	return points
 
 func snapshot() -> Dictionary:
-	var out: Dictionary={}
+	var out: Dictionary={"version":2}
 	for key in ["run_id","mode","chamber","seed_value","day","depth","gear","shots","used","score","crystals","stage_crystals","best_combo","chains","ricochets","shot_combo","shot_time","moving","done","won","continued","stage_ready","ore"]:out[key]=get(key)
 	out.position=[position.x,position.y];out.velocity=[velocity.x,velocity.y]
 	return out.duplicate(true)
@@ -164,9 +169,10 @@ static func number(value: Variant, lo: float, hi: float) -> bool:
 
 static func valid_snapshot(d: Variant) -> bool:
 	if not d is Dictionary:return false
+	if d.get("version")!=2:return false
 	for key in ["run_id","chamber","seed_value","day","depth","shots","used","score","crystals","stage_crystals","best_combo","chains","ricochets","shot_combo"]:
 		if not number(d.get(key),0,1e12) or float(d[key])!=floor(float(d[key])):return false
-	if not d.get("mode") in ["campaign","daily","endless"] or int(d.chamber)>29 or int(d.shots)>6 or int(d.depth)<1:return false
+	if not d.get("mode") in ["campaign","daily","endless"] or int(d.chamber)>=Chambers.COUNT or int(d.shots)>6 or int(d.depth)<1:return false
 	for key in ["moving","done","won","continued","stage_ready"]:
 		if not d.get(key) is bool:return false
 	if (d.moving and d.done) or (d.won and not d.done) or (d.stage_ready and (d.moving or d.done or d.mode!="endless")):return false
@@ -180,8 +186,8 @@ static func valid_snapshot(d: Variant) -> bool:
 	if d.moving and absf(speed-SPEED)>0.01:return false
 	if not d.moving and speed>0.01:return false
 	if not d.get("gear") is Dictionary:return false
-	for key in ["drill","echo","salvage"]:
-		if not number(d.gear.get(key),0,4) or float(d.gear[key])!=floor(float(d.gear[key])):return false
+	for key in Upgrades.KEYS:
+		if not number(d.gear.get(key),0,Upgrades.cap(key)) or float(d.gear[key])!=floor(float(d.gear[key])):return false
 	if not d.get("ore") is Array or d.ore.size()>60 or d.ore.is_empty():return false
 	var expected: Dictionary=Chambers.make(int(d.chamber),int(d.seed_value))
 	if expected.ore.size()!=d.ore.size():return false
@@ -193,7 +199,19 @@ static func valid_snapshot(d: Variant) -> bool:
 		if not number(c.get("hp"),0,1) or float(c.hp)!=floor(float(c.hp)):return false
 	return true
 
+static func migrate_legacy_snapshot(d:Variant) -> Dictionary:
+	if not d is Dictionary or d.get("version",1)!=1:return {}
+	if not number(d.get("chamber"),0,29) or float(d.chamber)!=floor(float(d.chamber)):return {}
+	if not d.get("gear") is Dictionary:return {}
+	for key in ["drill","echo","salvage"]:
+		if not number(d.gear.get(key),0,4) or float(d.gear[key])!=floor(float(d.gear[key])):return {}
+	var converted:Dictionary=d.duplicate(true)
+	converted.version=2;converted.chamber=Chambers.legacy_to_current(int(d.chamber))
+	converted.gear=Upgrades.normalize({"drill":d.gear.drill,"echo":d.gear.echo,"salvage":d.gear.salvage})
+	return converted if valid_snapshot(converted) else {}
+
 static func restore(d: Dictionary) -> RefCounted:
+	if not valid_snapshot(d):return null
 	var r=load("res://game/run.gd").new()
 	for key in d:
 		if key not in ["position","velocity"]:r.set(key,d[key])

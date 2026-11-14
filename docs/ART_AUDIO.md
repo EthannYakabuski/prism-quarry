@@ -2,6 +2,43 @@
 
 Production date: 2026-11-13. These assets belong to Prism Quarry only.
 
+## Ten-biome expansion, November 14
+
+The expanded development source keeps the original branding and audio provenance.
+Those illustrated assets are not new gameplay evidence. Ten scenery configurations
+use the same readable rail inset, with distinct perimeter geometry:
+
+| Biome | Scenery identity |
+| --- | --- |
+| Amber Hollow | Timber workings, bushes and log stacks |
+| Azure Grotto | Mushroom beds and hanging moss |
+| Violet Vault | Violet crystal clusters and a rock arch |
+| Copper Foundry | Pressure tanks, chimney columns and forged braces |
+| Jade Canopy | Plateau trees, hanging moss and fallen timber |
+| Frostglass Caverns | Low stepped shelves and faceted ice spires |
+| Ember Rift | Split basalt peaks and static emissive fissures |
+| Moonstone Archive | Tiered stone shelves, columns and a ruin gateway |
+| Obsidian Crown | Tall asymmetric basalt crowns and buttresses |
+| Prismatic Depths | Raised geode beds and multicolour crystal ridges |
+
+The added source models are the supplied Kenney City Kit Industrial 2.0
+`detail-tank.glb` and `chimney-small.glb`, their required colormap, and Nature Kit
+`tree_plateau_dark.glb`. Files are copied unchanged from the supplied local library.
+Exact paths, bytes, hashes and texture dependencies are in
+[biome-props-provenance.json](../assets/biome-props-provenance.json). Both packs are
+CC0; the Industrial pack's original license is preserved in
+[LICENSES](../LICENSES/kenney_city-kit-industrial_2.0.txt), alongside the existing
+Nature Kit notice. Other props reuse already bundled cave/nature models or simple
+project-authored meshes. Model materials are shared per biome; only two unshadowed
+local lights are used. Scenery is static, including the fissures; no ambient camera
+motion or particle animation was added. All 42 fresh desktop viewport captures
+were visually reviewed: ten biomes plus home/map/workshop/results at three sizes.
+Their [provenance](../marketing/screenshots/provenance.json) records actual pixels
+and source hashes. A few pale background details reduce heading contrast without
+hiding text. Existing foreground table/bracket props slightly overlap the lower
+board edge but hide no ore, bumper or launcher in the checked frames. These
+fixtures do not establish native device performance or physical-device behavior.
+
 ## Brand direction and deliverables
 
 The original art direction uses faceted sapphire cave walls, luminous teal crystals,

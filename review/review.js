@@ -11,6 +11,7 @@
     } else {
       gallery.textContent = "";
       const profiles = {phone: "Phone", tablet7: "7-inch viewport", tablet10: "10-inch viewport"};
+      const views = {home: "Home", map: "Campaign map", gameplay: "Amber Hollow", azure: "Azure Grotto", violet: "Violet Vault", copper: "Copper Foundry", jade: "Jade Canopy", frostglass: "Frostglass Caverns", ember: "Ember Rift", moonstone: "Moonstone Archive", obsidian: "Obsidian Crown", prismatic: "Prismatic Depths", workshop: "Workshop", results: "Results"};
       const filter = document.createElement("div"); filter.className = "actions"; filter.setAttribute("aria-label", "Capture profile");
       const figures = [];
       const profileNames = [...new Set(captures.map(c => c.profile))];
@@ -34,7 +35,7 @@
         picture.addEventListener("error", () => { figure.textContent = ""; figure.className = "pending"; figure.textContent = "Capture file unavailable: " + capture.path; });
         link.append(picture);
         const caption = document.createElement("figcaption");
-        const name = document.createElement("strong"); name.textContent = `${profiles[capture.profile] || capture.profile || "Runtime viewport"} · ${capture.view || "capture"}`;
+        const name = document.createElement("strong"); name.textContent = `${profiles[capture.profile] || capture.profile || "Runtime viewport"} · ${views[capture.view] || capture.view || "capture"}`;
         const details = document.createElement("span"); details.textContent = `${capture.width} × ${capture.height} · ${capture.device_class || "device class unrecorded"}. ${capture.description || ""}`;
         const method = document.createElement("div"); method.textContent = capture.method || "Capture method unrecorded";
         caption.append(name, details, method); figure.append(link, caption); gallery.append(figure); figures.push({figure, profile: capture.profile});

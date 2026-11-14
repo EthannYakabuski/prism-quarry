@@ -1,5 +1,9 @@
 # Prism Quarry acceptance record
 
+**Expansion snapshot, 2026-11-14:** the working tree now contains 200 chambers, ten biomes, six twelve-rank upgrades and 42 refreshed desktop captures. This expansion is local only: no new push, CI run or deployment is claimed; the public build remains `58f069e`. [EXPANSION_ACCEPTANCE.md](EXPANSION_ACCEPTANCE.md) records the new automated/browser checks, static exports and remaining Android acceptance. The sections below retain the dated 30-chamber/B14 history and must not be read as proof of the expansion. The Nov13 and B14 JSON receipts remain unchanged.
+
+## Historical edition record
+
 Evidence dates: 2026-11-13 (retained native/build snapshot) and 2026-11-14 (live Pages/browser verification and label correction). B14 is verified locally and in the live Web payload at `7950a924c434f5f7755bf311e9eee37b866173d1`. Rebuilt Android packages pass static checks but have not been installed or played; the native capture gallery remains historical Nov13 evidence. This is development acceptance, not a production-release certification.
 
 Nov13 runtime correction revision: [f0fdea95a100c1250e5e5b94f04b568142209629](https://github.com/EthannYakabuski/prism-quarry/commit/f0fdea95a100c1250e5e5b94f04b568142209629). Nov14 label-fix revision: `363d0f6c9728fc4ed72c9322fe9f688cd68510ac`. [build-evidence.json](build-evidence.json) remains the unchanged prepublication verification snapshot: five actual artifact identities and source/worktree state recorded on 2026-11-13. The snapshot includes [hosted run 43475885486](https://github.com/EthannYakabuski/prism-quarry/actions/runs/43475885486), which passed at aa830e55. For later publication state, compare the exact commit against [current CI runs](https://github.com/EthannYakabuski/prism-quarry/actions/workflows/ci.yml); later source identities and CI outcomes must be recorded separately from this retained receipt.

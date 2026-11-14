@@ -1,5 +1,14 @@
 # Core verification
 
+**Current expansion evidence (2026-11-14):** see
+[EXPANSION_ACCEPTANCE.md](../docs/EXPANSION_ACCEPTANCE.md) for the 200-chamber
+campaign, 200 seeded daily baseline replays, migration/economy checks, final
+219-check UI pass, ten touch transitions and 42 graphical desktop captures.
+The remainder of this document preserves the earlier 30-chamber/B14 record;
+it is not evidence of expanded Android play or a new public deployment.
+
+## Historical 30-chamber and B14 verification
+
 Godot 4.5.1 Compatibility. Baseline core evidence is dated 13 November 2026;
 the local B14 label-correction rerun is dated 14 November 2026.
 

@@ -95,8 +95,13 @@ if (typeof Engine !== 'function') {
             shutil.rmtree(destination)
         if source.is_dir():
             shutil.copytree(source, destination, ignore=ignore)
-    for name in ("LICENSE", "NOTICE"):
+    for name in ("LICENSE", "NOTICE", "INITIAL_VECTOR_PROMPT.txt", "INITIAL_VECTOR_EXPANSION.md"):
         shutil.copy2(ROOT / name, target / name)
+    asset_metadata = target / "assets"
+    if not asset_metadata.resolve().is_relative_to(target):
+        raise SystemExit("Asset metadata output escapes site directory")
+    asset_metadata.mkdir(exist_ok=True)
+    shutil.copy2(ROOT / "assets/biome-props-provenance.json", asset_metadata / "biome-props-provenance.json")
     shutil.copy2(ROOT / "game/catalog.json", target / "catalog.json")
     if not (target / "game").resolve().is_relative_to(target):
         raise SystemExit("Managed game output escapes site directory")

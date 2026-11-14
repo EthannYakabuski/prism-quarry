@@ -6,6 +6,13 @@ var directory:="res://build/visual"
 var quick:=false
 var profile_name:="diagnostic"
 var captures:Array=[]
+const BIOME_VIEWS := [
+	{"view":"gameplay","chamber":4},{"view":"azure","chamber":21},
+	{"view":"violet","chamber":43},{"view":"copper","chamber":64},
+	{"view":"jade","chamber":84},{"view":"frostglass","chamber":104},
+	{"view":"ember","chamber":124},{"view":"moonstone","chamber":144},
+	{"view":"obsidian","chamber":164},{"view":"prismatic","chamber":184}
+]
 func _initialize() -> void:call_deferred("capture")
 func shot(name: String) -> void:
 	await process_frame
@@ -29,16 +36,25 @@ func capture() -> void:
 	game=load("res://scenes/main.tscn").instantiate();root.add_child(game)
 	await process_frame
 	game.home();await shot("home")
-	game.start_run("campaign",4);game.aim=Vector2(-0.55,-1).normalized();game.cavern.show_preview(game.run.preview(game.aim));await shot("gameplay")
-	if quick:game.queue_free();await process_frame;quit();return
-	game.start_run("campaign",11);await shot("azure")
-	game.start_run("campaign",23);await shot("violet")
+	game.show_map(0);await shot("map")
+	for view in BIOME_VIEWS:
+		game.start_run("campaign",int(view.chamber))
+		if view.view=="gameplay":game.aim=Vector2(-0.55,-1).normalized();game.cavern.show_preview(game.run.preview(game.aim))
+		await shot(str(view.view))
+		if quick:game.queue_free();await process_frame;quit();return
 	game.show_workshop();await shot("workshop")
 	game.start_run("campaign",0)
 	game.run.launch(Vector2.UP)
 	for i in range(700):
 		game.run.step(1.0/60.0)
 		if game.run.done:break
-	game.cavern.sync(game.run);game._result();await shot("results")
+	game.cavern.sync(game.run);game._result()
+	# The new popup starts transparent. Capture only after the real fade/scale completes.
+	for frame in range(300):
+		if game.result_elapsed>=game.RESULT_APPEAR_SECONDS:break
+		await process_frame
+	if game.result_elapsed<game.RESULT_APPEAR_SECONDS:
+		push_error("CAPTURE FAILED: result appearance did not finish");quit(1);return
+	await shot("results")
 	var manifest:=FileAccess.open(directory+"/captures.json",FileAccess.WRITE);manifest.store_string(JSON.stringify({"captures":captures},"\t"));manifest.close()
 	game.queue_free();await process_frame;quit()

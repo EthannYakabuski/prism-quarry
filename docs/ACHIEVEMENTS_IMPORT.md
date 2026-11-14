@@ -122,6 +122,19 @@ minimum one, unique numeric list order, one unique PNG per achievement, no text
 commas in localizations, and UTF-8 without BOM are strict authoring conventions;
 they are not all separately stated as Google import requirements.
 
+## Expanded campaign compatibility
+
+On November 14, the development campaign expanded to 200 chambers. Existing
+achievement keys, thresholds, points, order and icons remain unchanged so earned
+milestones keep their meaning. Vault Keeper now says "Clear thirty different
+campaign chambers" at threshold 30, and Master Miner says "Earn ninety campaign
+stars" at threshold 90. Neither claims completion of the full expanded campaign.
+The previous ZIP and catalog were archived locally before regeneration. The new
+22-entry ZIP contains 20 achievements and 720 points, is 9,338,709 bytes, and has
+SHA256 `f978d0f1338d01acee607fad9e713362a3e1ce35b735f63f2d5be7f5af5aa60e`.
+All 31 validator self-tests and the finished-file reread pass. This is local static
+authoring validation; no Console upload, import or backend-ID change was performed.
+
 ## Source reconciliation and evidence
 
 On November 13, 2026, [Android Developers' import guide](https://developer.android.com/games/pgs/integrate-achievements#zip-file-guidelines)

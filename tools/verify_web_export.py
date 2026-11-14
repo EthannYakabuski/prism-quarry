@@ -46,7 +46,12 @@ def check(folder: Path) -> dict:
         if hashlib.md5(data).digest() != expected:
             raise ValueError(f"PCK content checksum mismatch: {path}")
         files[path] = size
-    required = ["project.binary", "game/catalog.json", "assets/audio/manifest.json", "platform/config.json", "scenes/main.tscn.remap", "game/main.gdc", "game/run.gdc", "game/profile.gdc", "game/chambers.gdc", "game/cavern.gdc", "platform/services.gdc", "LICENSE", "NOTICE"]
+    required = [
+        "project.binary", "game/catalog.json", "assets/audio/manifest.json", "platform/config.json",
+        "scenes/main.tscn.remap", "game/main.gdc", "game/run.gdc", "game/profile.gdc",
+        "game/chambers.gdc", "game/chambers_legacy.gdc", "game/chamber_expansion_data.gdc",
+        "game/cavern.gdc", "game/upgrades.gdc", "platform/services.gdc", "LICENSE", "NOTICE",
+    ]
     for path in required:
         if path not in files:
             raise ValueError(f"Missing runtime pack entry: {path}")

@@ -2,13 +2,19 @@
 
 Prism Quarry is a development package for `com.ethannyakabuski.prismquarry`. Store text is a draft, not a live listing. Build artifacts, CI success, static achievement validation, runtime input evidence, device testing and publication are separate outcomes. Consult [ACCEPTANCE.md](ACCEPTANCE.md) for recorded evidence; do not infer completion from this checklist.
 
+## Expansion draft scope
+
+The current copy describes the expanded development edition: 200 campaign chambers, ten biomes with twenty chambers each, and six workshop choices with twelve ranks apiece. Longburn drill, Echo lens, Salvage rig, Focus tip, Prism resonator and Combo calibrator improve distinct parts of a run. Smaller ore payouts are intended to extend workshop decisions across the campaign; no measured balance or completion claim is inferred from the copy.
+
+The refreshed 42 desktop captures show the expanded build, with all ten biome fixtures and home/map/workshop/results at three portrait sizes. Their actual source hashes and capture limits are recorded in the manifest. The 11 native frames remain historical Nov13 APK evidence and do not prove the expansion on Android. The existing public Web build (`58f069e`) and historical CI results below remain separate from this local, unpushed expansion; see [expansion acceptance](EXPANSION_ACCEPTANCE.md). [INITIAL_VECTOR_EXPANSION.md](../INITIAL_VECTOR_EXPANSION.md) records the authorized scope and verification requirements.
+
 ## Store materials
 
 The editable source is [store-listing.json](../marketing/store/store-listing.json): title **Prism Quarry**, proposed **Game / Arcade**, short and long English copy, discovery keywords, asset paths and unresolved owner fields. Keywords are proposed discovery concepts; select actual available Console tags that accurately describe the shipped build. No content rating or target age group has been asserted.
 
 The 512 × 512 app icon, 1024 × 500 feature graphic and 1080 × 1920 splash are branding images. They must never be submitted as gameplay screenshots. Genuine captures are listed separately in [capture provenance](../marketing/screenshots/provenance.json). Phone, 7-inch and 10-inch-sized desktop viewport captures establish layout evidence only; they are not physical-device or emulator evidence. Retain original captures and their provenance without retouching gameplay into a fabricated state.
 
-The [styled review](../review/index.html) presents the hook, loop, three selling cards, progression, monetization, branding, runtime gallery and download links. Serve the assembled site over HTTP; its gallery and source identity read local JSON. A pending or missing capture stays visibly pending.
+The [styled review](../review/index.html) presents the hook, loop, three selling cards, ten-biome outline, six workshop choices, monetization, branding, runtime gallery and download links. It explicitly separates fresh expansion desktop captures from retained native evidence. Direct-file opening shows genuine fallback images; HTTP enables the complete galleries and profile controls. A pending or missing capture stays visibly pending.
 
 ## Native services and owner fields
 
@@ -56,12 +62,13 @@ Godot's [Android export guide](https://docs.godotengine.org/en/4.5/tutorials/exp
 
 ## Future expansion
 
-**Sunken Geodes** is a future DLC concept: flooded chambers with refracting currents. It is not implemented, sold, scheduled, priced or included in the current 30-chamber campaign. There is no billing product to configure in this development package.
+**Sunken Geodes** is a future DLC concept: flooded chambers with refracting currents. It is not implemented, sold, scheduled, priced or included in the expanded 200-chamber campaign. There is no billing product to configure in this development package.
 
 ## Release checklist
 
 1. Freeze the final source revision; run all required tests and exports; verify exact remote SHA and CI URL.
 2. Check baseline chamber completion, save recovery, once-only payouts/claims, pause/resume, and service cancellation using genuine input and fixtures with their evidence clearly distinguished.
+   For the expansion, include all 200 baseline chambers, legacy progress/active-run migration, the six upgrade caps and effects, reduced ore payouts, and the brief clear-to-results presentation with reduced motion.
 3. Test the actual Android packages on declared device/emulator profiles; verify performance, safe areas, orientation and interruptions. Do not label desktop captures as Android testing.
 4. Finish the owner fields and production-service/privacy work above. Confirm the listing describes the shipped behavior.
 5. Verify the achievement ZIP statically, then have the owner review/import it into the intended Play project and map returned IDs.

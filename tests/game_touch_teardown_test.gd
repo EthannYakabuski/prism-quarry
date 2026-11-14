@@ -32,6 +32,8 @@ func tap(text:String, expected:String) -> void:
 		failures.append(text+" expected "+expected+" got "+game.screen)
 		push_error(failures.back())
 	print("TEARDOWN AFTER ",text," screen=",game.screen)
+	if game.screen=="result":
+		for frame in range(20):game._process(1.0/60.0)
 func execute() -> void:
 	var isolated:=false
 	for arg in OS.get_cmdline_user_args():
